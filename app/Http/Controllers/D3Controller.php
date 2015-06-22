@@ -4,7 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-
+use DB;
 class D3Controller extends Controller {
 
 	/**
@@ -15,6 +15,10 @@ class D3Controller extends Controller {
 	public function index()
 	{
 		//
+		$result = DB::table('beca')
+            ->get();
+            echo "<pre>";
+            print_r($result);
 		return view('d3.index');
 	}
 
