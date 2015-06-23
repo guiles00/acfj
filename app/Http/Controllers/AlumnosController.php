@@ -3,8 +3,10 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use App\Alumno;
+use Request;
+
 class AlumnosController extends Controller {
 
 	/**
@@ -17,15 +19,25 @@ class AlumnosController extends Controller {
 		//
 		//echo "nada";
 		//exit;
-		$alumnos = Alumno::all();
+		$input = Request::all();
+		
+		$str = (isset($input['str_alumno']))?$input['str_alumno']:'';
+		$alumnos = Alumno::where('usi_nombre', 'LIKE', "%$str%")
+		->orWhere('usi_dni', 'LIKE', "%$str%")
+		->orWhere('usi_nombre', 'LIKE', "%$str%")
+		->orWhere('usi_legajo', 'LIKE', "%$str%")
+		->paginate(30);
+		
+		$alumnos->setPath('alumnos');
 		//echo "<pre>";
-		//print_r($alumnos);
+		//print_r($input);
 		return view('alumnos.index')->with('alumnos',$alumnos);
 	}
 
 	public function pendientes(){
 
-		return view('alumnos.pendientes');
+//return response()->json($json_data);
+	return view('alumnos.pendientes');
 	}
 	public function about()
 	{
@@ -50,6 +62,15 @@ class AlumnosController extends Controller {
 	public function store()
 	{
 		//
+			$input = Request::all();
+			$alumno = Alumno::where('usi_id','=',$input['_id'])->first();
+		//	echo"<pre>";
+		//	print_r($input);
+		
+			$alumno->usi_nombre = $input['nombre'];
+			$alumno->save();
+			
+		return view('alumnos.store');
 	}
 
 	/**
@@ -60,8 +81,10 @@ class AlumnosController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
-		return view('alumnos.show');
+		$alumno = Alumno::where('usi_id','=',$id)->first();
+	//	echo "<pre>";
+	//	print_r($alumno);
+		return view('alumnos.show')->with('alumno',$alumno);
 	}
 
 	/**
