@@ -65,6 +65,8 @@ Route::get('tablero/estadisticas','TableroController@estadisticasCurso');
 Route::get('cargocurso/{x}/{y}','TableroController@traeCargoCurso');
 Route::get('tablero/estadisticas/{x}','TableroController@estadisticasCurso');
 Route::get('pendientes','AlumnosController@pendientes');
+Route::get('curso-fecha','TableroController@cursoFecha');
+Route::get('inscriptos-curso','TableroController@inscriptosCurso');
 
 //Route::get('tablero/{id}','TableroController@estadisticasCurso');
 

@@ -110,6 +110,74 @@ and usi_car_id=-1
 		return view('tablero.cargocurso')->with('data',$data)->with('curso_id',$cur_id);
 
 	}
+
+	//Trae los cursos por intervalo de fechas (años)
+	public function cursoFecha(){
+		//inicializo data
+		$data = [];
+		$input = Request::all();
+		$data['anio'] = isset($input['anio'])?$input['anio']: '2015'; 
+
+/*select g3.gcu3_id,g3.gcu3_titulo,count(*) from curso c , curso_usuario_sitio cus, usuario_sitio us, grupo_curso3 g3 
+where c.cur_id = cus.cus_cur_id 
+and us.usi_id = cus.cus_usi_id
+and c.cur_gcu3_id = g3.gcu3_id
+AND cus.cus_validado =  'Si'
+and YEAR(c.cur_fechaInicio) ='2014'
+group by g3.gcu3_titulo*/
+
+		$res = DB::table('curso_usuario_sitio')
+            ->join('curso', 'curso.cur_id', '=', 'curso_usuario_sitio.cus_cur_id')
+            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'curso_usuario_sitio.cus_usi_id')
+            ->join('grupo_curso3','curso.cur_gcu3_id','=','grupo_curso3.gcu3_id')
+            ->select('curso.cur_id','grupo_curso3.gcu3_titulo',DB::raw('count(*) as cantidad'))
+            ->where(DB::raw('YEAR(curso.cur_fechaInicio)'), '=', $data['anio'])
+            ->where('curso_usuario_sitio.cur_asistio','=','Si')
+            ->where('curso_usuario_sitio.cus_habilitado','=','1')
+            //->where(DB::raw('YEAR(curso.cur_fechaInicio)', '=', date('Y') ))
+            ->groupBy('grupo_curso3.gcu3_titulo')
+            //->toSql();
+            ->get();
+			//echo $res;
+			//exit;
+	    
+		usort($res,function($a,$b){
+			if ( $a->cantidad == $b->cantidad){ return 0; } 
+
+			return ($a->cantidad > $b->cantidad) ? -1 : 1;	
+		});
+		
+		$data['res'] = $res;    
+
+		return view('tablero.cursofecha')->with('data',$data); 
+	}
+	public function inscriptosCurso(){
+
+/*
+		SELECT * 
+FROM curso c, curso_usuario_sitio cus, usuario_sitio us
+WHERE c.cur_id = cus.cus_cur_id
+AND us.usi_id = cus.cus_usi_id
+AND c.cur_id =220
+AND cus.cus_validado =  'Si'
+*/
+			$input = Request::all();
+			$curso_id = ( isset($input['curso_id']) )? $input['curso_id'] : null;
+
+			$data = [];
+
+			$res = DB::table('curso_usuario_sitio')
+            ->join('curso', 'curso.cur_id', '=', 'curso_usuario_sitio.cus_cur_id')
+            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'curso_usuario_sitio.cus_usi_id')
+            ->select('*')
+            ->where('curso.cur_id', '=', $curso_id )
+            //->toSql();
+            ->get();
+          //print_r($res);
+          $data['res'] = $res;
+          $data['anio'] = $input['anio']; 
+		return view('tablero.inscriptoscurso')->with('data',$data); ;
+	}
 	/**
 	 * Show the form for creating a new resource.
 	 *

@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 //use Illuminate\Http\Request;
 use App\Alumno;
+use App\Cargo;
 use Request;
 
 class AlumnosController extends Controller {
@@ -31,6 +32,7 @@ class AlumnosController extends Controller {
 		$alumnos->setPath('alumnos');
 		//echo "<pre>";
 		//print_r($input);
+	
 		return view('alumnos.index')->with('alumnos',$alumnos);
 	}
 
@@ -61,13 +63,31 @@ class AlumnosController extends Controller {
 	 */
 	public function store()
 	{
-		//
+
 			$input = Request::all();
 			$alumno = Alumno::where('usi_id','=',$input['_id'])->first();
 		//	echo"<pre>";
 		//	print_r($input);
 		
 			$alumno->usi_nombre = $input['nombre'];
+			$alumno->usi_legajo = $input['legajo'];
+			$alumno->usi_email = $input['email'];
+			//$alumno->usi_clave
+			$alumno->usi_telefono = $input['telefono'];
+			//$alumno->usi_activado = $input['activado'];
+			$alumno->usi_celular = $input['celular'];
+			$alumno->usi_cp = $input['cp'];
+			$alumno->usi_dni = $input['dni'];
+			$alumno->usi_direccion = $input['direccion'];
+			$alumno->usi_are_id = $input['are_id'];
+			//$alumno->usi_area_otro = $input['area_otro'];
+			$alumno->usi_dep_id = $input['dep_id']; 
+  			//$alumno->usi_dep_otro = $input['dep_otro'];
+ 			$alumno->usi_car_id = $input['car_id'];
+ 			//$alumno->usi_cargo_otro = $input['cargo_otro'];
+ 			$alumno->usi_validado = $input['validado'];
+     		$alumno->usi_obligar_clave = $input['obligar_clave'];
+  			//$alumno->usi_fecha_alta 
 			$alumno->save();
 			
 		return view('alumnos.store');
@@ -84,7 +104,14 @@ class AlumnosController extends Controller {
 		$alumno = Alumno::where('usi_id','=',$id)->first();
 	//	echo "<pre>";
 	//	print_r($alumno);
-		return view('alumnos.show')->with('alumno',$alumno);
+		$cargos = Cargo::lists('car_nombre', 'car_id');
+		//echo "<pre>";
+		//print_r($cargos);
+		//exit;
+		$data['alumno'] = $alumno;
+		$data['cargos'] = $cargos;
+
+		return view('alumnos.show')->with('data',$data);//->with('cargos',$cargos);
 	}
 
 	/**
