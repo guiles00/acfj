@@ -310,10 +310,21 @@
                                 <!-- /input-group -->
                             </li>
                             <li>
-                                <a href="{!! URL::asset('/tablero') !!}"><i class="fa fa-dashboard fa-fw"></i> Panel de Control</a>
+                                <a href="#"><i class="fa fa-dashboard fa-fw"></i> Tablero<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="{!! URL::asset('/tablero') !!}">Cargos x Curso</a>
+                                    </li>
+                                    <li>
+                                        <a href="{!! URL::asset('/curso-fecha') !!}">Fechas(?)</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Docentes</a>
+                                    </li>
+                                </ul>
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-sitemap fa-fw"></i> Gesti&oacute;n Acad&eacute;mica<span class="fa arrow"></span></a>
+                                <a href="#"><i class="fa fa-sitemap fa-fw"></i> Gesti&oacute;n Acad&eacute;mica</a>
                                 <ul class="nav nav-second-level">
                                     <li>
                                         <a href="#">Categor&iacute;as <span class="fa arrow"></span></a>
@@ -336,7 +347,6 @@
                                     <li>
                                         <a href="#">Docentes</a>
                                     </li>
-
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
@@ -363,12 +373,7 @@
         </nav>
 
         <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Panel de Administraci&oacute;n</h1>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
+       
             @yield('content')   
 
               <!--div class="row">
