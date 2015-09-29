@@ -17,7 +17,7 @@
  <form method="GET" action="{{action('AlumnosController@index')}}" class="navbar-form navbar-left pull-right" role="search">
     <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
     <div class="form-group">
-        <input type="text" class="form-control" name="str_alumno" placeholder="">
+        <input type="text" class="form-control" name="str_alumno" placeholder="" id="search_alumno">
     </div>
     <button type="submit" class="btn btn-default">Buscar</button>
 </form>
@@ -54,6 +54,30 @@
   </div>
 <?php echo $alumnos->render(); ?>
 
+<div id="res"></div>
 </div>
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+              $('#search_alumno').on('change keyup paste', function(d) {
+                
+
+                  console.log('I am pretty sure the text box changed');
+                  //alert('okaaasasasa');
+                  console.debug(d.target.value);
+                  $.ajax({
+                          url: 'http://localhost/content/cfj-cfj/admin_cfj/public/alumnos',
+                          data: {'data':d.target.value},
+                          success: function(data){
+                           // console.debug(data);
+                          //  $('#res').html(data);
+                          }
+                          //dataType: dataType
+                        });
+
+
+                });
+
+            });
+</script>
 @stop

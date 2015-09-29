@@ -40,6 +40,9 @@
   </select>
   </div>
   <button type="submit" class="btn btn-default">Aceptar</button>
+  <!--button type="submit" class="btn btn-default">2015</button>
+  <button type="submit" class="btn btn-default">2014</button>
+  <button type="submit" class="btn btn-default">2013</button-->
   </form>
 <br>
 <div>       
@@ -63,7 +66,7 @@
             <?php echo "<pre>"; $array = []; ?>
             @foreach($data['res'] as $curso)
               <tr>
-              <td><a href="{!! URL::action('TableroController@inscriptosCurso', array('curso_id'=>$curso->cur_id,'anio'=>$data['anio'])); !!}">{{$curso->gcu3_titulo}}</a> </td>
+              <td><a href="{!! URL::action('TableroController@cursoCargo', array('curso_id'=>$curso->cur_id,'anio'=>$data['anio'])); !!}">{{$curso->gcu3_titulo}}</a></td>
               <td> {{$curso->cantidad}}</td>
               </tr>
               <?php 
@@ -212,29 +215,32 @@ var datos_o = JSON.parse(datos);
 */
 </script>        
 <script>
-    console.debug('daots'); 
+    //console.debug('datos'); 
     //console.debug(datos);
-
+    var w = 1224;
     var arr_categories = new Array();
-    var arr_dollars = new Array();
+    var arr_cantidad = new Array();
 
     var o_datos = JSON.parse(datos);
     for(i=0;i<16;i++){
       
       arr_categories.push(o_datos[i].categories);
-      console.debug();
-      var cant = (o_datos[i].dollars);
-      console.debug(cant);
-      arr_dollars.push(cant)
+      //console.debug();
+      var cant = +(o_datos[i].dollars);
+      //console.debug(cant);
+      arr_cantidad.push(cant)
     }
 
-    //console.debug(o_datos);
+    console.debug(arr_categories);
+    console.debug(arr_cantidad);
 
-    var categories= ['','Accessories', 'Audiophile', 'Camera & Photo', 'Cell Phones', 'Computers','eBook Readers','Gadgets','GPS & Navigation','Home Audio','Office Electronics','Portable Audio','Portable Video','Security & Surveillance','Service','Television & Video','Car & Vehicle'];
-    var categories = arr_categories;
-    var dollars = [213,209,190,179,156,209,190,179,213,209,190,179,156,209,190,190];
-    var dollars = arr_dollars;
-    
+   // var categories = arr_categories;
+   // var dollars = arr_cantidad;
+   var categories = ["VI Jornadas de Actualización del Poder Judicial de la Ciudad Autónoma de Buenos Aires  - Fuero PCyF", "VI Jornadas de Actualización del Poder Judicial de la Ciudad Autónoma de Buenos Aires  - Fuero CAyT", "PRE-CONGRESO INTERNACIONAL: Una lectura de la Conv…nfancia y la Adolescencia. Puebla, México, 2014” ", "Reforma del Código Penal", "Prostitución como tema de Política Pública", "Discapacidad: Derecho a un Trato Adecuado", "Jornada sobre Reforma y Proceso Penal", "Manipulaciones judiciales de los varones violentos…icación de sus tácticas (impedimento de contacto)", "Teorías de Género", "Taller de Trabajo para una Justicia con Perspectiva de Género  - Protocolo C", "Delitos Informáticos y evidencia digital en el proceso penal", "Curso Matrimonio Igualitario y Familias Diversas: Cambios Legislativos y Desafíos Judiciales ", "Ley de Identidad de Género: Antecedentes e Impacto en la Justicia", "Violencia Simbólica y Violencia Mediática", "Mesa Redonda: Género y Derecho", "Encuentros por los 15 años del Centro de Formación Judicial: Transferencia de competencias"];
+   var dollars = [328, 325, 95, 83, 65, 56, 55, 54, 53, 41, 37, 37, 36, 35, 34, 31]
+
+    var cantidad_cursos = arr_cantidad;
+
     var colors = ['#0000b4','#0082ca','#0094ff','#0d4bcf','#0066AE','#074285','#00187B','#285964','#405F83','#416545','#4D7069','#6E9985','#7EBC89','#0283AF','#79BCBF','#99C19E'];
 
     var grid = d3.range(25).map(function(i){
@@ -246,9 +252,11 @@ var datos_o = JSON.parse(datos);
       else if(i===0){ return "100";}
     });
 
+   
     var xscale = d3.scale.linear()
-            .domain([10,250])
-            .range([0,722]);
+                     .domain([0, d3.max(cantidad_cursos, function(d) {  return d; })])
+                     .range([0, w]);        
+
 
     var yscale = d3.scale.linear()
             .domain([0,categories.length])
@@ -260,7 +268,7 @@ var datos_o = JSON.parse(datos);
 
     var canvas = d3.select('#chart')
             .append('svg')
-            .attr({'width':1900,'height':550});
+            .attr({'width':w,'height':550});
 
     var grids = canvas.append('g')
               .attr('id','grid')
@@ -279,8 +287,9 @@ var datos_o = JSON.parse(datos);
     var xAxis = d3.svg.axis();
       xAxis
         .orient('bottom')
-        .scale(xscale)
-        .tickValues(tickVals);
+        .scale(xscale);
+        //.ticks(5);
+      //  .tickValues(tickVals);
 
     var yAxis = d3.svg.axis();
       yAxis

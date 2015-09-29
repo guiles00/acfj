@@ -30,9 +30,14 @@ class AlumnosController extends Controller {
 		->paginate(30);
 		
 		$alumnos->setPath('alumnos');
+		
 		//echo "<pre>";
 		//print_r($input);
-	
+		
+		//Override alumnos
+		//$alumnos = Alumno::all();
+
+
 		return view('alumnos.index')->with('alumnos',$alumnos);
 	}
 
@@ -145,6 +150,16 @@ class AlumnosController extends Controller {
 	public function destroy($id)
 	{
 		//
+	}
+
+
+	public function ajaxget()
+	{
+		//echo "ajax get";
+
+		$input = Request::all();
+
+		print_r($input);
 	}
 
 }

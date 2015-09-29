@@ -26,7 +26,7 @@
             @endforeach
             </tbody>
             </table>
-<a href="{!! URL::action('TableroController@estadisticasCurso', array('curso_id'=>$curso_id)); !!}">Volver</a>
+<a href="{!! URL::action('TableroController@cursoCargo', array('curso_id'=>$curso_id)); !!}">Volver</a> 
   </div>
 </div>
 </div>

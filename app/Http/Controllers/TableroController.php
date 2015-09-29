@@ -22,6 +22,44 @@ class TableroController extends Controller {
             				->get();
 		return view('tablero.index')->with('cursos',$cursos);
 	}
+
+
+	public function cursoCargo($x){
+
+		$input = Request::all();
+		$p_curso_id = ( isset($input['curso']) )? $input['curso'] : $x;
+
+
+		$data = DB::table('curso_usuario_sitio')
+            ->join('curso', 'curso.cur_id', '=', 'curso_usuario_sitio.cus_cur_id')
+            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'curso_usuario_sitio.cus_usi_id')
+            ->join('cargo','usuario_sitio.usi_car_id','=','cargo.car_id')
+            ->select(DB::raw('count(*) as cantidad, cargo.car_nombre,cargo.car_id'))
+            ->where('curso.cur_id', '=',$p_curso_id)
+            ->groupBy('cargo.car_nombre')
+            ->orderBy('cantidad','DESC')
+            //->toSql();
+            ->get();
+
+		$arr_data = [];
+		$cantidad_total = 0;
+
+		foreach ($data as $value) {
+			$curso['color'] = "#2484c1";
+			$curso['value'] = (integer)$value->cantidad;
+			$curso['label'] = $value->car_nombre;
+			$arr_data[]=(object)$curso;
+			$cantidad_total = $cantidad_total +  $value->cantidad;
+		}
+
+		
+		return view('tablero.cargoxcurso')->with('data',$data)->with('json_data',json_encode($arr_data))
+		->with('curso_id',$p_curso_id)->with('cantidad_total',$cantidad_total);	
+
+
+
+	}
+
 	public function estadisticasCurso($x){
 /*
 select ca.car_id,count(*),ca.car_nombre from curso c , curso_usuario_sitio cus, usuario_sitio us, cargo as ca  
@@ -151,7 +189,9 @@ group by g3.gcu3_titulo*/
 
 		return view('tablero.cursofecha')->with('data',$data); 
 	}
-	public function inscriptosCurso(){
+	
+
+public function inscriptosCurso(){
 
 /*
 		SELECT * 
@@ -178,6 +218,262 @@ AND cus.cus_validado =  'Si'
           $data['anio'] = $input['anio']; 
 		return view('tablero.inscriptoscurso')->with('data',$data); ;
 	}
+
+	public function area(){
+
+		return view('tablero.area');
+
+	}
+	public function categorias(){
+
+		return view('tablero.categorias');
+
+	}
+	
+
+	public function grupo(){
+		
+		/*SELECT gcu_id,gcu_nombre, count(*) as cant
+			FROM curso
+			INNER JOIN grupo_curso3 ON curso.cur_gcu3_id = grupo_curso3.gcu3_id  
+			INNER JOIN grupo_curso2 ON grupo_curso3.gcu3_gcu2_id = grupo_curso2.gcu2_id
+			INNER JOIN grupo_curso ON grupo_curso2.gcu2_gcu_id = grupo_curso.gcu_id
+			where YEAR(curso.cur_fechaInicio) = '2014' 
+			group by gcu_nombre
+			ORDER BY cant
+		*/
+		$input = Request::all();
+		//print_r($input);
+		$data = [];
+
+			$res = DB::table('curso')
+            ->join('grupo_curso3', 'curso.cur_gcu3_id', '=', 'grupo_curso3.gcu3_id')
+            ->join('grupo_curso2', 'grupo_curso3.gcu3_gcu2_id', '=', 'grupo_curso2.gcu2_id')
+            ->join('grupo_curso', 'grupo_curso2.gcu2_gcu_id', '=', 'grupo_curso.gcu_id')
+            ->select('gcu_id','gcu_nombre',DB::raw('count(*) as cantidad') )
+            ->where(DB::raw('YEAR(curso.cur_fechaInicio)'), '=', $input['data'])
+            ->groupBy('gcu_nombre')
+            ->orderBy('cantidad','DESC')
+            //->toSql();
+            ->get();	
+
+            $data['res'] = $res;
+            $data['anio'] = $input['data'];
+
+		return view('tablero.resgrupo')->with('data',$data);
+
+	}
+
+
+	public function resarea(){
+		
+		/*SELECT gcu_id,gcu_nombre, count(*) as cant
+			FROM curso
+			INNER JOIN grupo_curso3 ON curso.cur_gcu3_id = grupo_curso3.gcu3_id  
+			INNER JOIN grupo_curso2 ON grupo_curso3.gcu3_gcu2_id = grupo_curso2.gcu2_id
+			INNER JOIN grupo_curso ON grupo_curso2.gcu2_gcu_id = grupo_curso.gcu_id
+			where YEAR(curso.cur_fechaInicio) = '2014' 
+			group by gcu_nombre
+			ORDER BY cant
+		*/
+		$input = Request::all();
+		//print_r($input);
+		$data = [];
+
+			$res = DB::table('curso')
+            ->join('grupo_curso3', 'curso.cur_gcu3_id', '=', 'grupo_curso3.gcu3_id')
+            ->join('grupo_curso2', 'grupo_curso3.gcu3_gcu2_id', '=', 'grupo_curso2.gcu2_id')
+            ->join('grupo_curso', 'grupo_curso2.gcu2_gcu_id', '=', 'grupo_curso.gcu_id')
+            ->select('gcu_id','gcu_nombre',DB::raw('count(*) as cantidad') )
+            ->where(DB::raw('YEAR(curso.cur_fechaInicio)'), '=', $input['data'])
+            ->groupBy('gcu_nombre')
+            //->toSql();
+            ->get();	
+
+            $data['res'] = $res;
+            $data['anio'] = $input['data'];
+
+		return view('tablero.resarea')->with('data',$data);
+
+	}
+
+
+	public function listadoGrupoDosCursos(){
+
+		/*SELECT gcu2_id,gcu2_nombre ,COUNT( * ) AS cantidad
+			FROM curso
+			INNER JOIN grupo_curso3 ON curso.cur_gcu3_id = grupo_curso3.gcu3_id
+			INNER JOIN grupo_curso2 ON grupo_curso3.gcu3_gcu2_id = grupo_curso2.gcu2_id
+			INNER JOIN grupo_curso ON grupo_curso2.gcu2_gcu_id = grupo_curso.gcu_id
+			WHERE YEAR( curso.cur_fechaInicio ) =  '2014'
+			and gcu_id = 10
+			GROUP BY gcu2_id
+		*/
+
+		$input = Request::all();
+		//print_r($input);
+		$data = [];
+
+			$res = DB::table('curso')
+            ->join('grupo_curso3', 'curso.cur_gcu3_id', '=', 'grupo_curso3.gcu3_id')
+            ->join('grupo_curso2', 'grupo_curso3.gcu3_gcu2_id', '=', 'grupo_curso2.gcu2_id')
+            ->join('grupo_curso', 'grupo_curso2.gcu2_gcu_id', '=', 'grupo_curso.gcu_id')
+            ->select('gcu2_id','gcu_nombre','gcu2_nombre',DB::raw('count(*) as cantidad'))
+            ->where(DB::raw('YEAR(curso.cur_fechaInicio)'), '=',  $input['anio'])
+            ->where('gcu_id', '=', $input['gcu_id'])
+            ->groupBy('gcu2_id')
+            ->orderBy('cantidad','DESC')
+            //->toSql();
+            ->get();	
+
+            $data['res'] = $res;
+            $data['anio'] = $input['anio'];
+		return view('tablero.reslistadogrupodoscursos')->with('data',$data);
+
+	}
+
+	public function listadoCursos(){
+
+		/*
+		SELECT gcu2_id, gcu3_id, gcu3_titulo, COUNT( * ) AS cantidad
+		FROM curso
+		INNER JOIN grupo_curso3 ON curso.cur_gcu3_id = grupo_curso3.gcu3_id
+		INNER JOIN grupo_curso2 ON grupo_curso3.gcu3_gcu2_id = grupo_curso2.gcu2_id
+		INNER JOIN grupo_curso ON grupo_curso2.gcu2_gcu_id = grupo_curso.gcu_id
+		WHERE YEAR( curso.cur_fechaInicio ) =  '2014'
+		group by gcu3_id
+		*/
+
+		$input = Request::all();
+		//print_r($input);
+		$data = [];
+
+			$res = DB::table('curso')
+            ->join('grupo_curso3', 'curso.cur_gcu3_id', '=', 'grupo_curso3.gcu3_id')
+            ->join('grupo_curso2', 'grupo_curso3.gcu3_gcu2_id', '=', 'grupo_curso2.gcu2_id')
+            ->join('grupo_curso', 'grupo_curso2.gcu2_gcu_id', '=', 'grupo_curso.gcu_id')
+            ->select('*',DB::raw('count(*) as cantidad'))
+            ->where(DB::raw('YEAR(curso.cur_fechaInicio)'), '=',  $input['anio'])
+            ->where('gcu2_id', '=', $input['gcu2_id'])
+            ->groupBy('gcu3_id')
+            ->orderBy('cantidad','DESC')
+            //->toSql();
+            ->get();	
+
+            $data['res'] = $res;
+            $data['anio'] = $input['anio'];
+		return view('tablero.reslistadocurso')->with('data',$data);
+	}
+
+
+	public function listCursos(){
+
+		/*
+		SELECT *
+		FROM curso
+		INNER JOIN grupo_curso3 ON curso.cur_gcu3_id = grupo_curso3.gcu3_id
+		INNER JOIN grupo_curso2 ON grupo_curso3.gcu3_gcu2_id = grupo_curso2.gcu2_id
+		INNER JOIN grupo_curso ON grupo_curso2.gcu2_gcu_id = grupo_curso.gcu_id
+		WHERE YEAR( curso.cur_fechaInicio ) =  '2014'
+		*/
+
+		$input = Request::all();
+		//print_r($input);
+		$data = [];
+
+			$res = DB::table('curso')
+            ->join('grupo_curso3', 'curso.cur_gcu3_id', '=', 'grupo_curso3.gcu3_id')
+            ->join('grupo_curso2', 'grupo_curso3.gcu3_gcu2_id', '=', 'grupo_curso2.gcu2_id')
+            ->join('grupo_curso', 'grupo_curso2.gcu2_gcu_id', '=', 'grupo_curso.gcu_id')
+            ->select('*')
+            ->where(DB::raw('YEAR(curso.cur_fechaInicio)'), '=',  $input['anio'])
+            ->where('cur_gcu3_id', '=', $input['cur_gcu3_id'])
+  //          ->toSql();
+            ->get();	
+
+            $data['res'] = $res;
+
+		return view('tablero.reslistcurso')->with('data',$data);
+
+
+	}
+
+	public function alumnosCurso(){
+
+		$input = Request::all();
+
+		$data = [];
+
+		/*SELECT * 
+			FROM curso c, curso_usuario_sitio cus, usuario_sitio us
+			WHERE c.cur_id = cus.cus_cur_id
+			AND us.usi_id = cus.cus_usi_id
+			AND c.cur_id =220
+			AND cus.cus_validado =  'Si'
+			AND cus.cus_habilitado = 1
+		*/
+
+		$res = DB::table('curso')
+        ->join('curso_usuario_sitio', 'curso_usuario_sitio.cus_cur_id', '=', 'curso.cur_id')
+        ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'curso_usuario_sitio.cus_usi_id')
+        ->select('*')
+        ->where('curso.cur_id', '=',  $input['cur_id'])
+        ->where('curso_usuario_sitio.cus_validado', '=', 'Si')
+        ->where('curso_usuario_sitio.cus_habilitado', '=', 1)
+        //->toSql();
+        ->get();	
+
+        $data['res'] = $res;
+            	
+		return view('tablero.resalumnoscurso')->with('data',$data);
+
+	}
+
+	public function fichaCurso(){
+
+		/*
+select ca.car_id,count(*),ca.car_nombre from curso c , curso_usuario_sitio cus, usuario_sitio us, cargo as ca  
+where c.cur_id = cus.cus_cur_id 
+and us.usi_id = cus.cus_usi_id
+and us.usi_car_id = ca.car_id
+and c.cur_id=220 
+AND cus.cus_validado =  'Si'
+group by ca.car_nombre
+*/
+		$input = Request::all();
+		$curso_id = $input['cur_id'];
+
+		$data = DB::table('curso_usuario_sitio')
+            ->join('curso', 'curso.cur_id', '=', 'curso_usuario_sitio.cus_cur_id')
+            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'curso_usuario_sitio.cus_usi_id')
+            ->join('cargo','usuario_sitio.usi_car_id','=','cargo.car_id')
+            ->select(DB::raw('count(*) as cantidad, cargo.car_nombre,cargo.car_id'))
+            ->where('curso.cur_id', '=',$input['cur_id'])
+            ->groupBy('cargo.car_nombre')
+            //->toSql();
+            ->get();
+
+
+		$arr_data = [];
+		$cantidad_total = 0;
+		foreach ($data as $value) {
+			$curso['color'] = "#2484c1";
+			$curso['value'] = (integer)$value->cantidad;
+			$curso['label'] = $value->car_nombre;
+			$arr_data[]=(object)$curso;
+			$cantidad_total = $cantidad_total +  $value->cantidad;
+		}
+
+		//echo "<pre>";
+		//print_r($data);
+		//exit;
+		return view('tablero.resfichacurso')->with('data',$data)->with('json_data',json_encode($arr_data))
+		->with('curso_id',$curso_id)->with('cantidad_total',$cantidad_total);	
+		
+
+	}
+
+
 	/**
 	 * Show the form for creating a new resource.
 	 *

@@ -68,6 +68,19 @@ Route::get('pendientes','AlumnosController@pendientes');
 Route::get('curso-fecha','TableroController@cursoFecha');
 Route::get('inscriptos-curso','TableroController@inscriptosCurso');
 
+Route::get('curso-cargo/{x}','TableroController@cursoCargo');
+Route::get('ajaxget','AlumnosController@ajaxget');
+
+
+Route::get('categorias','TableroController@categorias');
+Route::get('area','TableroController@area');
+Route::get('grupo','TableroController@grupo');
+Route::get('resarea','TableroController@resarea');
+Route::get('listadoCursos','TableroController@listadoCursos');
+Route::get('listadoGrupoDosCursos','TableroController@listadoGrupoDosCursos');
+Route::get('alumnosCurso','TableroController@alumnosCurso');
+Route::get('listCursos','TableroController@listCursos');
+Route::get('fichaCurso','TableroController@fichaCurso');
 //Route::get('tablero/{id}','TableroController@estadisticasCurso');
 
 //Route::controller('tablero', 'TableroController');

@@ -310,20 +310,23 @@
                                 <!-- /input-group -->
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-dashboard fa-fw"></i> Tablero<span class="fa arrow"></span></a>
+                                <a href="#"><i class="fa fa-dashboard fa-fw"></i>Control de Gesti&oacute;n<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="{!! URL::asset('/categorias') !!}">Cursos x Programas</a>
+                                    </li>
                                     <li>
                                         <a href="{!! URL::asset('/tablero') !!}">Cargos x Curso</a>
                                     </li>
                                     <li>
-                                        <a href="{!! URL::asset('/curso-fecha') !!}">Fechas(?)</a>
+                                        <a href="{!! URL::asset('/curso-fecha') !!}">Cursos Anual</a>
                                     </li>
                                     <li>
-                                        <a href="#">Docentes</a>
+                                        <a href="#">AMenu</a>
                                     </li>
                                 </ul>
                             </li>
-                            <li>
+                            <!--li>
                                 <a href="#"><i class="fa fa-sitemap fa-fw"></i> Gesti&oacute;n Acad&eacute;mica</a>
                                 <ul class="nav nav-second-level">
                                     <li>
@@ -339,7 +342,7 @@
                                                 <a href="#">Tipo de Actividad</a>
                                             </li>
                                         </ul>
-                                        <!-- /.nav-third-level -->
+                                
                                     </li>
                                     <li>
                                         <a href="#">Cursos</a>
@@ -348,9 +351,9 @@
                                         <a href="#">Docentes</a>
                                     </li>
                                 </ul>
-                                <!-- /.nav-second-level -->
-                            </li>
-                            <li><!--fa-bar-chart-o -->
+                                
+                            </li-->
+                            <!--li>
                                 <a href="#"><i class="fa fa-table fa-fw"></i> Alumnos<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
@@ -360,11 +363,11 @@
                                         <a href="{!! URL::asset('/pendientes') !!}">Pendiente de Registraci&oacute;n</a>
                                     </li>
                                 </ul>
-                                <!-- /.nav-second-level -->
-                            </li>
-                            <li>
+                                
+                            </li-->
+                            <!--li>
                                 <a href="tables.html"><i class="fa fa-table fa-fw"></i> Becas</a>
-                            </li>
+                            </li-->
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
