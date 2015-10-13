@@ -260,7 +260,17 @@ AND cus.cus_validado =  'Si'
             $data['res'] = $res;
             $data['anio'] = $input['data'];
 
-		return view('tablero.resgrupo')->with('data',$data);
+            $arr_data = [];
+		
+			foreach ($res as $value) {
+		
+				$programa['color'] = "#2484c1";
+				$programa['value'] = (integer)$value->cantidad;
+				$programa['label'] = $value->gcu_nombre;
+				$arr_data[]=(object)$programa;
+			}	
+
+		return view('tablero.resgrupo')->with('data',$data)->with('json_data',json_encode($arr_data));
 
 	}
 
@@ -311,7 +321,8 @@ AND cus.cus_validado =  'Si'
 		*/
 
 		$input = Request::all();
-		//print_r($input);
+		
+
 		$data = [];
 
 			$res = DB::table('curso')
@@ -328,7 +339,19 @@ AND cus.cus_validado =  'Si'
 
             $data['res'] = $res;
             $data['anio'] = $input['anio'];
-		return view('tablero.reslistadogrupodoscursos')->with('data',$data);
+
+            
+            $arr_data = [];
+		
+			foreach ($res as $value) {
+		
+				$grupo['color'] = "#2484c1";
+				$grupo['value'] = (integer)$value->cantidad;
+				$grupo['label'] = $value->gcu2_nombre;
+				$arr_data[]=(object)$grupo;
+			}
+
+		return view('tablero.reslistadogrupodoscursos')->with('data',$data)->with('json_data',json_encode($arr_data));
 
 	}
 
@@ -471,6 +494,11 @@ group by ca.car_nombre
 		->with('curso_id',$curso_id)->with('cantidad_total',$cantidad_total);	
 		
 
+	}
+
+	public function mgrupo(){
+
+		return view('tablero.mgrupo');
 	}
 
 

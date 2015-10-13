@@ -9,8 +9,8 @@
   </div>
 </div-->
 <script src="{!! URL::asset('js/jquery.js'); !!}"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
-<script src="{!! URL::asset('/js/d3pie.js'); !!}"></script>
+<!--script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script-->
+<script src="{!! URL::asset('js/d3.js'); !!}"></script>
 
 <div class="col-lg-12">
 
@@ -28,7 +28,13 @@
   <div class="panel-body">
    
    <div class="row">
-  
+
+   <div class="col-md-6">
+            <div id="grupoChart"></div>
+            
+    </div>
+
+ 
    <div class="col-md-6">
   
     <div class="table-responsive">
@@ -48,17 +54,18 @@
               <td>{{$dat->cantidad}}</td>
               </tr>
             @endforeach
-            <tr><td></td><td>
+            <!--tr><td></td><td>
             <button type="button" class="btn btn-info btn-lg btn-xs" data-toggle="modal" data-target="#myModal">Ver Gr&aacute;fico</button>
-            </td></tr>
+            </td></tr-->
             </tbody>
             </table>
       </div>
   </div>
-    <div id="res2" class="col-md-6">
-    </div>
+
 </div>  
-    <!-- Modal -->
+<div id="res2">
+</div>
+<!-- 
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -75,17 +82,16 @@
       </div>
     </div>
   </div>
-
+-->
 
   </div>
 </div>
 
-
+<script src="{!! URL::asset('/js/d3pie.js'); !!}"></script>
 <script>
 $('document').ready(function(){
    
-   //jQuery.noConflict();
-          
+   //jQuery.noConflict();         
    //$('#myModal').modal('toggle');
 
 
@@ -96,13 +102,9 @@ $('document').ready(function(){
               $.ajax({
                          // url: 'http://localhost/content/cfj-cfj/admin_cfj/public/area',
                           url: './cfj-cfj/admin_cfj/public/area',
-                          //data: {'data':d.target.value},
                           success: function(data){
-                           // console.debug(data);
                             $('#content').html(data);
-                           // console.debug(data);
                           }
-                          //dataType: dataType
                         });
 
   });
@@ -110,8 +112,7 @@ $('document').ready(function(){
     $('.traemeladata').click(function(e){
         e.preventDefault();
         return;
-        //console.debug(e.target.parentNode.parentNode.childNodes);
-        //return;
+        
         var gcu_id = e.target.parentNode.parentNode.childNodes[1].value;
         var anio = e.target.parentNode.parentNode.childNodes[3].value;
         //console.debug(e.target.href);
@@ -130,13 +131,17 @@ $('document').ready(function(){
      $(".dataGrid1 td").click(function(e) {
         
         var href = e.target.parentNode.getAttribute('href');
-        //console.debug(href);
+        
          $.ajax({
                     url:href
                     //url: 'http://localhost/content/cfj-cfj/admin_cfj/public/listadoCursos',
                     //data: {'gcu_id':gcu_id,'anio':anio},
                     ,success: function(data){
+
                       $('#res2').html(data);
+                      $("body, html").animate({ 
+                          scrollTop: $( $('#res2') ).offset().top 
+                          }, 600);
                     }
                 });
 
@@ -144,15 +149,28 @@ $('document').ready(function(){
 });
 </script>
 <script>
+$('document').ready(function(){
+var datos =  '<?php echo $json_data ; ?>';
+var datos_obj = JSON.parse(datos);
+
+var obj_data = new Object();
+obj_data.sortOrder = "value-desc";
+obj_data.content = new Array();
+//obj_data.content = datos_obj;
+for (i = 0; i < datos_obj.length; i++) { 
+var hue = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+    datos_obj[i].color = hue;
+    obj_data.content.push(datos_obj[i]);
+}
+
 var pie = new d3pie("grupoChart", {
   "header": {
     "title": {
-      "text": "Lots of Programming Languages",
+      "text": "Cantidad por Programas",
       "fontSize": 24,
       "font": "open sans"
     },
     "subtitle": {
-      "text": "A full pie chart to show off label collision detection and resolution.",
       "color": "#999999",
       "fontSize": 12,
       "font": "open sans"
@@ -166,48 +184,19 @@ var pie = new d3pie("grupoChart", {
     "location": "bottom-left"
   },
   "size": {
-    "canvasWidth": 390,
+    "canvasWidth": 790,
     "pieOuterRadius": "90%"
   },
-  "data": {
-    "sortOrder": "value-desc",
-    "content": [
-      {
-        "label": "JavaScript",
-        "value": 264131,
-        "color": "#2484c1"
-      },
-      {
-        "label": "Ruby",
-        "value": 218812,
-        "color": "#0c6197"
-      },
-      {
-        "label": "Java",
-        "value": 157618,
-        "color": "#4daa4b"
-      },
-      {
-        "label": "PHP",
-        "value": 114384,
-        "color": "#90c469"
-      },
-      {
-        "label": "Python",
-        "value": 95002,
-        "color": "#daca61"
-      }
-    ]
-  },
-  "labels": {
+  "data": obj_data
+  ,"labels": {
     "outer": {
-      "pieDistance": 32
+      "pieDistance": 30
     },
     "inner": {
       "hideWhenLessThanPercentage": 3
     },
     "mainLabel": {
-      "fontSize": 11
+      "fontSize": 12
     },
     "percentage": {
       "color": "#ffffff",
@@ -215,20 +204,20 @@ var pie = new d3pie("grupoChart", {
     },
     "value": {
       "color": "#adadad",
-      "fontSize": 11
+      "fontSize": 12
     },
     "lines": {
       "enabled": true
     },
     "truncation": {
-      "enabled": true
+      "enabled": false
     }
   },
   "effects": {
     "pullOutSegmentOnClick": {
       "effect": "linear",
       "speed": 400,
-      "size": 8
+      "size": 12
     }
   },
   "misc": {
@@ -237,5 +226,7 @@ var pie = new d3pie("grupoChart", {
       "percentage": 100
     }
   }
+});
+
 });
 </script>

@@ -1,13 +1,13 @@
-      <div class="row">
+      <!--div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Cantidad de cargos por x Curso</h1>
                 </div>
-                <!-- /.col-lg-12 -->
-      </div>
-      <div class="panel panel-default">
-   <div class="panel-heading">
+          
+      </div-->
+  <div class="panel panel-default">
+   <!--div class="panel-heading">
    Cantidad de cargos por ...
-   </div>
+   </div-->
 
   <div class="panel-body">
   <?php 
@@ -80,29 +80,10 @@ var hue = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.ra
     obj_data.content.push(datos_obj[i]);
 }
 
-var d3pie_data = JSON.stringify(obj_data);
-
-var oo = {
-    "sortOrder": "value-desc",
-    "content": [
-      {
-        "label": "JavaScript",
-        "value": 264131,
-        "color": "#2484c1"
-      },
-      {
-        "label": "Ruby",
-        "value": 218812,
-        "color": "#0c6197"
-      }
-      ]
-};
-console.debug(oo);
-
 var pie = new d3pie("pieChart", {
   "header": {
     "title": {
-      "text": "Cargo por Curso",
+      "text": "Cargos",
       "fontSize": 24,
       "font": "open sans"
     },

@@ -81,6 +81,7 @@ Route::get('listadoGrupoDosCursos','TableroController@listadoGrupoDosCursos');
 Route::get('alumnosCurso','TableroController@alumnosCurso');
 Route::get('listCursos','TableroController@listCursos');
 Route::get('fichaCurso','TableroController@fichaCurso');
+Route::get('mgrupo','TableroController@mgrupo');
 //Route::get('tablero/{id}','TableroController@estadisticasCurso');
 
 //Route::controller('tablero', 'TableroController');
