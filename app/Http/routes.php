@@ -90,5 +90,10 @@ Route::get('mgrupo','TableroController@mgrupo');
 
 //Route::get('hobbits','HobbitController@index');
 
+//Rutas Para Becas
+
+Route::resource('listBecas', 'BecaController');
+Route::get('verSolicitud/{id}', 'BecaController@verSolicitud');
+Route::get('verDocAdjunta/{id}', 'BecaController@verDocAdjunta');
 
 

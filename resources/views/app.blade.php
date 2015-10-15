@@ -334,7 +334,7 @@
                                 <a href="#"><i class="fa fa-sitemap fa-fw"></i>Becas</a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="{!! URL::asset('/categorias') !!}">Solicitudes</a>
+                                        <a href="{!! URL::asset('/listBecas') !!}">Solicitudes</a>
                                     </li>
                                     <li>
                                         <a href="#">Listado Becas</a>
