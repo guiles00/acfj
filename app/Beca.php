@@ -7,5 +7,8 @@ class Beca extends Model {
 	//
 		protected $table = 'beca';
 
+		protected $primaryKey = 'beca_id';
+
+		public $timestamps = false;
 
 }

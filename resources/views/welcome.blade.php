@@ -1,11 +1,12 @@
-<html>
-	<head>
-		<title>Guiles</title>
+@extends('app')
+
+@section('content')
+
 		
 		<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
 
 		<style>
-			body {
+			body .container {
 				margin: 0;
 				padding: 0;
 				width: 100%;
@@ -40,10 +41,8 @@
 	<body>
 		<div class="container">
 			<div class="content">
-				<div class="title">MrGuiles Project</div>
-				<div class="quote">Powered by Laravel</div>
-				<a href="{{action('DwarfController@index')}}"> Ir al Sitio</a>
+				<div class="title">Sistema de Gesti&oacute;n de la vida</div>
+				<div class="quote">Centro de Formaci&oacute;n Judicial</div>
 			</div>
 		</div>
-	</body>
-</html>
+@stop

@@ -286,7 +286,7 @@
                             <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            <li><a href="{{ URL::to('logout') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
                         </ul>
                         <!-- /.dropdown-user -->
@@ -331,7 +331,7 @@
                             </li>
 
                             <li>
-                                <a href="#"><i class="fa fa-sitemap fa-fw"></i>Becas</a>
+                                <a href="#"><i class="fa fa-sitemap fa-fw"></i>Becas<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
                                         <a href="{!! URL::asset('/listBecas') !!}">Solicitudes</a>

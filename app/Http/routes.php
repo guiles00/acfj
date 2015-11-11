@@ -12,8 +12,12 @@
 */
 
 Route::get('/', 'WelcomeController@index');
+Route::get('bienvenido', 'WelcomeController@welcome');
+Route::post('login', 'WelcomeController@doLogin');
+Route::get('logout', 'WelcomeController@doLogout');
 
 Route::get('home', 'HomeController@index');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
@@ -92,8 +96,10 @@ Route::get('mgrupo','TableroController@mgrupo');
 
 //Rutas Para Becas
 
-Route::resource('listBecas', 'BecaController');
+//Route::resource('listBecas', 'BecaController');
+Route::resource('listBecas', 'BecaController@index');
 Route::get('verSolicitud/{id}', 'BecaController@verSolicitud');
 Route::get('verDocAdjunta/{id}', 'BecaController@verDocAdjunta');
-
+Route::post('saveBeca', 'BecaController@save');
+Route::get('exportar', 'BecaController@exportar');
 

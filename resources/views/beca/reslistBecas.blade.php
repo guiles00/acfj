@@ -1,6 +1,3 @@
-@extends('app')
-
-@section('content')
   <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Listado</h1>
@@ -17,10 +14,8 @@
                     <div class="col-md-4">
                           <select class="form-control" name="estado_id" id="estado_id">
                                 <option value="-1">-</option>
-                                <!--option value="0">CONFIRMAR EMAIL</option-->
+                                <option value="0">CONFIRMAR EMAIL</option>
                                 <option value="1">PENDIENTE</option>
-                                <option value="2">INCOMPLETO</option>
-                                <option value="3">COMPLETO</option>
                           </select> 
                     </div>        
                   </div> 
@@ -40,7 +35,7 @@
             <thead>
                 <tr>
                    <th>fecha</th>
-                   <!--th>beca_id</th-->
+                   <th>beca_id</th>
                    <th>tipo_beca_id</th>
                    <th>Nombre</th>
                    <th>Monto</th>
@@ -53,62 +48,17 @@
             @foreach ($becas as $beca)
             <tr>
                 <td> {{ $beca->timestamp}} </td>
-                <!--td> {{ $beca->beca_id}} </td-->
+                <td> {{ $beca->beca_id}} </td>
                 <td> {{ $beca->tipo_beca_id}} </td>
                 <td> {{ $beca->usi_nombre}} </td>
                 <td> {{ $beca->monto}} </td>
                 <td> {{ $beca->estado_beca}} </td>
                 <td> <a href="{{action('BecaController@verSolicitud',$beca->beca_id)}}">Ver</a></td>
-                <td> <a href="{{action('BecaController@verDocAdjunta',$beca->beca_id)}}">...</a></td>
+                <td> <a href="{{action('BecaController@verDocAdjunta',$beca->beca_id)}}">Doc. Adjunta</a></td>
             </tr>
             @endforeach    
         </tbody>
     </table>
   </div>
-<div>
- <a href="{{action('BecaController@exportar')}}">Exportar a Excel</a>
-</div>
-
 <?php echo $becas->render(); ?>
-
-
-<div id="res"></div>
 </div>
-</div>
-<script type="text/javascript">
-$(document).ready(function() {
-              $('#search_beca').on('change keyup paste', function(d) {
-                
-
-                  console.log('I am pretty sure the text box changed');
-                  //alert('okaaasasasa');
-                  console.debug(d.target.value);
-                  $.ajax({
-                          url: 'http://localhost/content/cfj-cfj/admin_cfj/public/alumnos',
-                          data: {'data':d.target.value},
-                          success: function(data){
-                           // console.debug(data);
-                          //  $('#res').html(data);
-                          }
-                          //dataType: dataType
-                        });
-
-                });
-
-              $('#search_beca').on('change', function(d) {
-                //alert('change');
-
-                $('#buscar_solicitud_beca').click();
-
-                });
-
-              $('#estado_id').on('change', function(d) {
-                //alert('change');
-                console.debug($('#estado_id').val());
-                $('#buscar_solicitud_beca').click();
-
-                });
-
-            });
-</script>
-@stop
