@@ -1,6 +1,7 @@
 @extends('app')
 
 @section('content')
+
   <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Listado</h1>
@@ -32,16 +33,17 @@
 </div>
 
 <div class="panel-body">
-
     <div class="table-responsive">
         <table class="table table-responsive table-striped table-bordered table-hover" id="beca">
             <thead>
                 <tr>
-                   <th>fecha</th>
+                   <th>ffecha</th>
                    <th>beca_id</th>
                    <th>tipo_beca_id</th>
                    <th>Nombre</th>
-                   <th>Monto</th>
+                   <th>Coisto</th>
+                   <th>Solicitado</th>
+                   <th>Otorgado</th>
                    <th>estado</th>
                    <th></th>
                    <th></th>
@@ -54,7 +56,9 @@
                 <td> {{ $beca->beca_id}} </td>
                 <td> {{ $beca->tipo_beca_id}} </td>
                 <td> {{ $beca->usi_nombre}} </td>
+                <td> {{ $beca->costo}} </td>
                 <td> {{ $beca->monto}} </td>
+                <td> {{ '00.00' </td>
                 <td> {{ $beca->estado_beca}} </td>
                 <td> <a href="{{action('BecaController@verSolicitud',$beca->beca_id)}}">Ver</a></td>
                 <td> <a href="{{action('BecaController@verDocAdjunta',$beca->beca_id)}}">Doc. Adjunta</a></td>

@@ -103,3 +103,10 @@ Route::get('verDocAdjunta/{id}', 'BecaController@verDocAdjunta');
 Route::post('saveBeca', 'BecaController@save');
 Route::get('exportar', 'BecaController@exportar');
 
+
+Route::post('saveActuacion', 'BecaController@saveActuacion');
+Route::get('addActuacion/{id}', 'BecaController@addActuacion');
+
+Route::resource('actuacion','ActuacionController');
+Route::get('altaActuacion','ActuacionController@altaActuacion');
+Route::post('storeActuacion', 'ActuacionController@store');

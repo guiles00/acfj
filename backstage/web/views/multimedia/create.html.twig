@@ -1,0 +1,296 @@
+{% extends 'ag_base/backend.html.twig' %}
+
+{% block container %}
+
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+
+        {% include 'menu.html.twig' with {'option': 'multimedia_create'} %}
+
+        <!-- Right side column. Contains the navbar and content of the page -->
+        <aside class="right-side">                
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    Create Multimedia
+                </h1>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+
+                {% include 'ag_alerts.html.twig' %}
+
+                <div class="row">
+                    <div class="col-md-6">
+
+                        {{ form_start(form, {'method': 'POST'}) }}
+                            {{ form_errors(form) }}
+
+                            <div class="box box-info">
+                                <div class="box-header">
+                                    <h3 class="box-title"></h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_fecha) }}
+									    {{ form_widget(form.mul_fecha, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_visible) }}
+									    {{ form_widget(form.mul_visible, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_tac_id) }}
+									    {{ form_widget(form.mul_tac_id, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_tem_id) }}
+									    {{ form_widget(form.mul_tem_id, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_titulo) }}
+									    {{ form_widget(form.mul_titulo, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_foto1) }}
+									    {{ form_widget(form.mul_foto1, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_copete) }}
+									    {{ form_widget(form.mul_copete, { attr: { 'class': 'form-control textarea', 'style': 'width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_descripcion) }}
+									    {{ form_widget(form.mul_descripcion, { attr: { 'class': 'form-control textarea', 'style': 'width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo1) }}
+									    {{ form_widget(form.mul_archivo1, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo2) }}
+									    {{ form_widget(form.mul_archivo2, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo3) }}
+									    {{ form_widget(form.mul_archivo3, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo4) }}
+									    {{ form_widget(form.mul_archivo4, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo5) }}
+									    {{ form_widget(form.mul_archivo5, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo6) }}
+									    {{ form_widget(form.mul_archivo6, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo7) }}
+									    {{ form_widget(form.mul_archivo7, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo8) }}
+									    {{ form_widget(form.mul_archivo8, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo9) }}
+									    {{ form_widget(form.mul_archivo9, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo10) }}
+									    {{ form_widget(form.mul_archivo10, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link1) }}
+									    {{ form_widget(form.mul_link1, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link2) }}
+									    {{ form_widget(form.mul_link2, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link3) }}
+									    {{ form_widget(form.mul_link3, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link4) }}
+									    {{ form_widget(form.mul_link4, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link5) }}
+									    {{ form_widget(form.mul_link5, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link6) }}
+									    {{ form_widget(form.mul_link6, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link7) }}
+									    {{ form_widget(form.mul_link7, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link8) }}
+									    {{ form_widget(form.mul_link8, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link9) }}
+									    {{ form_widget(form.mul_link9, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link10) }}
+									    {{ form_widget(form.mul_link10, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo1_desc) }}
+									    {{ form_widget(form.mul_archivo1_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo2_desc) }}
+									    {{ form_widget(form.mul_archivo2_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo3_desc) }}
+									    {{ form_widget(form.mul_archivo3_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo4_desc) }}
+									    {{ form_widget(form.mul_archivo4_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo5_desc) }}
+									    {{ form_widget(form.mul_archivo5_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo6_desc) }}
+									    {{ form_widget(form.mul_archivo6_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo7_desc) }}
+									    {{ form_widget(form.mul_archivo7_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo8_desc) }}
+									    {{ form_widget(form.mul_archivo8_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo9_desc) }}
+									    {{ form_widget(form.mul_archivo9_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_archivo10_desc) }}
+									    {{ form_widget(form.mul_archivo10_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link1_desc) }}
+									    {{ form_widget(form.mul_link1_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link2_desc) }}
+									    {{ form_widget(form.mul_link2_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link3_desc) }}
+									    {{ form_widget(form.mul_link3_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link4_desc) }}
+									    {{ form_widget(form.mul_link4_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link5_desc) }}
+									    {{ form_widget(form.mul_link5_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link6_desc) }}
+									    {{ form_widget(form.mul_link6_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link7_desc) }}
+									    {{ form_widget(form.mul_link7_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link8_desc) }}
+									    {{ form_widget(form.mul_link8_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link9_desc) }}
+									    {{ form_widget(form.mul_link9_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mul_link10_desc) }}
+									    {{ form_widget(form.mul_link10_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+                                                  
+
+                                </div><!-- /.box-body -->
+
+                                {{ form_rest(form) }}
+
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+
+                            </div><!-- /.box -->
+                        {{ form_end(form) }}
+
+
+                    </div>
+                </div>
+
+            </section><!-- /.content -->
+        </aside><!-- /.right-side -->
+    </div><!-- ./wrapper -->
+
+{% endblock %}

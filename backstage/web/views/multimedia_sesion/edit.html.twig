@@ -1,0 +1,286 @@
+{% extends 'ag_base/backend.html.twig' %}
+
+{% block container %}
+
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+
+        {% include 'menu.html.twig' with {'option': 'multimedia_sesion_edit'} %}
+
+        <!-- Right side column. Contains the navbar and content of the page -->
+        <aside class="right-side">                
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    Edit Multimedia_sesion {{ id }}
+                </h1>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+
+                {% include 'ag_alerts.html.twig' %}
+
+                <div class="row">
+                    <div class="col-md-6">
+
+                        {{ form_start(form, {'method': 'POST'}) }}
+                            {{ form_errors(form) }}
+
+                            <div class="box box-info">
+                                <div class="box-header">
+                                    <h3 class="box-title"></h3>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_mul_id) }}
+									    {{ form_widget(form.mse_mul_id, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_fecha) }}
+									    {{ form_widget(form.mse_fecha, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_curso) }}
+									    {{ form_widget(form.mse_curso, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_sesion) }}
+									    {{ form_widget(form.mse_sesion, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_video) }}
+									    {{ form_widget(form.mse_video, { attr: { 'class': 'form-control textarea', 'style': 'width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_texto) }}
+									    {{ form_widget(form.mse_texto, { attr: { 'class': 'form-control textarea', 'style': 'width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo1) }}
+									    {{ form_widget(form.mse_archivo1, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link1) }}
+									    {{ form_widget(form.mse_link1, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo1_desc) }}
+									    {{ form_widget(form.mse_archivo1_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link1_desc) }}
+									    {{ form_widget(form.mse_link1_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo2) }}
+									    {{ form_widget(form.mse_archivo2, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link2) }}
+									    {{ form_widget(form.mse_link2, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo2_desc) }}
+									    {{ form_widget(form.mse_archivo2_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link2_desc) }}
+									    {{ form_widget(form.mse_link2_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo3) }}
+									    {{ form_widget(form.mse_archivo3, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link3) }}
+									    {{ form_widget(form.mse_link3, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo3_desc) }}
+									    {{ form_widget(form.mse_archivo3_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link3_desc) }}
+									    {{ form_widget(form.mse_link3_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo4) }}
+									    {{ form_widget(form.mse_archivo4, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link4) }}
+									    {{ form_widget(form.mse_link4, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo4_desc) }}
+									    {{ form_widget(form.mse_archivo4_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link4_desc) }}
+									    {{ form_widget(form.mse_link4_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo5) }}
+									    {{ form_widget(form.mse_archivo5, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link5) }}
+									    {{ form_widget(form.mse_link5, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo5_desc) }}
+									    {{ form_widget(form.mse_archivo5_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link5_desc) }}
+									    {{ form_widget(form.mse_link5_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo6) }}
+									    {{ form_widget(form.mse_archivo6, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link6) }}
+									    {{ form_widget(form.mse_link6, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo6_desc) }}
+									    {{ form_widget(form.mse_archivo6_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link6_desc) }}
+									    {{ form_widget(form.mse_link6_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo7) }}
+									    {{ form_widget(form.mse_archivo7, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link7) }}
+									    {{ form_widget(form.mse_link7, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo7_desc) }}
+									    {{ form_widget(form.mse_archivo7_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link7_desc) }}
+									    {{ form_widget(form.mse_link7_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo8) }}
+									    {{ form_widget(form.mse_archivo8, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link8) }}
+									    {{ form_widget(form.mse_link8, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo8_desc) }}
+									    {{ form_widget(form.mse_archivo8_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link8_desc) }}
+									    {{ form_widget(form.mse_link8_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo9) }}
+									    {{ form_widget(form.mse_archivo9, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link9) }}
+									    {{ form_widget(form.mse_link9, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo9_desc) }}
+									    {{ form_widget(form.mse_archivo9_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link9_desc) }}
+									    {{ form_widget(form.mse_link9_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo10) }}
+									    {{ form_widget(form.mse_archivo10, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link10) }}
+									    {{ form_widget(form.mse_link10, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_archivo10_desc) }}
+									    {{ form_widget(form.mse_archivo10_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+									<div class='form-group'>
+									    {{ form_label(form.mse_link10_desc) }}
+									    {{ form_widget(form.mse_link10_desc, { attr: { 'class': 'form-control' }}) }}
+									</div>
+
+                                                 
+
+                                </div><!-- /.box-body -->
+
+                                {{ form_rest(form) }}
+
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                </div>
+
+                            </div><!-- /.box -->
+                        {{ form_end(form) }}
+
+
+                    </div>
+                </div>
+
+            </section><!-- /.content -->
+        </aside><!-- /.right-side -->
+    </div><!-- ./wrapper -->
+
+{% endblock %}

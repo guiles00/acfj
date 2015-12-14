@@ -23,9 +23,11 @@
 		Volver a Becas
 	</div>
 <?php  
+
+
 $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 //echo "<pre>";
-//print_r($beca);
+//print_r($documentacion);
 ?>
 
 <?php if(Session::get('edited') == true){?>
@@ -321,12 +323,28 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 						<div class="col-md-8"><input class="form-control input-sm" name="costo" value='<?=$beca->costo?>'></div>
 					</div>
 				</div>
-					<div class="row">	
+				<div class="row">	
 					<div class="form-group">
-						<label class="control-label col-md-2">Monto</label>
+						<label class="control-label col-md-2">Monto Solicitado</label>
 						<div class="col-md-8"><input class="form-control input-sm" name="monto" value='<?=$beca->monto?>'></div>
 					</div>
 				</div>
+				<div class="row">
+		        	<div class="form-group">
+								<label class="control-label col-md-2">Estado de la Solicitud</label>
+								<div class="col-md-4">
+								<select class="form-control" name="estado_id">
+														@foreach($helpers['estado_beca'] as $key=>$estado_beca)
+														<?php if( $estado_beca->dominio_id == $beca->estado_id ){?>
+														<option value="{{$estado_beca->dominio_id}}" selected>{{$estado_beca->nombre}}</option>
+														<?php }else{?>
+														<option value="{{$estado_beca->dominio_id}}">{{$estado_beca->nombre}}</option>
+														<?php }?>
+														@endforeach
+										</select>
+								</div>
+							</div>
+		        </div>
 		</div>
 		<div class="col-lg-6 col-md-6">
 			<div class="row">
@@ -360,7 +378,7 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 						<div class="col-md-8"><input class="form-control input-sm" name="dictamen_por" value='<?=$beca->dictamen_por?>'></div>
 					</div>
 				</div>
-					<div class="row">	
+				<div class="row">	
 					<div class="form-group">
 						<label class="control-label col-md-2">Superposici&oacute;n</label>
 						<div class="col-md-8">
@@ -376,9 +394,16 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 						</div>
 					</div>
 				</div>
+				<div class="row">	
+					<div class="form-group">
+						<label class="control-label col-md-2">Monto Otorgado</label>
+						<div class="col-md-8"><input class="form-control input-sm" name="monto_otorgado" value=''></div>
+					</div>
+				</div>
+
 		</div>
 		
-			<div class="col-sm-12">
+			<!--div class="col-sm-12">
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="form-group" style="background-color:#d1dfee">
@@ -386,90 +411,9 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 						</div>
 					</div>
 				</div>
-			</div>
+			</div-->
 
-<div class="col-sm-12">
-        <div class="row">
-        	<div class="form-group">
-					
-						<label class="control-label col-sm-2">Formulario de Solicitud</label>
-						<div class="btn-group col-sm-2" data-toggle="buttons">
-							<label class="btn btn-default">
-							<input type="checkbox" autocomplete="off">
-							<span class="glyphicon glyphicon-ok"></span>
-							</label>
-						</div>
 
-						<label class="control-label col-sm-2">Informaci&oacute;n de Actividad</label>
-						<div class="btn-group col-sm-2" data-toggle="buttons">
-							<label class="btn btn-default">
-							<input type="checkbox" autocomplete="off">
-							<span class="glyphicon glyphicon-ok"></span>
-							</label>
-						</div>
-					
-						<label class="control-label col-sm-2">Copia Certificada T&iacute;tulo Universitario</label>
-						<div class="btn-group col-sm-2" data-toggle="buttons">
-							<label class="btn btn-default">
-							<input type="checkbox" autocomplete="off">
-							<span class="glyphicon glyphicon-ok"></span>
-							</label>
-						</div>
-		    </div>
-       
-        </div>
-        <div class="row">
-        	<div class="form-group">
-					
-						<label class="control-label col-sm-2">Curriculum Vitae</label>
-						<div class="btn-group col-sm-2" data-toggle="buttons">
-							<label class="btn btn-default">
-							<input type="checkbox" autocomplete="off">
-							<span class="glyphicon glyphicon-ok"></span>
-							</label>
-						</div>
-
-						<label class="control-label col-sm-2">Certificado Laboral</label>
-						<div class="btn-group col-sm-2" data-toggle="buttons">
-							<label class="btn btn-default">
-							<input type="checkbox" autocomplete="off">
-							<span class="glyphicon glyphicon-ok"></span>
-							</label>
-						</div>
-					
-						<label class="control-label col-sm-2">Dictamen Evaluativo</label>
-						<div class="btn-group col-sm-2" data-toggle="buttons">
-							<label class="btn btn-default">
-							<input type="checkbox" autocomplete="off">
-							<span class="glyphicon glyphicon-ok"></span>
-							</label>
-						</div>
-		    </div>
-       
-        </div>
-        <!--div class="row">
-        	<div class="col-sm-12">
-        		<hr>
-        	</div>
-        </div-->
-        <div class="row">
-        	<div class="form-group">
-						<label class="control-label col-md-2">Estado de la Solicitud</label>
-						<div class="col-md-4">
-						<select class="form-control" name="estado_id">
-												@foreach($helpers['estado_beca'] as $key=>$estado_beca)
-												<?php if( $estado_beca->dominio_id == $beca->estado_id ){?>
-												<option value="{{$estado_beca->dominio_id}}" selected>{{$estado_beca->nombre}}</option>
-												<?php }else{?>
-												<option value="{{$estado_beca->dominio_id}}">{{$estado_beca->nombre}}</option>
-												<?php }?>
-												@endforeach
-								</select>
-						</div>
-					</div>
-        </div>
-
-</div>
 	<div class="col-sm-12">
 				<div class="row">
 					<div class="col-sm-12">
@@ -481,7 +425,19 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 	</div>
 
 
-			<div class="col-sm-12">
+
+	<!--div class="col-sm-12">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="form-group" style="background-color:#d1dfee">
+							<hr>
+						</div>
+					</div>
+				</div>
+	</div-->
+
+
+			<!--div class="col-sm-12">
 				<div class="row">
 					<div class="form-group"> 
 						<div class="col-md-offset-1 col-md-10">
@@ -491,10 +447,186 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 						</div>
 					</div>
 				</div>
-			</div>
-		</form>
+			</div-->
+
+		
+	</div> <!-- row --> 
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#menu1">Documentaci&oacute;n</a></li>
+  <li><a data-toggle="tab" href="#menu2">Actuaciones</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="menu1" class="tab-pane fade in active">
+		<br>
+		    <div class="col-sm-12">
+		        <div class="row">
+		        	<div class="form-group">
+							
+								<label class="control-label col-sm-2">Formulario de Solicitud</label>
+								<div class="btn-group col-sm-2" data-toggle="buttons">
+									<?php if($documentacion->formulario_solicitud == 1){ ?> 
+										<label class="btn btn-default active">
+										<input type="checkbox" name="doc_formulario_solicitud" checked>
+									<?php }else{ ?> 
+										<label class="btn btn-default">
+										<input type="checkbox" name="doc_formulario_solicitud">
+									<?php } ?>
+									<span class="glyphicon glyphicon-ok"></span>
+									</label>
+								</div>
+
+								<label class="control-label col-sm-2">Informaci&oacute;n de Actividad</label>
+								<div class="btn-group col-sm-2" data-toggle="buttons">
+									<?php if($documentacion->informacion_actividad == 1){ ?>
+									<label class="btn btn-default active">
+									<input type="checkbox" name="doc_informacion_actividad" checked>
+									
+									<?php }else{ ?> 
+									<label class="btn btn-default">
+									<input type="checkbox" name="doc_informacion_actividad">
+									<?php } ?>
+									<span class="glyphicon glyphicon-ok"></span>
+									</label>
+								</div>
+							
+								<label class="control-label col-sm-2">Copia Certificada T&iacute;tulo Universitario</label>
+								<div class="btn-group col-sm-2" data-toggle="buttons">
+									<?php if($documentacion->copia_titulo == 1){ ?>
+										<label class="btn btn-default active">
+										<input type="checkbox" name="doc_copia_titulo" checked>
+									<?php }else{ ?> 
+										<label class="btn btn-default">
+										<input type="checkbox" name="doc_copia_titulo">
+									<?php } ?>
+									<span class="glyphicon glyphicon-ok"></span>
+									</label>
+								</div>
+				    </div>
+		       
+		        </div>
+		        <div class="row">
+		        	<div class="form-group">
+							
+								<label class="control-label col-sm-2">Curriculum Vitae</label>
+								<div class="btn-group col-sm-2" data-toggle="buttons">
+									<?php if($documentacion->curriculum_vitae == 1){ ?>
+										<label class="btn btn-default active">
+										<input type="checkbox" name="doc_curriculum_vitae" checked>
+									<?php }else{ ?> 
+										<label class="btn btn-default">
+										<input type="checkbox" name="doc_curriculum_vitae">
+									<?php } ?> 
+									<span class="glyphicon glyphicon-ok"></span>
+									</label>
+								</div>
+
+								<label class="control-label col-sm-2">Certificado Laboral</label>
+								<div class="btn-group col-sm-2" data-toggle="buttons">
+									<?php if($documentacion->certificado_laboral == 1){ ?>
+										<label class="btn btn-default active">
+										<input type="checkbox" name="doc_certificado_laboral" checked>
+									<?php }else{ ?> 
+										<label class="btn btn-default">
+										<input type="checkbox" name="doc_certificado_laboral">
+									<?php } ?> 
+									<span class="glyphicon glyphicon-ok"></span>
+									</label>
+								</div>
+							
+								<label class="control-label col-sm-2">Dictamen Evaluativo</label>
+								<div class="btn-group col-sm-2" data-toggle="buttons">
+									<?php if($documentacion->dictamen_evaluativo == 1){ ?>
+										<label class="btn btn-default active">
+										<input type="checkbox" name="doc_dictamen_evaluativo" checked>
+									<?php }else{ ?> 
+										<label class="btn btn-default">
+										<input type="checkbox" name="doc_dictamen_evaluativo">
+									<?php } ?> 
+									<span class="glyphicon glyphicon-ok"></span>
+									</label>
+								</div>
+				    </div>
+		       
+		        </div>
 	</div>
-</div>
+  </div>
+	  <div id="menu2" class="tab-pane fade">
+	    	 <table class="table table-condensed table-bordered table-striped volumes">
+	        <thead>
+	          <tr>
+	            <th>Nro Actuacion</th>
+	            <th>Fecha</th>
+	            <th>Observaciones</th>
+	            <th width="10%"></th>
+	            <th width="10%"></th>
+	          </tr>
+	        </thead>
+	        <tbody>
+	          <tr>
+	            <td>1564</td>
+	            <td>10/10/2015</td>
+	            <td>Entrego el CV</td>
+	            <td width="10%"><a href="#" class="btn btn-default">Editar</a></td>
+	            <td width="10%"><a href="#" class="btn btn-default">Eliminar</a></td>
+	          </tr>
+	          <tr>
+	            <td>1561</td>
+	            <td>10/10/2015</td>
+	            <td>Pidio mas plata</td>
+	            <td width="10%"><a href="#" class="btn btn-default">Editar</a></td>
+	            <td width="10%"><a href="#" class="btn btn-default">Eliminar</a></td>
+	          </tr>
+	          <tr>
+	            <td>15641</td>
+	            <td>10/10/2015</td>
+	            <td>.....</td>
+	            <td width="10%"><a href="#" class="btn btn-default">Editar</a></td>
+	            <td width="10%"><a href="#" class="btn btn-default">Eliminar</a></td>
+	          </tr>
+	        </tbody>
+	      </table>
+
+	    	<div class="col-sm-12">
+				<div class="row">
+					<div class="form-group"> 
+						<div class="col-md-offset-1 col-md-10">
+							<a href="{!! URL::action('BecaController@addActuacion',$beca->beca_id); !!}" class="btn btn-default">Agregar Actuaci&oacute;n</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+	</div>
+</div>	
+
+	<div class="col-sm-12">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="form-group" style="background-color:#d1dfee">
+							<hr>
+						</div>
+					</div>
+				</div>
+	</div>
+
+		<div class="col-sm-12">
+				<div class="row">
+					<div class="form-group"> 
+						<div class="col-md-12">
+							<button type="submit" class="btn btn-default" id="b_save_beca">Guardar</button>
+							<a href="{!! URL::action('BecaController@index'); !!}" class="btn btn-default">Cancelar</a>
+							<button type="button" class="btn btn-default">Enviar Email Documentaci&oacute;n</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+</form>
+
+
+</div> <!-- panel body -->
 <script>
 
 

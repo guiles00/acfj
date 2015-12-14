@@ -1,6 +1,9 @@
 @extends('app')
 
 @section('content')
+<?php 
+$helper = new App\Domain\Helper();
+?>
   <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Listado</h1>
@@ -41,25 +44,33 @@
                 <tr>
                    <th>fecha</th>
                    <!--th>beca_id</th-->
-                   <th>tipo_beca_id</th>
+                   <th>Tipo</th>
                    <th>Nombre</th>
-                   <th>Monto</th>
+                   <th>Costo</th>
+                   <th>Solicitado</th>
+                   <th>Otorgado</th>
+                   <th>Renovaci&oacute;n</th>
                    <th>estado</th>
                    <th></th>
-                   <th></th>
+                   
                </tr>
            </thead>
            <tbody>
+
             @foreach ($becas as $beca)
+            
             <tr>
                 <td> {{ $beca->timestamp}} </td>
                 <!--td> {{ $beca->beca_id}} </td-->
-                <td> {{ $beca->tipo_beca_id}} </td>
+                <td> {{ $helper->getHelperByDominioAndId('tipo_beca',$beca->tipo_beca_id)  }} </td>
                 <td> {{ $beca->usi_nombre}} </td>
+                <td> {{ $beca->costo}} </td>
                 <td> {{ $beca->monto}} </td>
+                <td> {{ '00.00' }}</td>
+                <td> {{ $helper->getHelperByDominioAndId('renovacion',$beca->renovacion_id)  }} </td>
                 <td> {{ $beca->estado_beca}} </td>
                 <td> <a href="{{action('BecaController@verSolicitud',$beca->beca_id)}}">Ver</a></td>
-                <td> <a href="{{action('BecaController@verDocAdjunta',$beca->beca_id)}}">...</a></td>
+                <!--td> <a href="{{action('BecaController@verDocAdjunta',$beca->beca_id)}}">...</a></td-->
             </tr>
             @endforeach    
         </tbody>

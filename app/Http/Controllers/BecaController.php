@@ -10,6 +10,8 @@ use DB;
 use Request;
 use Auth;
 use App\domain\Helper;
+use App\domain\Documentacion;
+use Redirect;
 
 class BecaController extends Controller {
 
@@ -34,8 +36,8 @@ class BecaController extends Controller {
 		$input = Request::all();
 		
 		$str = (isset($input['str_beca']))?$input['str_beca']:'';
-		print_r($input);
-
+		//print_r($input);
+		$helper = new Helper();
 		/*$becas = Beca::where('usi_nombre', 'LIKE', "%$str%")
 		->orWhere('usi_dni', 'LIKE', "%$str%")
 		->orWhere('usi_nombre', 'LIKE', "%$str%")
@@ -90,7 +92,7 @@ class BecaController extends Controller {
 		$input = Request::all();
 		
 		$str = (isset($input['str_beca']))?$input['str_beca']:'';
-		print_r($input);
+		//print_r($input);
 
 		/*$becas = Beca::where('usi_nombre', 'LIKE', "%$str%")
 		->orWhere('usi_dni', 'LIKE', "%$str%")
@@ -99,7 +101,8 @@ class BecaController extends Controller {
 		->paginate(30);
 		*/
 		//$alumnos->setPath('alumnos');
-$input['estado_id'] = (isset($input['estado_id']))?$input['estado_id']:'-1';
+		$input['estado_id'] = (isset($input['estado_id']))?$input['estado_id']:'-1';
+		
 		if($input['estado_id'] == -1){
 			$data = DB::table('beca')
 	            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
@@ -178,7 +181,9 @@ $input['estado_id'] = (isset($input['estado_id']))?$input['estado_id']:'-1';
 			$helpers['s_horaria'] = $s_horaria;
 			$helpers['estado_beca'] = $estado_beca;
 			
-		return view('beca.verSolicitudBeca')->with('beca',$solicitud_beca[0])->with('helpers',$helpers);
+			$documentacion = Documentacion::traeDocumentacion($id);
+
+		return view('beca.verSolicitudBeca')->with('beca',$solicitud_beca[0])->with('helpers',$helpers)->with('documentacion',$documentacion);
 
 	}
 
@@ -205,40 +210,58 @@ $input['estado_id'] = (isset($input['estado_id']))?$input['estado_id']:'-1';
 	public function save(){
 
 		$input = Request::all();
-/*echo "<pre>";
-print_r($input);
-exit;*/
-//echo "muestro la solicitud";		
-//guardo datos de beca, los de usuario_sitio hay que confirmar que datos se pueden modificar.
-$beca = Beca::find($input['_id']);
-$beca->titulo_id = $input['titulo_id'];
-$beca->domicilio_constituido = $input['domicilio'];
-$beca->cargo_id = $input['car_id'];
-$beca->fuero_id = $input['fuero_id'];
-$beca->universidad_id = $input['universidad_id'];
-$beca->facultad_id = $input['facultad_id'];
-$beca->titulo_id = $input['titulo_id'];
-$beca->tipo_beca_id = $input['tipo_beca_id'];
-$beca->tipo_actividad_id = $input['tipo_actividad_id'];
-$beca->institucion_propuesta = $input['inst_prop_id'];
-$beca->costo = $input['costo'];
-$beca->monto = $input['monto'];
-$beca->fecha_inicio = $input['fecha_inicio'];
-$beca->fecha_fin = $input['fecha_fin'];
-$beca->actividad_nombre = $input['actividad_nombre'];
-$beca->duracion = $input['duracion'];
-$beca->sup_horaria = $input['s_horaria'];
-$beca->f_ingreso_caba = $input['f_ingreso_caba'];
-$beca->dependencia_id = $input['dependencia_id'];
-$beca->telefono_laboral = $input['tel_laboral'];
-$beca->dictamen_por = $input['dictamen_por'];
-$beca->renovacion_id = $input['renovacion_id'];
+		
+		//echo "<pre>";
+		//print_r($input);
+		//exit;
+		//echo "muestro la solicitud";		
+		//guardo datos de beca, los de usuario_sitio hay que confirmar que datos se pueden modificar.
+		$beca = Beca::find($input['_id']);
+		$beca->titulo_id = $input['titulo_id'];
+		$beca->domicilio_constituido = $input['domicilio'];
+		$beca->cargo_id = $input['car_id'];
+		$beca->fuero_id = $input['fuero_id'];
+		$beca->universidad_id = $input['universidad_id'];
+		$beca->facultad_id = $input['facultad_id'];
+		$beca->titulo_id = $input['titulo_id'];
+		$beca->tipo_beca_id = $input['tipo_beca_id'];
+		$beca->tipo_actividad_id = $input['tipo_actividad_id'];
+		$beca->institucion_propuesta = $input['inst_prop_id'];
+		$beca->costo = $input['costo'];
+		$beca->monto = $input['monto'];
+		$beca->fecha_inicio = $input['fecha_inicio'];
+		$beca->fecha_fin = $input['fecha_fin'];
+		$beca->actividad_nombre = $input['actividad_nombre'];
+		$beca->duracion = $input['duracion'];
+		$beca->sup_horaria = $input['s_horaria'];
+		$beca->f_ingreso_caba = $input['f_ingreso_caba'];
+		$beca->dependencia_id = $input['dependencia_id'];
+		$beca->telefono_laboral = $input['tel_laboral'];
+		$beca->dictamen_por = $input['dictamen_por'];
+		$beca->renovacion_id = $input['renovacion_id'];
 
-$beca->estado_id = $input['estado_id'];
+		$beca->estado_id = $input['estado_id'];
 
-$beca->save();
-//exit;
-/*		echo "<pre>";
+		$beca->save();
+
+
+		$documentacion = \App\Documentacion::where('beca_id',$input['_id'])->first();
+		
+		
+        $documentacion->formulario_solicitud = ( empty($input['doc_formulario_solicitud']) )? 0 : 1;
+        $documentacion->curriculum_vitae = ( empty($input['doc_curriculum_vitae']) )? 0 : 1;
+        $documentacion->informacion_actividad = ( empty($input['doc_informacion_actividad']) )? 0 : 1;
+        $documentacion->certificado_laboral = ( empty($input['doc_certificado_laboral']) )? 0 : 1;;
+        $documentacion->copia_titulo = ( empty($input['doc_copia_titulo']) )? 0 : 1;
+        $documentacion->dictamen_evaluativo = ( empty($input['doc_dictamen_evaluativo']) )? 0 : 1;
+
+        $documentacion->save();
+
+		//echo "<pre>";
+		//echo $input['_id'];
+		//print_r($documentacion);
+		//exit;
+		/*		echo "<pre>";
 
 		$helper = new Helper();
 		$t_becas = $helper->getHelperByDominio('tipo_beca');
@@ -302,7 +325,25 @@ return redirect()->back()->with('edited',true);
 */
 	}
 
+public function addActuacion($id){
+	$input = Request::all();
+	//echo "<pre>";
+	print_r($input);
 
+	return view('beca.addActuacion')->with('beca_id',$id);
+
+}
+
+public function saveActuacion(){
+	$input = Request::all();
+	//echo "<pre>";
+	print_r($input);
+
+	//return view('beca.verSolicitudBeca')->with('beca_id',$id);
+	$url = 'verSolicitud/'.$input['beca_id'];
+	return Redirect::to($url);
+
+}
 public function exportar(){
 	$datos = array(
 		array("First Name" => "Nitya", "Last Name" => "Maity", "Email" => "nityamaity87@gmail.com", "Message" => "Test message by Nitya"),

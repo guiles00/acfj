@@ -20,10 +20,25 @@ class Helper {
 
 	static public function getHelperByDominio($dominio){
 
-			$tipo_beca = DB::table('helper')
+			$res = DB::table('helper')
             ->select('*')
            	->where('dominio','=', "$dominio" )
             ->get();
-            return $tipo_beca;
+
+            return $res;
 	}
+
+  static public function getHelperByDominioAndId($dominio,$id){
+
+      $res = DB::table('helper')
+            ->select('*')
+            ->where('dominio','=', "$dominio" )
+            ->where('dominio_id','=', "$id" )
+            ->get();
+
+
+if( empty($res[0]) ) return 'S/D';
+            
+            return $res[0]->nombre;
+  }
 }
