@@ -16,7 +16,7 @@
 		<button type="button" class="btn btn-default" aria-label="Left Align">
 			<a href="" class="glyphicon glyphicon-arrow-left"></a>
 		</button>
-		Dar de Alta otra Actuaci&oacute;n
+		
 	</div>
 
   <div class="panel-body">
@@ -27,13 +27,26 @@
 	  <div class="form-group">
       <label class="control-label col-sm-2" >Nro Actuaci&oacute;n:</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" id="" >
+        <input type="text" class="form-control" id="" name="nro_actuacion" required>
       </div>
     </div>
     <div class="form-group">
+      <label class="control-label col-sm-2">Fecha</label>
+      <div class="col-sm-2">          
+        <input type="date" class="form-control" id="" name="actuacion_fecha">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Fojas</label>
+      <div class="col-sm-2">          
+        <input type="text" class="form-control" id="" name="actuacion_fojas">
+      </div>
+    </div>
+    
+    <div class="form-group">
       <label class="control-label col-sm-2">Observaciones</label>
       <div class="col-sm-8">          
-        <input type="text" class="form-control" id="">
+        <textarea type="text" class="form-control" id="" name="actuacion_observaciones"></textarea>
       </div>
     </div>
     		<div class="form-group"> 

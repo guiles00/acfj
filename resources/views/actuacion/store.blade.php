@@ -14,13 +14,14 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<button type="button" class="btn btn-default" aria-label="Left Align">
-			<a href="" class="glyphicon glyphicon-arrow-left"></a>
+			<a href="{!! URL::asset('/altaActuacion') !!}" class="glyphicon glyphicon-arrow-left"></a>
 		</button>
-		Volver
+		Dar de Alta otra Actuaci&oacute;n
 	</div>
 
   	<div class="panel-body">
-	Actuaci&oacute;n Creada Con &eacute;xito!!!!! MADERFACAAAAAAA!!!!  
+	Actuaci&oacute;n Creada Con &eacute;xito!!!!! MADERFACAAAAAAA!!!!
+	El Id es el siguiente : {{ $actuacion->actuaacion_id }}  
 	</div> <!-- panel body -->
 <script>
 

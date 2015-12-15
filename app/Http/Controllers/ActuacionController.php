@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 
 //use Illuminate\Http\Request;
 use Request;
+use App\Actuacion;
 
 class ActuacionController extends Controller {
 
@@ -90,10 +91,15 @@ class ActuacionController extends Controller {
 	{
 		//
 		$input = Request::all();
+		$actuacion = new Actuacion;
+		$actuacion->numero_actuacion = $input['nro_actuacion'];
+		$actuacion->save();
+
 		//echo "<pre>";
+		
 		//print_r($input);
 
-		return view('actuacion.store');
+		return view('actuacion.store')->with('actuacion',$actuacion);
 	}
 
 
