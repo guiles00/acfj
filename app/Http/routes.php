@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/', 'WelcomeController@index');
 Route::get('bienvenido', 'WelcomeController@welcome');
 Route::post('login', 'WelcomeController@doLogin');
@@ -23,6 +24,12 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+Route::get('error',function()
+{
+	abort(500);
+	return "bar";
+});
 
 //Route::get('/', function()
 //{
@@ -64,6 +71,8 @@ Route::post('becas','DwarfController@store');
 
 Route::get('d3','D3Controller@index');
 
+
+
 Route::get('tablero','TableroController@index');
 Route::get('tablero/estadisticas','TableroController@estadisticasCurso');
 Route::get('cargocurso/{x}/{y}','TableroController@traeCargoCurso');
@@ -71,6 +80,7 @@ Route::get('tablero/estadisticas/{x}','TableroController@estadisticasCurso');
 Route::get('pendientes','AlumnosController@pendientes');
 Route::get('curso-fecha','TableroController@cursoFecha');
 Route::get('inscriptos-curso','TableroController@inscriptosCurso');
+
 
 Route::get('curso-cargo/{x}','TableroController@cursoCargo');
 Route::get('ajaxget','AlumnosController@ajaxget');
@@ -102,11 +112,20 @@ Route::get('verSolicitud/{id}', 'BecaController@verSolicitud');
 Route::get('verDocAdjunta/{id}', 'BecaController@verDocAdjunta');
 Route::post('saveBeca', 'BecaController@save');
 Route::get('exportar', 'BecaController@exportar');
-
+Route::get('enviarEmailDocumentacion', 'BecaController@enviarEmailDocumentacion');
 
 Route::post('saveActuacion', 'BecaController@saveActuacion');
 Route::get('addActuacion/{id}', 'BecaController@addActuacion');
 
+
+//Route::group(['middleware' => 'auth'], function () {
+
 Route::resource('actuacion','ActuacionController');
 Route::get('altaActuacion','ActuacionController@altaActuacion');
 Route::post('storeActuacion', 'ActuacionController@store');
+Route::get('listActuacion','ActuacionController@listActuacion');
+Route::post('updateActuacion','ActuacionController@update');
+Route::get('editActuacion/{id}','ActuacionController@edit');
+Route::get('getDatosActuacion','ActuacionController@getDatosActuacion');
+
+//});

@@ -2,12 +2,12 @@
 
 @section('content')
 
-  <div class="row">
+  <!--div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Listado</h1>
                 </div>
                 <!-- /.col-lg-12 -->
-      </div>
+      <!--/div-->
 <div class="panel panel-default">
  <div class="panel-heading">
      <div class="row">      
@@ -76,7 +76,7 @@ $(document).ready(function() {
               $('.search_beca').on('change', function(d) { // keyup paste
                 
 
-                  console.log('I am pretty sure the text box changed');
+                  //console.log('I am pretty sure the text box changed');
                   //alert('okaaasasasa');
                   console.debug(d.target.value);
                   var str_beca = $('#str_beca').val();

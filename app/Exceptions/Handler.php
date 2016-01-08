@@ -35,7 +35,14 @@ class Handler extends ExceptionHandler {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function render($request, Exception $e)
-	{
+	{	
+
+		if ($e->getStatusCode() == 500) {
+            return response()->view('errors.500', [], 500);
+			
+        }
+
+
 		return parent::render($request, $e);
 	}
 

@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 use App\Beca;
+use App\Actuacion;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -9,9 +10,11 @@ use App\Http\Controllers\Controller;
 use DB;
 use Request;
 use Auth;
+use App\domain\MyAuth;
 use App\domain\Helper;
 use App\domain\Documentacion;
 use Redirect;
+use App\domain\User;
 
 class BecaController extends Controller {
 
@@ -24,14 +27,16 @@ class BecaController extends Controller {
 	{
 		//$becas = Beca::all();
 		
-		if (Auth::check())
+
+
+		if (  MyAuth::check() )
 		{
-		    echo "logueado";
-		    exit;
-		}/*else{
-			echo " no logueado";
-		    exit;
-		}*/
+			//Aca algo voy a hacer
+			//Levanto los datos el usuario
+		}else{
+
+	        return Redirect::to('/');
+		}
 
 		$input = Request::all();
 		
@@ -163,7 +168,7 @@ class BecaController extends Controller {
             
             
             $cargos = DB::table('cargo')->get();
-            $universidades = DB::table('universidad')->get();
+            $universidades = DB::table('universidad_sigla')->get();
             $fuero = DB::table('fuero')->get();
 			$titulos = DB::table('titulo')->get();
 			$facultades = DB::table('facultad')->get();
@@ -182,8 +187,13 @@ class BecaController extends Controller {
 			$helpers['estado_beca'] = $estado_beca;
 			
 			$documentacion = Documentacion::traeDocumentacion($id);
+			//echo $id;
+			$actuaciones = DB::table('actuacion')->where('beca_id','=',$id)->get();
+			//echo "<pre>";
+			//print_r($actuaciones);
+			//exit;
 
-		return view('beca.verSolicitudBeca')->with('beca',$solicitud_beca[0])->with('helpers',$helpers)->with('documentacion',$documentacion);
+		return view('beca.verSolicitudBeca')->with('beca',$solicitud_beca[0])->with('helpers',$helpers)->with('documentacion',$documentacion)->with('actuaciones',$actuaciones);
 
 	}
 
@@ -222,8 +232,11 @@ class BecaController extends Controller {
 		$beca->cargo_id = $input['car_id'];
 		$beca->fuero_id = $input['fuero_id'];
 		$beca->universidad_id = $input['universidad_id'];
+		$beca->universidad_otro = $input['universidad_otro'];
 		$beca->facultad_id = $input['facultad_id'];
+		$beca->facultad_otro = $input['facultad_otro'];
 		$beca->titulo_id = $input['titulo_id'];
+		$beca->titulo_otro = $input['titulo_otro'];
 		$beca->tipo_beca_id = $input['tipo_beca_id'];
 		$beca->tipo_actividad_id = $input['tipo_actividad_id'];
 		$beca->institucion_propuesta = $input['inst_prop_id'];
@@ -236,6 +249,7 @@ class BecaController extends Controller {
 		$beca->sup_horaria = $input['s_horaria'];
 		$beca->f_ingreso_caba = $input['f_ingreso_caba'];
 		$beca->dependencia_id = $input['dependencia_id'];
+		$beca->dependencia_otro = $input['dependencia_otro'];
 		$beca->telefono_laboral = $input['tel_laboral'];
 		$beca->dictamen_por = $input['dictamen_por'];
 		$beca->renovacion_id = $input['renovacion_id'];
@@ -328,7 +342,7 @@ return redirect()->back()->with('edited',true);
 public function addActuacion($id){
 	$input = Request::all();
 	//echo "<pre>";
-	print_r($input);
+	//print_r($input);
 
 	return view('beca.addActuacion')->with('beca_id',$id);
 
@@ -336,9 +350,9 @@ public function addActuacion($id){
 
 public function saveActuacion(){
 	$input = Request::all();
-	//echo "<pre>";
-	print_r($input);
-
+	$actuacion = Actuacion::find($input['actuacion_id']);
+	$actuacion->beca_id = $input['beca_id'];
+	$actuacion->save();
 	//return view('beca.verSolicitudBeca')->with('beca_id',$id);
 	$url = 'verSolicitud/'.$input['beca_id'];
 	return Redirect::to($url);
@@ -382,6 +396,15 @@ public function exportar(){
 
 }
 
+
+
+	public function enviarEmailDocumentacion(){
+			$input = Request::all();
+
+			print_r($input);
+			exit;
+
+	}
 	/**
 	 * Show the form for creating a new resource.
 	 *

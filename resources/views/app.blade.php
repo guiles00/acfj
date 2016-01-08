@@ -1,3 +1,4 @@
+<? use App\domain\User; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -81,16 +82,16 @@
                         <span class="icon-bar"></span>
                     </button>
                     <img class="navbar-brand" src="{{ asset('/img/logo.png') }}" ></img>
-                    <a class="navbar-brand" href="index.html" style="color:white">Centro de Fomaci&oacute;n Judicial</a>
+                    <a class="navbar-brand" href="" style="color:white">Centro de Fomaci&oacute;n Judicial</a>
                 </div>
                 <!-- /.navbar-header -->
 
                 <ul class="nav navbar-top-links navbar-right">
-                    <li class="dropdown">
+                    <!--li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
-                        <ul class="dropdown-menu dropdown-messages">
+                        <!--ul class="dropdown-menu dropdown-messages">
                             <li>
                                 <a href="#">
                                     <div>
@@ -133,11 +134,11 @@
                                     <i class="fa fa-angle-right"></i>
                                 </a>
                             </li>
-                        </ul>
+                        </ul-->
                         <!-- /.dropdown-messages -->
-                    </li>
+                    <!--/li-->
                     <!-- /.dropdown -->
-                    <li class="dropdown">
+                    <!--li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
@@ -214,9 +215,9 @@
                             </li>
                         </ul>
                         <!-- /.dropdown-tasks -->
-                    </li>
+                    <!--/li-->
                     <!-- /.dropdown -->
-                    <li class="dropdown">
+                    <!--li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
@@ -274,17 +275,21 @@
                             </li>
                         </ul>
                         <!-- /.dropdown-alerts -->
-                    </li>
+                    <!--/li-->
                     <!-- /.dropdown -->
+                    <li>
+                      <span style="color:white">  {{ User::getInstance()->getUsername() }} <span>
+                    </li>
                     <li class="dropdown">
+
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                            <li><a href="#"><i class="fa fa-user fa-fw"></i> Cambiar Clave</a>
                             </li>
-                            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                            </li>
+                            <!--li><a href="#"><i class="fa fa-gear fa-fw"></i> Configurac</a>
+                            </li-->
                             <li class="divider"></li>
                             <li><a href="{{ URL::to('logout') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
@@ -298,7 +303,7 @@
                 <div class="navbar-default sidebar" role="navigation">
                     <div class="sidebar-nav navbar-collapse">
                         <ul class="nav" id="side-menu">
-                            <li class="sidebar-search">
+                            <!--li class="sidebar-search">
                                 <div class="input-group custom-search-form">
                                     <input type="text" class="form-control" placeholder="Search...">
                                     <span class="input-group-btn">
@@ -308,7 +313,13 @@
                                     </span>
                                 </div>
                                 <!-- /input-group -->
-                            </li>
+                            <!--/li-->
+
+                            <!-- Aca empieza el menu -->
+                            <? $user = User::getInstance(); 
+                            ?>
+
+                            <? if( $user->hassAcess(1) ){ ?>
                             <li>
                             <a href="#"><i class="fa fa-dashboard fa-fw"></i>Control de Gesti&oacute;n<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -324,12 +335,10 @@
                                     <li>
                                         <a href="{!! URL::asset('/curso-fecha') !!}">Cursos Anual</a>
                                     </li>
-                                    <li>
-                                        <a href="#">AMenu</a>
-                                    </li>
                                 </ul>
                             </li>
-
+                            <?}?>
+                            <? if( $user->hassAcess(2) ){ ?>    
                             <li>
                                 <a href="#"><i class="fa fa-sitemap fa-fw"></i>Becas<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
@@ -342,6 +351,8 @@
                                 </ul>
                                 
                             </li>
+                            <?}?>
+                            <? if( $user->hassAcess(3) ){ ?>    
                             <li>
                                 <a href="#"><i class="fa fa-sitemap fa-fw"></i>Mesa de Entrada<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
@@ -349,11 +360,13 @@
                                         <a href="{!! URL::asset('/altaActuacion') !!}">Alta</a>
                                     </li>
                                     <li>
-                                        <a href="{!! URL::asset('/actuacion') !!}">Listado</a>
+                                        <a href="{!! URL::asset('/listActuacion') !!}">Listado</a>
                                     </li>
                                 </ul>
                                 
                             </li>
+                            <?}?>
+                            <? if( $user->hassAcess(4) ){ ?>    
                             <li>
                                 <a href="#"><i class="fa fa-sitemap fa-fw"></i>Admin<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
@@ -362,8 +375,9 @@
                                     </li>
                                     
                                 </ul>
-                                
                             </li>
+                            <?}?>
+                            
                             <!--li>
                                 <a href="#"><i class="fa fa-sitemap fa-fw"></i> Gesti&oacute;n Acad&eacute;mica</a>
                                 <ul class="nav nav-second-level">
@@ -414,7 +428,7 @@
         </nav>
 
         <div id="page-wrapper">
-       
+        <br>
             @yield('content')   
 
               <!--div class="row">

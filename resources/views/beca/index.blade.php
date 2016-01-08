@@ -2,14 +2,15 @@
 
 @section('content')
 <?php 
+use App\domain\Utils;
 $helper = new App\Domain\Helper();
 ?>
-  <div class="row">
+  <!--div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Listado</h1>
                 </div>
                 <!-- /.col-lg-12 -->
-      </div>
+      <!--/div-->
 <div class="panel panel-default">
  <div class="panel-heading">
      <div class="row">      
@@ -60,7 +61,7 @@ $helper = new App\Domain\Helper();
             @foreach ($becas as $beca)
             
             <tr>
-                <td> {{ $beca->timestamp}} </td>
+                <td> {{ Utils::formatDate($beca->timestamp) }} </td>
                 <!--td> {{ $beca->beca_id}} </td-->
                 <td> {{ $helper->getHelperByDominioAndId('tipo_beca',$beca->tipo_beca_id)  }} </td>
                 <td> {{ $beca->usi_nombre}} </td>
@@ -88,6 +89,8 @@ $helper = new App\Domain\Helper();
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
+
+            /*
               $('#search_beca').on('change keyup paste', function(d) {
                 
 
@@ -105,7 +108,7 @@ $(document).ready(function() {
                         });
 
                 });
-
+              */
               $('#search_beca').on('change', function(d) {
                 //alert('change');
 

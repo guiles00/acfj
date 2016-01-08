@@ -2,6 +2,8 @@
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use App\domain\MyAuth;
+use Redirect;
 
 class Authenticate {
 
@@ -21,6 +23,8 @@ class Authenticate {
 	public function __construct(Guard $auth)
 	{
 		$this->auth = $auth;
+		
+
 	}
 
 	/**
@@ -32,7 +36,23 @@ class Authenticate {
 	 */
 	public function handle($request, Closure $next)
 	{
-		if ($this->auth->guest())
+
+		//Como no funcionaba el Auth, hice uno propio y modifique unas cosillas
+
+		if (  MyAuth::check() )
+		{
+			//Aca algo voy a hacer
+			//Levanto los datos el usuario
+		}else{
+
+	        return Redirect::to('/');
+		}
+		
+		//return false;
+
+		//Aca no hace nada
+
+	/*	if ($this->auth->guest())
 		{
 			if ($request->ajax())
 			{
@@ -43,7 +63,7 @@ class Authenticate {
 				return redirect()->guest('auth/login');
 			}
 		}
-
+	*/
 		return $next($request);
 	}
 

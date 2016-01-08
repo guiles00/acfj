@@ -43,7 +43,7 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 	
 	<form method="POST" action="{{action('BecaController@save')}}" accept-charset="UTF-8" class="form-horizontal" role="form">
 					<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
-					<input type="hidden" name="_id" value="{{$beca->beca_id}}" />
+					<input type="hidden" name="_id" value="{{$beca->beca_id}}" id="b_beca_id"/>
 
 		<div class="col-lg-6 col-md-6">
 			
@@ -81,9 +81,15 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 				<div class="row">	
 					<div class="form-group">
 						<label class="control-label col-md-2">Tel Particular</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="tel_particular" value=''></div>
+						<div class="col-md-8"><input class="form-control input-sm" name="tel_particular" value='<?=$beca->telefono_particular?>'></div>
 					</div>
 				</div>
+				<div class="row">
+									<div class="form-group">
+										<label class="control-label col-md-2">Tel. Laboral</label>
+										<div class="col-md-8"><input class="form-control input-sm" name="tel_laboral" value='<?=$beca->telefono_laboral?>'></div>
+									</div>
+								</div>
 				<div class="row">	
 					<div class="form-group">
 						<label class="control-label col-md-2">G&eacute;nero</label>
@@ -117,6 +123,12 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 											</div>
 										</div>
 								</div>
+								<!--div class="row">
+									<div class="form-group">
+										<label class="control-label col-md-2">Email</label>
+										<div class="col-md-8"><input class="form-control input-sm" name="email" value='<?=$beca->f_ingreso_caba?>'></div>
+									</div>
+								</div-->
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-md-2">Fecha Ingreso PJCABA</label>
@@ -143,7 +155,7 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 								 <div class="form-group">
 									<label class="control-label col-md-2">Dependencia</label>
 									<div class="col-md-8">
-										<select class="form-control" name="dependencia_id">
+										<select class="form-control" name="dependencia_id" id="b_dep_id">
 											@foreach($helpers['dependencias'] as $key=>$dependencia)
 											<?php if( $dependencia->dep_id == $beca->dependencia_id ){?>
 											<option value="{{$dependencia->dep_id}}" selected>{{$dependencia->dep_nombre}}</option>
@@ -155,6 +167,15 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 									</div>
 								</div>
 								</div>
+								<div class="row" id="b_dependencia_otro">
+										<div class="form-group">
+										<label class="control-label col-md-2">Otra Dependencia</label>
+										<div class="col-md-8">
+											<input class="form-control input-sm" name="dependencia_otro" value='<?=$beca->dependencia_otro?>'>
+										</div>
+									</div>
+								</div>
+
 								<div class="row">	
 									<div class="form-group">
 										<label class="control-label col-md-2">Cargo</label>
@@ -171,25 +192,20 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 										</div>
 									</div>
 								</div>	
-									<div class="row" id="otroCargo">	
+								<!--div class="row" id="b_cargo_otro">	
 									<div class="form-group">
 										<label class="control-label col-md-2">Otro Cargo</label>
 										<div class="col-md-8">
 											<input class="form-control input-sm" name="otro_cargo" value='<?=$beca->telefono_laboral?>'>
 										</div>
 									</div>
-								</div>
-								<div class="row">
-									<div class="form-group">
-										<label class="control-label col-md-2">Tel. Laboral</label>
-										<div class="col-md-8"><input class="form-control input-sm" name="tel_laboral" value='<?=$beca->telefono_laboral?>'></div>
-									</div>
-								</div>
+								</div-->
+								
 								<div class="row">
 										<div class="form-group">
 											<label class="control-label col-md-2">Universidad</label>
 											<div class="col-md-8">
-												<select class="form-control" name="universidad_id">
+												<select class="form-control" name="universidad_id" id="b_universidad_id">
 													@foreach($helpers['universidades'] as $key=>$universidad)
 													<?php if( $universidad->universidad_id == $beca->universidad_id ){?>
 													<option value="{{$universidad->universidad_id}}" selected>{{$universidad->universidad}}</option>
@@ -201,11 +217,20 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 											</div>
 										</div>
 								</div>
+								<div class="row" id="b_universidad_otro">	
+									<div class="form-group">
+										<label class="control-label col-md-2">Otro Universidad</label>
+										<div class="col-md-8">
+											<input class="form-control input-sm" name="universidad_otro" value='<?=$beca->universidad_otro?>'>
+										</div>
+									</div>
+								</div>
+
 								<div class="row">
 										<div class="form-group">
 											<label class="control-label col-md-2">Facultad:</label>
 											<div class="col-md-8">
-												<select class="form-control" name="facultad_id">
+												<select class="form-control" name="facultad_id" id="b_facultad_id">
 													@foreach($helpers['facultades'] as $key=>$facultad)
 													<?php if( $facultad->facultad_id == $beca->facultad_id ){?>
 													<option value="{{$facultad->facultad_id}}" selected>{{$facultad->facultad}}</option>
@@ -217,11 +242,21 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 											</div>
 										</div>
 								</div>
+
+								<div class="row" id="b_facultad_otro">
+										<div class="form-group">
+										<label class="control-label col-md-2">Otra Fac.</label>
+										<div class="col-md-8">
+											<input class="form-control input-sm" name="facultad_otro" value='<?=$beca->facultad_otro?>'>
+										</div>
+									</div>
+								</div>
+
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-md-2">Titulo:</label>
 										<div class="col-md-8">
-											<select class="form-control" name="titulo_id">
+											<select class="form-control" name="titulo_id" id="b_titulo_id">
 												@foreach($helpers['titulos'] as $key=>$titulo)
 												<?php if( $titulo->titulo_id == $beca->titulo_id ){?>
 												<option value="{{$titulo->titulo_id}}" selected>{{$titulo->titulo}}</option>
@@ -233,8 +268,13 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 										</div>
 									</div>
 								</div>
-								<div class="row">
-									
+								<div class="row" id="b_titulo_otro">
+										<div class="form-group">
+										<label class="control-label col-md-2">Otro Tit.</label>
+										<div class="col-md-8">
+											<input class="form-control input-sm" name="titulo_otro" value='<?=$beca->titulo_otro?>'>
+										</div>
+									</div>
 								</div>
 								<div class="row">
 									
@@ -252,6 +292,12 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 			</div>
 
 		<div class="col-lg-6 col-md-6">
+				<div class="row">
+									<div class="form-group">
+										<label class="control-label col-md-2">Fecha de Solicitud</label>
+										<div class="col-md-8"><input class="form-control input-sm" name="fecha" value='<?=$beca->timestamp?>' disabled></div>
+									</div>
+				</div>
 				<div class="row">
 					<div class="form-group">
 						<label class="control-label col-md-2">Renovaci&oacute;n</label>
@@ -556,42 +602,40 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 	    	 <table class="table table-condensed table-bordered table-striped volumes">
 	        <thead>
 	          <tr>
+	          	<th>Prefijo</th>
 	            <th>Nro Actuacion</th>
-	            <th>Fecha</th>
-	            <th>Observaciones</th>
-	            <th width="10%"></th>
+	            <th>FECHA</th>
+                <th>ASUNTO</th>
+                <th>DIRIGIDO</th>  
+                <th>REMITE</th>
+                <th>CONSTE</th>
 	            <th width="10%"></th>
 	          </tr>
 	        </thead>
 	        <tbody>
-	          <tr>
-	            <td>1564</td>
-	            <td>10/10/2015</td>
-	            <td>Entrego el CV</td>
-	            <td width="10%"><a href="#" class="btn btn-default">Editar</a></td>
-	            <td width="10%"><a href="#" class="btn btn-default">Eliminar</a></td>
-	          </tr>
-	          <tr>
-	            <td>1561</td>
-	            <td>10/10/2015</td>
-	            <td>Pidio mas plata</td>
-	            <td width="10%"><a href="#" class="btn btn-default">Editar</a></td>
-	            <td width="10%"><a href="#" class="btn btn-default">Eliminar</a></td>
-	          </tr>
-	          <tr>
-	            <td>15641</td>
-	            <td>10/10/2015</td>
-	            <td>.....</td>
-	            <td width="10%"><a href="#" class="btn btn-default">Editar</a></td>
-	            <td width="10%"><a href="#" class="btn btn-default">Eliminar</a></td>
-	          </tr>
+
+       	 @foreach ($actuaciones as $actuacion)
+            <tr>
+                <td> {{ $actuacion->prefijo }} </td>
+                <td> {{ $actuacion->numero_actuacion  }} </td>                
+                <td> {{ $actuacion->actuacion_fecha}} </td>
+                <td> {{ $actuacion->asunto}} </td>
+                <td> {{ $actuacion->dirigido}} </td>
+                <td> {{ $actuacion->remite}} </td>
+                <td> {{ $actuacion->conste}} </td>
+                <!--td> {{ $actuacion->actuacion_id}} </td-->
+                <td> <a href="" onClick="return false">Eliminar</a></td>
+
+            </tr>
+            @endforeach    
+
 	        </tbody>
 	      </table>
 
 	    	<div class="col-sm-12">
 				<div class="row">
 					<div class="form-group"> 
-						<div class="col-md-offset-1 col-md-10">
+						<div class="col-md-10">
 							<a href="{!! URL::action('BecaController@addActuacion',$beca->beca_id); !!}" class="btn btn-default">Agregar Actuaci&oacute;n</a>
 						</div>
 					</div>
@@ -617,14 +661,15 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 						<div class="col-md-12">
 							<button type="submit" class="btn btn-default" id="b_save_beca">Guardar</button>
 							<a href="{!! URL::action('BecaController@index'); !!}" class="btn btn-default">Cancelar</a>
-							<button type="button" class="btn btn-default">Enviar Email Documentaci&oacute;n</button>
+							<button type="button" class="btn btn-default" id="b_enviar_email_documentacion">Enviar Email Documentaci&oacute;n</button>
 						</div>
 					</div>
 				</div>
 			</div>
 
 </form>
-
+<div id="res">
+</div>
 
 </div> <!-- panel body -->
 <script>
@@ -636,22 +681,93 @@ $('document').ready(function(){
 	var token =  '<?php echo Session::token() ; ?>';
 	
 		var car_id = $('#b_car_id').val();
-
+		var dep_id = $('#b_dep_id').val();
+		var universidad_id = $('#b_universidad_id').val();
+		var facultad_id = $('#b_facultad_id').val();
+		var titulo_id = $('#b_titulo_id').val();
+		/*
 		if( car_id == '-1'){
-		$('#otroCargo').show();	
+		$('#b_cargo_otro').show();	
 		}else{
-		$('#otroCargo').hide();	
+		$('#b_cargo_otro').hide();	
 		} 
 
 		$('#b_car_id').change(function(){
 
 		var car_id = $('#b_car_id').val();
 
-		if( car_id == '-1') $('#otroCargo').show();
+		if( car_id == '-1') $('#b_cargo_otro').show();
 
-		if( car_id != '-1') $('#otroCargo').hide();
+		if( car_id != '-1') $('#b_cargo_otro').hide();
+
+		}); */
+
+		if( dep_id == '-1'){
+		$('#b_dependencia_otro').show();	
+		}else{
+		$('#b_dependencia_otro').hide();	
+		} 
+
+		$('#b_dep_id').change(function(){
+
+		var dep_id = $('#b_dep_id').val();
+
+		if( dep_id == '-1') $('#b_dependencia_otro').show();
+
+		if( dep_id != '-1') $('#b_dependencia_otro').hide();
 
 		});
+
+		if( universidad_id == '-1'){
+		$('#b_universidad_otro').show();	
+		}else{
+		$('#b_universidad_otro').hide();	
+		} 
+
+		$('#b_universidad_id').change(function(){
+
+		var universidad_id = $('#b_universidad_id').val();
+
+		if( universidad_id == '-1') $('#b_universidad_otro').show();
+
+		if( universidad_id != '-1') $('#b_universidad_otro').hide();
+
+		});
+
+
+		if( facultad_id == '-1'){
+		$('#b_facultad_otro').show();	
+		}else{
+		$('#b_facultad_otro').hide();	
+		} 
+
+		$('#b_facultad_id').change(function(){
+
+		var facultad_id = $('#b_facultad_id').val();
+
+		if( facultad_id == '-1') $('#b_facultad_otro').show();
+
+		if( facultad_id != '-1') $('#b_facultad_otro').hide();
+
+		});
+
+		if( titulo_id == '-1'){
+		$('#b_titulo_otro').show();	
+		}else{
+		$('#b_titulo_otro').hide();	
+		} 
+
+		$('#b_titulo_id').change(function(){
+
+		var titulo_id = $('#b_titulo_id').val();
+
+		if( titulo_id == '-1') $('#b_titulo_otro').show();
+
+		if( titulo_id != '-1') $('#b_titulo_otro').hide();
+
+		});
+
+		
 
 	/*	$('#b_save_beca').click(function(){
 			$.ajax({
@@ -665,6 +781,22 @@ $('document').ready(function(){
 
 		});
 	*/
+
+	$('#b_enviar_email_documentacion').click(function(){
+		
+		
+		var beca_id = $('#b_beca_id').val();
+
+			$.ajax({
+		                url : "../enviarEmailDocumentacion"
+		                ,data: {'beca_id':beca_id}
+		                ,success : function(result) {
+		                	$('#res').html('Email enviado con exito...de mentirita...');
+		                	console.debug('exito');
+		                }
+		              });   
+
+	});
 
 });
 

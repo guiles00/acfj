@@ -41,7 +41,7 @@
 	<body>
 		<div class="container">
 			<div class="content">
-				<div class="title">Sistema de Gesti&oacute;n de la vida</div>
+				<div class="title">Sistema de Gesti&oacute;n de ....</div>
 				<div class="quote">Centro de Formaci&oacute;n Judicial</div>
 			</div>
 		</div>
