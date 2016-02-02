@@ -19,8 +19,10 @@ class User {
           session_start();
         }
 
-        $this->_session_id =  $_SESSION['cfj_userinfo']['user_id'];
-        $this->_username =  $_SESSION['cfj_userinfo']['username'];
+        
+        $this->_session_id =  (isset($_SESSION['cfj_userinfo']['user_id']))?$_SESSION['cfj_userinfo']['user_id']:null;
+        $this->_username =  (isset($_SESSION['cfj_userinfo']['username']))?$_SESSION['cfj_userinfo']['username']:null;
+
         //$this->_usuario = new Domain_Usuario($this->_session_id);
         //$this->_acl = new Domain_Acl($this->_session_id) ;
         //$this->_usuario->setAcl(new  Domain_Acl($this->_session_id));
@@ -42,7 +44,10 @@ class User {
     function getUsuario(){
         return $this->_usuario;
     }
- 
+    
+    function getSessionId(){
+        return $this->_session_id;
+    }
     function hassAcess($menu_id){
 
       //echo $menu_id;

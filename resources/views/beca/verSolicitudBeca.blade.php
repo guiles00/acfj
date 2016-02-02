@@ -57,19 +57,19 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 				<div class="row">
 					<div class="form-group">
 						<label class="control-label col-md-2">DNI</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="dni" value='<?=$beca->usi_dni?>'></div>
+						<div class="col-md-8"><input class="form-control input-sm" name="dni" value='<?=$beca->usi_dni?>' disabled></div>
 					</div>
 				</div>
 				<div class="row">	
 					<div class="form-group">
 						<label class="control-label col-md-2">Apellido y Nombre</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="apynom" value='<?=$beca->usi_nombre?>'></div>
+						<div class="col-md-8"><input class="form-control input-sm" name="apynom" value='<?=$beca->usi_nombre?>' disabled></div>
 					</div>
 				</div>
 				<div class="row">	
 					<div class="form-group">
 						<label class="control-label col-md-2">Legajo</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="legajo" value='<?=$beca->usi_legajo?>'></div>
+						<div class="col-md-8"><input class="form-control input-sm" name="legajo" value='<?=$beca->usi_legajo?>'disabled></div>
 					</div>
 				</div>	
 				<div class="row">
@@ -94,7 +94,7 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 					<div class="form-group">
 						<label class="control-label col-md-2">G&eacute;nero</label>
 					<div class="col-md-8">
-						<select class="form-control" name="car_id">
+						<select class="form-control" name="car_id" disabled>
 						@foreach($generos as $key=>$genero)
 						<?php if( $key == $beca->usi_genero ){?>
 						<option value="{{$key}}" selected>{{$genero}}</option>
@@ -396,13 +396,13 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 			<div class="row">
 					<div class="form-group">
 						<label class="control-label col-md-2">Fecha Inicio</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="fecha_inicio" value='<?=$beca->fecha_inicio?>'></div>
+						<div class="col-md-8"><input class="form-control input-sm" name="fecha_inicio" value='<?=$beca->fecha_inicio?>' id="b_fecha_inicio"></div>
 					</div>
 				</div>
 				<div class="row">	
 					<div class="form-group">
 						<label class="control-label col-md-2">Fecha Fin</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="fecha_fin" value='<?=$beca->fecha_fin?>'></div>
+						<div class="col-md-8"><input class="form-control input-sm" name="fecha_fin" value='<?=$beca->fecha_fin?>' id="b_fecha_fin"></div>
 					</div>
 				</div>
 				<div class="row">	
@@ -428,7 +428,7 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 					<div class="form-group">
 						<label class="control-label col-md-2">Superposici&oacute;n</label>
 						<div class="col-md-8">
-								<select class="form-control" name="s_horaria">
+								<select class="form-control" name="s_horaria" id="b_sup_horaria">
 												@foreach($helpers['s_horaria'] as $key=>$s_horaria)
 												<?php if( $s_horaria->dominio_id == $beca->sup_horaria ){?>
 												<option value="{{$s_horaria->dominio_id}}" selected>{{$s_horaria->nombre}}</option>
@@ -537,8 +537,8 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 									</label>
 								</div>
 							
-								<label class="control-label col-sm-2">Copia Certificada T&iacute;tulo Universitario</label>
-								<div class="btn-group col-sm-2" data-toggle="buttons">
+								<label class="control-label col-sm-1">Copia Certificada T&iacute;tulo Universitario</label>
+								<div class="btn-group col-sm-1" data-toggle="buttons">
 									<?php if($documentacion->copia_titulo == 1){ ?>
 										<label class="btn btn-default active">
 										<input type="checkbox" name="doc_copia_titulo" checked>
@@ -546,6 +546,18 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 										<label class="btn btn-default">
 										<input type="checkbox" name="doc_copia_titulo">
 									<?php } ?>
+									<span class="glyphicon glyphicon-ok"></span>
+									</label>
+								</div>
+								<label class="control-label col-sm-1" id="b_autorizacion_label">Autorizaci&oacute;n Superposici&oacute;n Horaria</label>
+								<div class="btn-group col-sm-1" data-toggle="buttons" id="b_autorizacion_div">
+									<?php if($documentacion->autorizacion_superposicion == 1){ ?>
+										<label class="btn btn-default active">
+										<input type="checkbox" name="doc_autorizacion_superposicion" checked>
+									<?php }else{ ?> 
+										<label class="btn btn-default">
+										<input type="checkbox" name="doc_autorizacion_superposicion">
+									<?php } ?> 
 									<span class="glyphicon glyphicon-ok"></span>
 									</label>
 								</div>
@@ -581,8 +593,8 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 									</label>
 								</div>
 							
-								<label class="control-label col-sm-2">Dictamen Evaluativo</label>
-								<div class="btn-group col-sm-2" data-toggle="buttons">
+								<label class="control-label col-sm-1">Dictamen Evaluativo</label>
+								<div class="btn-group col-sm-1" data-toggle="buttons">
 									<?php if($documentacion->dictamen_evaluativo == 1){ ?>
 										<label class="btn btn-default active">
 										<input type="checkbox" name="doc_dictamen_evaluativo" checked>
@@ -608,7 +620,7 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
                 <th>ASUNTO</th>
                 <th>DIRIGIDO</th>  
                 <th>REMITE</th>
-                <th>CONSTE</th>
+                <th>RECIBIO</th>
 	            <th width="10%"></th>
 	          </tr>
 	        </thead>
@@ -798,6 +810,43 @@ $('document').ready(function(){
 
 	});
 
+
+
+	//Muestro o no la superposicion horaria
+
+	var sup_horaria = $('#b_sup_horaria').val();
+	
+	if(sup_horaria == 1){
+		//alert('muestro')
+		$('#b_autorizacion_label').show();
+		$('#b_autorizacion_div').show();
+	}else{
+		//alert('oculto')
+		$('#b_autorizacion_label').hide();
+		$('#b_autorizacion_div').hide();
+	}
+
+	 $('#b_sup_horaria').on('change', function(d) {
+
+	 		var sup_horaria = $('#b_sup_horaria').val();
+	
+			if(sup_horaria == 1){
+				//alert('muestro')
+				$('#b_autorizacion_label').show();
+				$('#b_autorizacion_div').show();
+			}else{
+				//alert('oculto')
+				$('#b_autorizacion_label').hide();
+				$('#b_autorizacion_div').hide();
+			}
+
+
+	 });
+
+$('#b_fecha_inicio').datepicker({dateFormat:"yy-mm-dd"});
+$('#b_fecha_fin').datepicker({dateFormat:"yy-mm-dd"});
+
+	
 });
 
 </script>

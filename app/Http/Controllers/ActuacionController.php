@@ -100,7 +100,7 @@ class ActuacionController extends Controller {
 		//print_r($actuacion);
 		//exit;
 
-		return view('actuacion.editActuacion')->with('actuacion',$actuacion);
+		return view('actuacion.editActuacion')->with('actuacion',$actuacion)->with('edited',true);
 	}
 
 	/**
@@ -216,5 +216,17 @@ class ActuacionController extends Controller {
 		return $datos_actuacion[0];
 	}
 
+		public function getNumeroActuacion(){
+
+		$input = Request::all();
+		
+		$datos_actuacion = Actuacion::where('numero_actuacion','=',$input['numero_actuacion'])->get();	
+		//print_r($datos_actuacion);
+		if(empty($datos_actuacion[0])) return "false";
+		
+//		$datos_actuacion = ['fecha'=>'01-01-2016','observaciones'=>'esto es una observacion'];
+		return $datos_actuacion[0];
+	}
+	
 
 }

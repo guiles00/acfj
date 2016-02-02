@@ -40,7 +40,8 @@
 
     <!-- DataTables Responsive CSS -->
     <link href="{{ asset('/bower_components/datatables-responsive/css/dataTables.responsive.css') }}" rel="stylesheet">
-
+    
+    <link rel="stylesheet" href="{{ asset('//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css') }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -50,6 +51,8 @@
         <![endif]-->
         <script src="{!! URL::asset('/bower_components/jquery/dist/jquery.min.js'); !!}"></script>
         <script src="{!! URL::asset('/bower_components/bootstrap/dist/js/bootstrap.min.js'); !!}"></script>
+        <script src="{!! URL::asset('//code.jquery.com/ui/1.11.4/jquery-ui.js'); !!}"></script>
+        <script src="{!! URL::asset('/js/datepicker.es.js'); !!}"></script>
         <link href="{{ asset('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css') }}" rel="stylesheet">
 
         <script src="{!! URL::asset('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'); !!}"></script>
@@ -354,7 +357,7 @@
                             <?}?>
                             <? if( $user->hassAcess(3) ){ ?>    
                             <li>
-                                <a href="#"><i class="fa fa-sitemap fa-fw"></i>Mesa de Entrada<span class="fa arrow"></span></a>
+                                <a href="#"><i class="fa fa-sitemap fa-fw"></i>Mesa de Entradas<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
                                         <a href="{!! URL::asset('/altaActuacion') !!}">Alta</a>
@@ -462,6 +465,7 @@
 
     <script src="{!! URL::asset('/bower_components/datatables/media/js/jquery.dataTables.min.js'); !!}"></script>
     <script src="{!! URL::asset('/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js'); !!}"></script>
+
 
 </body>
 

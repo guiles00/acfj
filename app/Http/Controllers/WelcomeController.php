@@ -6,6 +6,9 @@ use Request;
 use DB;
 use Auth;
 use App\domain\MyAuth;
+use App\domain\User;
+use App\User as ModelUser;
+
 
 class WelcomeController extends Controller {
 
@@ -87,6 +90,24 @@ class WelcomeController extends Controller {
 		//$user = Auth::user();
 		//print_r($user);		
 		return view('welcome');
+	}
+
+	public function cambiarClave(){
+
+		$username = User::getInstance()->getUsername();
+		$user_id = User::getInstance()->getSessionId();
+		
+		return view('auth.reset')->with('username',$username)->with('user_id',$user_id);
+	}
+
+	public function updatePassword(){
+		$input = Request::all();
+		
+		$user = ModelUser::find($input['user_id']);
+		$user->password = md5($input['password']);
+		$user->save();
+
+		return view('auth.updatePassword');
 	}
 
 }

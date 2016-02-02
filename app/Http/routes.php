@@ -17,6 +17,8 @@ Route::get('bienvenido', 'WelcomeController@welcome');
 Route::post('login', 'WelcomeController@doLogin');
 Route::get('logout', 'WelcomeController@doLogout');
 
+Route::get('cambiarClave', 'WelcomeController@cambiarClave');
+Route::post('updatePassword', 'WelcomeController@updatePassword');
 Route::get('home', 'HomeController@index');
 
 
@@ -25,12 +27,12 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
-Route::get('error',function()
+/*Route::get('error',function()
 {
 	abort(500);
 	return "bar";
 });
-
+*/
 //Route::get('/', function()
 //{
 //    return 'Hello World';
@@ -120,6 +122,9 @@ Route::get('addActuacion/{id}', 'BecaController@addActuacion');
 
 //Route::group(['middleware' => 'auth'], function () {
 
+/*
+Actuaciones
+*/
 Route::resource('actuacion','ActuacionController');
 Route::get('altaActuacion','ActuacionController@altaActuacion');
 Route::post('storeActuacion', 'ActuacionController@store');
@@ -127,5 +132,5 @@ Route::get('listActuacion','ActuacionController@listActuacion');
 Route::post('updateActuacion','ActuacionController@update');
 Route::get('editActuacion/{id}','ActuacionController@edit');
 Route::get('getDatosActuacion','ActuacionController@getDatosActuacion');
-
+Route::get('getNumeroActuacion','ActuacionController@getNumeroActuacion');
 //});

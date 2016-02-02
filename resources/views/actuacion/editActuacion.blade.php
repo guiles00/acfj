@@ -19,7 +19,7 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<button type="button" class="btn btn-default" aria-label="Left Align">
-			<a href="" class="glyphicon glyphicon-arrow-left"></a>
+			<a href="{{action('ActuacionController@listActuacion')}}" class="glyphicon glyphicon-arrow-left"></a>
 		</button>
 		
 	</div>
@@ -29,7 +29,7 @@
         <div class="alert alert-success alert-dismissable">
                 <i class="fa fa-check"></i>
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <b>Beca Editada!</b>
+                <b>Actuaci&oacute;n Editada!</b>
             </div>
   <?php } ?>  
 	  
@@ -88,9 +88,9 @@
     </div>
     
     <div class="form-group">
-      <label class="control-label col-sm-2">Conste</label>
+      <label class="control-label col-sm-2">Recibi&oacute;</label>
       <div class="col-sm-2">          
-        <input type="text" class="form-control" id="" name="actuacion_conste" value="{{$actuacion->remite}}">
+        <input type="text" class="form-control" id="" name="actuacion_conste" value="{{$actuacion->conste}}">
       </div>
     </div>
     

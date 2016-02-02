@@ -251,6 +251,7 @@ class BecaController extends Controller {
 		$beca->dependencia_id = $input['dependencia_id'];
 		$beca->dependencia_otro = $input['dependencia_otro'];
 		$beca->telefono_laboral = $input['tel_laboral'];
+		$beca->telefono_particular = $input['tel_particular'];
 		$beca->dictamen_por = $input['dictamen_por'];
 		$beca->renovacion_id = $input['renovacion_id'];
 
@@ -268,12 +269,13 @@ class BecaController extends Controller {
         $documentacion->certificado_laboral = ( empty($input['doc_certificado_laboral']) )? 0 : 1;;
         $documentacion->copia_titulo = ( empty($input['doc_copia_titulo']) )? 0 : 1;
         $documentacion->dictamen_evaluativo = ( empty($input['doc_dictamen_evaluativo']) )? 0 : 1;
+        $documentacion->autorizacion_superposicion = ( empty($input['doc_autorizacion_superposicion']) )? 0 : 1;
 
         $documentacion->save();
 
 		//echo "<pre>";
 		//echo $input['_id'];
-		//print_r($documentacion);
+		//print_r($input);
 		//exit;
 		/*		echo "<pre>";
 
