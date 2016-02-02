@@ -75,7 +75,7 @@
     </div>
     
     <div class="form-group">
-      <label class="control-label col-sm-2">Conste</label>
+      <label class="control-label col-sm-2">Recibi&oacute;</label>
       <div class="col-sm-2">          
         <input type="text" class="form-control" id="" name="actuacion_conste">
       </div>

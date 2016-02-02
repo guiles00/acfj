@@ -286,7 +286,7 @@
                             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#"><i class="fa fa-user fa-fw"></i> Cambiar Clave</a>
+                            <li><a href="{{ URL::to('cambiarClave') }}"><i class="fa fa-user fa-fw"></i> Cambiar Clave</a>
                             </li>
                             <!--li><a href="#"><i class="fa fa-gear fa-fw"></i> Configurac</a>
                             </li-->

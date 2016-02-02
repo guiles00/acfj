@@ -48,7 +48,7 @@
                    <th>ASUNTO</th>
                    <th>DIRIGIDO</th>  
                    <th>REMITE</th>
-                   <th>CONSTE</th>
+                   <th>RECIBIO</th>
                    <th></th>
                </tr>
            </thead>

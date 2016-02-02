@@ -11,6 +11,7 @@
 	opacity: 1;				
 }
 </style>
+
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<button type="button" class="btn btn-default" aria-label="Left Align">
@@ -18,10 +19,9 @@
 		</button>
 		
 	</div>
-
+  
   <div class="panel-body">
-	  
- 	<form class="form-horizontal" role="form" method="POST" action="{{action('ActuacionController@store')}}">
+  <form class="form-horizontal" role="form" method="POST" action="{{action('ActuacionController@store')}}">
 	  <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
 
 	  <div class="form-group">
@@ -59,7 +59,7 @@
     </div>
     
     <div class="form-group">
-      <label class="control-label col-sm-2">Conste</label>
+      <label class="control-label col-sm-2">Recibi&oacute;</label>
       <div class="col-sm-2">          
         <input type="text" class="form-control" id="" name="actuacion_conste">
       </div>

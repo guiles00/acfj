@@ -72,7 +72,7 @@
 					    </div>
 					    
 					    <div class="form-group">
-					      <label class="control-label col-sm-2">Conste</label>
+					      <label class="control-label col-sm-2">Recibi&oacute;</label>
 					      <div class="col-sm-6">          
 					        <input type="text" class="form-control"  name="actuacion_conste" value='' id='b_actuacion_conste' disabled>
 					      </div>

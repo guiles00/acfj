@@ -25,6 +25,13 @@
 	</div>
 
   <div class="panel-body">
+    <?php if(isset($edited)){?>
+        <div class="alert alert-success alert-dismissable">
+                <i class="fa fa-check"></i>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <b>Beca Editada!</b>
+            </div>
+  <?php } ?>  
 	  
  	<form class="form-horizontal" role="form" method="POST" action="{{action('ActuacionController@update')}}">
 	  <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
