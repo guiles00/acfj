@@ -1,6 +1,6 @@
 <?php
 	// file name for download
-	$fileName = "codexworld_export_data" . date('Ymd') . ".xls";
+	$fileName = "solicitud_beca" . date('Ymd') . ".xls";
 	// headers for download
 	
 	header("Content-Disposition: attachment; filename=\"$fileName\"");

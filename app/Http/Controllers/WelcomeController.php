@@ -62,6 +62,10 @@ class WelcomeController extends Controller {
 		$userdata = array('email'=> $input['email'],
 		        'password'  => $input['password']);
 
+/* 		$id_sesion = md5(uniqid(rand(), true));
+		$id_sesion2 = $input['email']."%".$id_sesion."%".'190.1.1.1';
+		setcookie('id_sesion', $id_sesion2, time()+7776000,'/');
+*/
 
 		 // attempt to do the login
 	     if ( MyAuth::attempt($userdata) ) {
@@ -70,10 +74,9 @@ class WelcomeController extends Controller {
 
 	    } else {        
 
-	        
 	        return Redirect::to('/');
-
 	    }
+
 
 	}
 

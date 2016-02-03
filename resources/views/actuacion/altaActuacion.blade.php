@@ -32,7 +32,7 @@
     </div>
 
   <div class="panel-body">
-	  
+	 
  	<form class="form-horizontal" role="form" method="POST" action="{{action('ActuacionController@store')}}" id="a_form_alta">
 	  <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
 
@@ -90,9 +90,23 @@
     <div class="form-group">
       <label class="control-label col-sm-2">Fojas</label>
       <div class="col-sm-2">          
-        <input type="text" class="form-control" id="" name="actuacion_fojas">
+        <input type="number" class="form-control" id="" name="actuacion_fojas">
       </div>
     </div>
+
+    
+    <!--div class="form-group">
+      <label class="control-label col-md-2">Archivo</label>
+        <div class="col-md-4">
+          <select class="form-control" name="archivo_actuacion_id">
+          <option value="0">-</option>
+          @foreach($archivo_actuacion as $key=>$archivo)
+          <option value="{{$archivo->archivo_actuacion_id}}">{{$archivo->nombre_archivo}}</option>
+          @endforeach
+          </select>
+        </div>
+    </div-->
+
 
     <div class="form-group">
       <label class="control-label col-sm-2">Observaciones</label>

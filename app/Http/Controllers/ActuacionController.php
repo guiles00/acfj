@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 //use Illuminate\Http\Request;
 use Request;
 use App\Actuacion;
+use App\ArchivoActuacion;
 use DB;
 use App\domain\MyAuth;
 use App\domain\User;
@@ -70,8 +71,9 @@ class ActuacionController extends Controller {
 		//
 		$actuacion = Actuacion::find($id);
 		
-
-		return view('actuacion.editActuacion')->with('actuacion',$actuacion);
+		$archivo_actuacion = ArchivoActuacion::get();
+		
+		return view('actuacion.editActuacion')->with('actuacion',$actuacion)->with('archivo_actuacion',$archivo_actuacion);
 	}
 
 	/**
@@ -95,12 +97,14 @@ class ActuacionController extends Controller {
     	$actuacion->conste = $input['actuacion_conste'];
     	$actuacion->fojas = $input['actuacion_fojas'];
     	$actuacion->observaciones = $input['actuacion_observaciones'];
+    	//$actuacion->archivo_actuacion_id = $input['archivo_actuacion_id'];
 		$actuacion->save();
 		//echo "<pre>";
 		//print_r($actuacion);
 		//exit;
+		$archivo_actuacion = ArchivoActuacion::get();
 
-		return view('actuacion.editActuacion')->with('actuacion',$actuacion)->with('edited',true);
+		return view('actuacion.editActuacion')->with('actuacion',$actuacion)->with('archivo_actuacion',$archivo_actuacion)->with('edited',true);
 	}
 
 	/**
@@ -117,8 +121,9 @@ class ActuacionController extends Controller {
 	public function altaActuacion()
 	{
 		//
+		$archivo_actuacion = ArchivoActuacion::get();
 
-		return view('actuacion.altaActuacion');
+		return view('actuacion.altaActuacion')->with('archivo_actuacion',$archivo_actuacion);
 	}
 
 	/**
@@ -143,6 +148,7 @@ class ActuacionController extends Controller {
     	$actuacion->conste = $input['actuacion_conste'];
     	$actuacion->fojas = $input['actuacion_fojas'];
     	$actuacion->observaciones = $input['actuacion_observaciones'];
+    	//$actuacion->archivo_actuacion_id = $input['archivo_actuacion_id'];
 		
 		try {
 

@@ -361,13 +361,13 @@ public function saveActuacion(){
 
 }
 public function exportar(){
-	$datos = array(
+	/*$datos = array(
 		array("First Name" => "Nitya", "Last Name" => "Maity", "Email" => "nityamaity87@gmail.com", "Message" => "Test message by Nitya"),
 		array("First Name" => "Codex", "Last Name" => "World", "Email" => "info@codexworld.com", "Message" => "Test message by CodexWorld"),
 		array("First Name" => "John", "Last Name" => "Thomas", "Email" => "john@gmail.com", "Message" => "Test message by John"),
 		array("First Name" => "Michael", "Last Name" => "Vicktor", "Email" => "michael@gmail.com", "Message" => "Test message by Michael"),
 		array("First Name" => "Sarah", "Last Name" => "David", "Email" => "sarah@gmail.com", "Message" => "Test message by Sarah")
-	);
+	);*/
 
 		$data = DB::table('beca')
             ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
@@ -379,15 +379,25 @@ public function exportar(){
            // ->groupBy('cargo.car_nombre')
             ->orderBy('beca.beca_id','DESC')
             ->get();
-//echo "<pre>";
+     
      $row = array();
-     foreach ($data as $key => $value) {
+	 
+     foreach ($data as $registro) {
+     	
+     	//print_r($dat);
+     	foreach ($registro as $key =>$valor) {
+			
+			$row[$key] = $valor;
+			
+     	}
+     		$excel[] = $row;
 
+     	/*exit;
   			$row['beca_id'] = $value->beca_id;
             $row['nombre'] = $value->usi_nombre;
             $row['tipo_beca_id'] = $value->tipo_beca_id;
     		
-    		$excel[] = $row;
+    		$excel[] = $row;*/
     }
     $data = $excel;
     //$data = $datos;
@@ -401,12 +411,177 @@ public function exportar(){
 
 
 	public function enviarEmailDocumentacion(){
+			
 			$input = Request::all();
 
-			print_r($input);
-			exit;
+			//Trae datos de la beca
+			$beca = Beca::find($input['beca_id']);
+
+			//Trae datos del destinatario
+			$datos_destinatario = DB::table('usuario_sitio')
+            ->select('*')
+            ->where('usuario_sitio.usi_id', '=', $beca['alumno_id'])
+            ->get();
+
+            $email = $datos_destinatario[0]->usi_email;	
+            
+            //Trae datos de Documentacion
+			$documentacion = (array) Documentacion::traeDocumentacion($input['beca_id']);
+			
+			$documentacion_papeles = [];
+			$doc = array_slice($documentacion, 2);   
+			
+			foreach ($doc as $key => $value) {
+					//lo que falta
+					if($value == 0) array_push($documentacion_papeles,$key);
+			}
+		
+			if($beca->sup_horaria == 0) { 
+
+				if(($key = array_search('autorizacion_superposicion', $documentacion_papeles)) !== false) {
+    			unset($documentacion_papeles[$key]);
+   			
+				}
+			}
+
+
+			if($beca->renovacion_id == 2) { 
+
+				if(($key = array_search('curriculum_vitae', $documentacion_papeles)) !== false) {
+    			unset($documentacion_papeles[$key]);
+				}
+				if(($key = array_search('informacion_actividad', $documentacion_papeles)) !== false) {
+    			unset($documentacion_papeles[$key]);
+				}
+				if(($key = array_search('copia_titulo', $documentacion_papeles)) !== false) {
+    			unset($documentacion_papeles[$key]);
+				}
+			}
+			
+			$html = $this->arma_html($datos_destinatario[0],$documentacion_papeles);
+			$res = $this->enviaEmail($datos_destinatario,$html);
+
+			$res_html = ($res)?'<b>Email enviado con &eacute;xito</b>':'<br><br><b>Oh no, ocurrí&oacute; un error, comun&iacute;quese con el administrador</b>';
+			return $res_html;
 
 	}
+
+	public function previewEmailDocumentacion(){
+
+			$input = Request::all();
+
+			//Trae datos de la beca
+			$beca = Beca::find($input['beca_id']);
+
+			//Trae datos del destinatario
+			$datos_destinatario = DB::table('usuario_sitio')
+            ->select('*')
+            ->where('usuario_sitio.usi_id', '=', $beca['alumno_id'])
+            ->get();
+
+            $email = $datos_destinatario[0]->usi_email;	
+            
+            //Trae datos de Documentacion
+			$documentacion = (array) Documentacion::traeDocumentacion($input['beca_id']);
+			
+			$documentacion_papeles = [];
+			$doc = array_slice($documentacion, 2);   
+			
+			foreach ($doc as $key => $value) {
+					//lo que falta
+					if($value == 0) array_push($documentacion_papeles,$key);
+			}
+		
+			if($beca->sup_horaria == 0) { 
+
+				if(($key = array_search('autorizacion_superposicion', $documentacion_papeles)) !== false) {
+    			unset($documentacion_papeles[$key]);
+   			
+				}
+			}
+
+
+			if($beca->renovacion_id == 2) { 
+
+				if(($key = array_search('curriculum_vitae', $documentacion_papeles)) !== false) {
+    			unset($documentacion_papeles[$key]);
+				}
+				if(($key = array_search('informacion_actividad', $documentacion_papeles)) !== false) {
+    			unset($documentacion_papeles[$key]);
+				}
+				if(($key = array_search('copia_titulo', $documentacion_papeles)) !== false) {
+    			unset($documentacion_papeles[$key]);
+				}
+			}
+			
+			$html = $this->arma_html($datos_destinatario[0],$documentacion_papeles);
+			
+			return $html;
+
+	}
+
+
+	private function arma_html($datos_destinatario,$documentacion_papeles){
+
+		$html_email = "Estimado/a: ".$datos_destinatario->usi_nombre."<br>"."<p>Nos comunicamos con Ud. con motivo de la solicitud de beca en tr&aacute;mite ante este Centro. <br>
+		Del an&aacute;lisis de su presentaci&oacute;n surge que a la fecha le falta acompa&ntilde;ar la siguiente documentaci&oacute;n:</p>";
+
+		$documentacion_labels = ['formulario_solicitud'=>'Formulario de Solicitud de Beca.','copia_titulo'=>'Copia Certificada del T&iacute;tulo Universitario.'
+		,'dictamen_evaluativo'=>'Dictamen Evaluativo del funcionario superior jer&aacute;rquico de la dependencia donde desempe&ntilde;e sus funciones, que contenga -de corresponder- la conformidad requerida por el Art. 12, 2&deg; p&aacute;rrafo del Reglamento.',
+		 'informacion_actividad'=>'Informaci&oacute;n de Actividad emitida por la instituci&oacute;n donde se pretende cursar los estudios con sus contenidos, carga horaria, días y horarios de cursos y costos'
+		 ,'certificado_laboral'=>' Certificado Laboral en el que conste la situaci&oacute;n de revista del aspirante y antig&uuml;edad en el cargo y remuneraci&oacute;n.'
+		,'autorizacion_superposicion'=>'Autorizaci&oacute;n por superposici&oacute;n horaria, del Presidente del Consejo de la Magistratura, Fiscal General, Defensor General, Asesor General Tutelar o Presidente del Tribunal Superior de Justicia de la Ciudad Aut&oacute;noma de Buenos Aires, seg&uacute;n corresponda, con indicaci&oacute;n expresa de la modalidad de recupero de las horas de trabajo.'
+		,'curriculum_vitae'=>'Curriculum Vitae.'];
+		
+		$html_email .= "<ul>";
+		//echo "<pre>";
+		//print_r($documentacion_papeles);
+		foreach ($documentacion_papeles as $key => $value) {
+			
+					$html_email = $html_email."<li>".$documentacion_labels[$value]."</li>";				
+		}	
+		$html_email .= "</ul>";
+		$html_email .= 'Cordialmente, <br>';
+		$html_email .= '<p style="font-size:14px">
+		Departamento de Coordinaci&oacute;n de Convenios, Becas y Publicaciones.
+		</p>
+ 		<br>
+		<div align="center"><b><i style="font-size:12px">
+		Bolivar 177 Piso 3ro -  Ciudad Aut&oacute;noma de Buenos Aires  -   CP: C1066AAC   -  Tel: 4008-0284  -  Email: becas@jusbaires.gov.ar
+		</i></b><div>';
+		//$html_email .= '<i>Por favor, NO responda a este mensaje, es un env&iacute;o autom&aacute;tico. Por cualquier inconveniente comuniques</i>';
+		return $html_email;
+	}
+
+	private function enviaEmail($datos_destinatario,$html){
+
+		$to      = 'guillermo.caserotto@gmail.com';
+		$subject = 'the subject';
+		$message = $html;
+		$headers = 'From: gcaserotto@jusbaires.gov.ar' . "\r\n" .
+		    'Reply-To: gcaserotto@jusbaires.gov.ar' . "\r\n" .
+		    'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		    'Bcc: gcaserotto@jusbaires.gov.ar' . "\r\n" .
+		    'X-Mailer: PHP/' . phpversion();
+
+		$res = mail($to, $subject, $message, $headers);
+
+		//ver error 
+
+		return $res;
+	}
+
+	public function eliminarVinculoActuacion($id)
+	{
+		//Traigo actuacion y desasocio la beca de la tabla actuacion (beca_id)
+		
+		$actuacion = Actuacion::find($id);
+		$actuacion->beca_id = null;
+		$actuacion->save();
+
+		return redirect()->back();
+	}
+
 	/**
 	 * Show the form for creating a new resource.
 	 *

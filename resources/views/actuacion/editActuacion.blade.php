@@ -97,9 +97,25 @@
     <div class="form-group">
       <label class="control-label col-sm-2">Fojas</label>
       <div class="col-sm-2">          
-        <input type="text" class="form-control" id="" name="actuacion_fojas" value="{{$actuacion->fojas}}">
+        <input type="number" class="form-control" id="" name="actuacion_fojas" value="{{$actuacion->fojas}}">
       </div>
     </div>
+
+
+    <!--div class="form-group">
+      <label class="control-label col-md-2">Archivo</label>
+        <div class="col-md-4">
+          <select class="form-control" name="archivo_actuacion_id">
+            @foreach($archivo_actuacion as $key=>$archivo)
+            <?php if( $archivo->archivo_actuacion_id == $actuacion->archivo_actuacion_id ){?>
+            <option value="{{$archivo->archivo_actuacion_id}}" selected>{{$archivo->nombre_archivo}}</option>
+            <?php }else{?>
+            <option value="{{$archivo->archivo_actuacion_id}}">{{$archivo->nombre_archivo}}</option>
+            <?php }?>
+            @endforeach
+          </select>
+        </div>
+    </div-->
 
     <div class="form-group">
       <label class="control-label col-sm-2">Observaciones</label>

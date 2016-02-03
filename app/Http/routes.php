@@ -106,7 +106,7 @@ Route::get('mgrupo','TableroController@mgrupo');
 
 //Route::get('hobbits','HobbitController@index');
 
-//Rutas Para Becas
+/*Rutas Para Becas*/
 
 //Route::resource('listBecas', 'BecaController');
 Route::resource('listBecas', 'BecaController@index');
@@ -115,10 +115,11 @@ Route::get('verDocAdjunta/{id}', 'BecaController@verDocAdjunta');
 Route::post('saveBeca', 'BecaController@save');
 Route::get('exportar', 'BecaController@exportar');
 Route::get('enviarEmailDocumentacion', 'BecaController@enviarEmailDocumentacion');
+Route::get('previewEmailDocumentacion', 'BecaController@previewEmailDocumentacion');
 
 Route::post('saveActuacion', 'BecaController@saveActuacion');
 Route::get('addActuacion/{id}', 'BecaController@addActuacion');
-
+Route::get('eliminarVinculoActuacion/{id}', 'BecaController@eliminarVinculoActuacion');
 
 //Route::group(['middleware' => 'auth'], function () {
 

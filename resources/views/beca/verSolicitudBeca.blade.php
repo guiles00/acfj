@@ -57,15 +57,18 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 				<div class="row">
 					<div class="form-group">
 						<label class="control-label col-md-2">DNI</label>
+
 						<div class="col-md-8"><input class="form-control input-sm" name="dni" value='<?=$beca->usi_dni?>' disabled></div>
 					</div>
 				</div>
 				<div class="row">	
 					<div class="form-group">
 						<label class="control-label col-md-2">Apellido y Nombre</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="apynom" value='<?=$beca->usi_nombre?>' disabled></div>
+						<? $nombre_email = $beca->usi_nombre.' ( '.$beca->usi_email.' )'; ?>
+						<div class="col-md-8"><input class="form-control input-sm" name="apynom" value='<?=$nombre_email?>' disabled></div>
 					</div>
 				</div>
+				
 				<div class="row">	
 					<div class="form-group">
 						<label class="control-label col-md-2">Legajo</label>
@@ -302,7 +305,7 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 					<div class="form-group">
 						<label class="control-label col-md-2">Renovaci&oacute;n</label>
 						<div class="col-md-4">
-						<select class="form-control" name="renovacion_id">
+						<select class="form-control" name="renovacion_id" id="b_renovacion_id">
 												@foreach($helpers['renovacion'] as $key=>$renovacion)
 												<?php if( $renovacion->dominio_id == $beca->renovacion_id ){?>
 												<option value="{{$renovacion->dominio_id}}" selected>{{$renovacion->nombre}}</option>
@@ -522,33 +525,32 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 									<span class="glyphicon glyphicon-ok"></span>
 									</label>
 								</div>
-
-								<label class="control-label col-sm-2">Informaci&oacute;n de Actividad</label>
+									<label class="control-label col-sm-2">Certificado Laboral</label>
 								<div class="btn-group col-sm-2" data-toggle="buttons">
-									<?php if($documentacion->informacion_actividad == 1){ ?>
-									<label class="btn btn-default active">
-									<input type="checkbox" name="doc_informacion_actividad" checked>
-									
+									<?php if($documentacion->certificado_laboral == 1){ ?>
+										<label class="btn btn-default active">
+										<input type="checkbox" name="doc_certificado_laboral" checked>
 									<?php }else{ ?> 
-									<label class="btn btn-default">
-									<input type="checkbox" name="doc_informacion_actividad">
-									<?php } ?>
+										<label class="btn btn-default">
+										<input type="checkbox" name="doc_certificado_laboral">
+									<?php } ?> 
+									<span class="glyphicon glyphicon-ok"></span>
+									</label>
+								</div>
+
+								<label class="control-label col-sm-1">Dictamen Evaluativo</label>
+								<div class="btn-group col-sm-1" data-toggle="buttons">
+									<?php if($documentacion->dictamen_evaluativo == 1){ ?>
+										<label class="btn btn-default active">
+										<input type="checkbox" name="doc_dictamen_evaluativo" checked>
+									<?php }else{ ?> 
+										<label class="btn btn-default">
+										<input type="checkbox" name="doc_dictamen_evaluativo">
+									<?php } ?> 
 									<span class="glyphicon glyphicon-ok"></span>
 									</label>
 								</div>
 							
-								<label class="control-label col-sm-1">Copia Certificada T&iacute;tulo Universitario</label>
-								<div class="btn-group col-sm-1" data-toggle="buttons">
-									<?php if($documentacion->copia_titulo == 1){ ?>
-										<label class="btn btn-default active">
-										<input type="checkbox" name="doc_copia_titulo" checked>
-									<?php }else{ ?> 
-										<label class="btn btn-default">
-										<input type="checkbox" name="doc_copia_titulo">
-									<?php } ?>
-									<span class="glyphicon glyphicon-ok"></span>
-									</label>
-								</div>
 								<label class="control-label col-sm-1" id="b_autorizacion_label">Autorizaci&oacute;n Superposici&oacute;n Horaria</label>
 								<div class="btn-group col-sm-1" data-toggle="buttons" id="b_autorizacion_div">
 									<?php if($documentacion->autorizacion_superposicion == 1){ ?>
@@ -567,8 +569,8 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 		        <div class="row">
 		        	<div class="form-group">
 							
-								<label class="control-label col-sm-2">Curriculum Vitae</label>
-								<div class="btn-group col-sm-2" data-toggle="buttons">
+								<label class="control-label col-sm-2" id="b_curriculum_vitae_label">Curriculum Vitae</label>
+								<div class="btn-group col-sm-2" data-toggle="buttons" id="b_curriculum_vitae_div">
 									<?php if($documentacion->curriculum_vitae == 1){ ?>
 										<label class="btn btn-default active">
 										<input type="checkbox" name="doc_curriculum_vitae" checked>
@@ -580,28 +582,29 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 									</label>
 								</div>
 
-								<label class="control-label col-sm-2">Certificado Laboral</label>
-								<div class="btn-group col-sm-2" data-toggle="buttons">
-									<?php if($documentacion->certificado_laboral == 1){ ?>
-										<label class="btn btn-default active">
-										<input type="checkbox" name="doc_certificado_laboral" checked>
+								<label class="control-label col-sm-2" id="b_informacion_actividad_label">Informaci&oacute;n de Actividad</label>
+								<div class="btn-group col-sm-2" data-toggle="buttons" id="b_informacion_actividad_div">
+									<?php if($documentacion->informacion_actividad == 1){ ?>
+									<label class="btn btn-default active">
+									<input type="checkbox" name="doc_informacion_actividad" checked>
+									
 									<?php }else{ ?> 
-										<label class="btn btn-default">
-										<input type="checkbox" name="doc_certificado_laboral">
-									<?php } ?> 
+									<label class="btn btn-default">
+									<input type="checkbox" name="doc_informacion_actividad">
+									<?php } ?>
 									<span class="glyphicon glyphicon-ok"></span>
 									</label>
 								</div>
-							
-								<label class="control-label col-sm-1">Dictamen Evaluativo</label>
-								<div class="btn-group col-sm-1" data-toggle="buttons">
-									<?php if($documentacion->dictamen_evaluativo == 1){ ?>
+
+								<label class="control-label col-sm-1" id="b_copia_titulo_label">Copia Certificada T&iacute;tulo Universitario</label>
+								<div class="btn-group col-sm-1" data-toggle="buttons" id="b_copia_titulo_div">
+									<?php if($documentacion->copia_titulo == 1){ ?>
 										<label class="btn btn-default active">
-										<input type="checkbox" name="doc_dictamen_evaluativo" checked>
+										<input type="checkbox" name="doc_copia_titulo" checked>
 									<?php }else{ ?> 
 										<label class="btn btn-default">
-										<input type="checkbox" name="doc_dictamen_evaluativo">
-									<?php } ?> 
+										<input type="checkbox" name="doc_copia_titulo">
+									<?php } ?>
 									<span class="glyphicon glyphicon-ok"></span>
 									</label>
 								</div>
@@ -636,7 +639,7 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
                 <td> {{ $actuacion->remite}} </td>
                 <td> {{ $actuacion->conste}} </td>
                 <!--td> {{ $actuacion->actuacion_id}} </td-->
-                <td> <a href="" onClick="return false">Eliminar</a></td>
+                <td> <a href="{!! URL::action('BecaController@eliminarVinculoActuacion',$actuacion->actuacion_id); !!}" onClick="return confirm('desea eliminar?')" >Eliminar</a></td>
 
             </tr>
             @endforeach    
@@ -673,6 +676,7 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 						<div class="col-md-12">
 							<button type="submit" class="btn btn-default" id="b_save_beca">Guardar</button>
 							<a href="{!! URL::action('BecaController@index'); !!}" class="btn btn-default">Cancelar</a>
+							<button type="button" class="btn btn-default" id="b_preview_email_documentacion">Previsualizar contenido Email</button>
 							<button type="button" class="btn btn-default" id="b_enviar_email_documentacion">Enviar Email Documentaci&oacute;n</button>
 						</div>
 					</div>
@@ -803,14 +807,29 @@ $('document').ready(function(){
 		                url : "../enviarEmailDocumentacion"
 		                ,data: {'beca_id':beca_id}
 		                ,success : function(result) {
-		                	$('#res').html('Email enviado con exito...de mentirita...');
-		                	console.debug('exito');
+		                	$('#res').html(result);
+		                	//console.debug(result);
 		                }
 		              });   
 
 	});
 
 
+	$('#b_preview_email_documentacion').click(function(){
+		
+		
+		var beca_id = $('#b_beca_id').val();
+
+			$.ajax({
+		                url : "../previewEmailDocumentacion"
+		                ,data: {'beca_id':beca_id}
+		                ,success : function(result) {
+		                	$('#res').html(result);
+		                	//console.debug(result);
+		                }
+		              });   
+
+	});
 
 	//Muestro o no la superposicion horaria
 
@@ -839,9 +858,64 @@ $('document').ready(function(){
 				$('#b_autorizacion_label').hide();
 				$('#b_autorizacion_div').hide();
 			}
-
-
 	 });
+
+
+	//Muestro o no si es renovacion
+
+	var renovacion = $('#b_renovacion_id').val();
+	
+	if(renovacion == 1){
+		
+		$('#b_curriculum_vitae_label').show();
+		$('#b_curriculum_vitae_div').show();
+
+		$('#b_informacion_actividad_label').show();
+		$('#b_informacion_actividad_div').show();
+		
+		$('#b_copia_titulo_label').show();
+		$('#b_copia_titulo_div').show();
+	}else{
+		
+		$('#b_curriculum_vitae_label').hide();
+		$('#b_curriculum_vitae_div').hide();
+
+		$('#b_informacion_actividad_label').hide();
+		$('#b_informacion_actividad_div').hide();
+		
+		$('#b_copia_titulo_label').hide();
+		$('#b_copia_titulo_div').hide();
+	}
+
+	 $('#b_renovacion_id').on('change', function(d) {
+
+	 		var renovacion = $('#b_renovacion_id').val();
+	
+			if(renovacion == 1){
+				
+				$('#b_curriculum_vitae_label').show();
+				$('#b_curriculum_vitae_div').show();
+
+				$('#b_informacion_actividad_label').show();
+				$('#b_informacion_actividad_div').show();
+				
+				$('#b_copia_titulo_label').show();
+				$('#b_copia_titulo_div').show();
+
+			}else{
+				
+				$('#b_curriculum_vitae_label').hide();
+				$('#b_curriculum_vitae_div').hide();
+
+				$('#b_informacion_actividad_label').hide();
+				$('#b_informacion_actividad_div').hide();
+				
+				$('#b_copia_titulo_label').hide();
+				$('#b_copia_titulo_div').hide();
+			}
+	 });
+
+
 
 $('#b_fecha_inicio').datepicker({dateFormat:"yy-mm-dd"});
 $('#b_fecha_fin').datepicker({dateFormat:"yy-mm-dd"});
