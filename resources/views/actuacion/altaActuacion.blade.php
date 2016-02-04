@@ -55,7 +55,7 @@
     <div class="form-group">
       <label class="control-label col-sm-2">Fecha</label>
       <div class="col-sm-2">          
-        <input type="date" class="form-control" id="" name="actuacion_fecha" value="">
+        <input type="text" class="form-control datepicker" id="" name="actuacion_fecha" value="">
       </div>
     </div>
 
@@ -128,7 +128,13 @@
 <script>
 $(document).ready(function() {
 
-              
+              $('.datepicker').datepicker({
+                    format: 'yyyy-mm-dd'
+                    ,language:'es'
+                    ,autoclose: true
+                  }
+                );
+
               $('#a_numero_actuacion').on('change', function(d) {
               
                //alert('busco');

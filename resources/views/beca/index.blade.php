@@ -43,7 +43,7 @@ $helper = new App\Domain\Helper();
         <table class="table table-responsive table-striped table-bordered table-hover" id="beca">
             <thead>
                 <tr>
-                   <th>fecha</th>
+                   <th>Fecha</th>
                    <!--th>beca_id</th-->
                    <th>Tipo</th>
                    <th>Nombre</th>

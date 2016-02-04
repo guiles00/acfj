@@ -41,8 +41,8 @@
     <!-- DataTables Responsive CSS -->
     <link href="{{ asset('/bower_components/datatables-responsive/css/dataTables.responsive.css') }}" rel="stylesheet">
     
-    <link rel="stylesheet" href="{{ asset('//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css') }}">
-
+    <!--link rel="stylesheet" href="{{ asset('//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css') }}"-->
+    <link rel="stylesheet" href="{{ asset('/js/datepicker/css/bootstrap-datepicker3.css') }}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -51,8 +51,11 @@
         <![endif]-->
         <script src="{!! URL::asset('/bower_components/jquery/dist/jquery.min.js'); !!}"></script>
         <script src="{!! URL::asset('/bower_components/bootstrap/dist/js/bootstrap.min.js'); !!}"></script>
-        <script src="{!! URL::asset('//code.jquery.com/ui/1.11.4/jquery-ui.js'); !!}"></script>
-        <script src="{!! URL::asset('/js/datepicker.es.js'); !!}"></script>
+        <!--script src="{!! URL::asset('//code.jquery.com/ui/1.11.4/jquery-ui.js'); !!}"></script-->
+        
+
+        <script src="{!! URL::asset('/js/datepicker/js/bootstrap-datepicker.js'); !!}"></script>
+        <script src="{!! URL::asset('/js/datepicker/locales/bootstrap-datepicker.es.min.js'); !!}"></script>
         <link href="{{ asset('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css') }}" rel="stylesheet">
 
         <script src="{!! URL::asset('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'); !!}"></script>

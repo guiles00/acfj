@@ -62,7 +62,7 @@
     <div class="form-group">
       <label class="control-label col-sm-2">Fecha</label>
       <div class="col-sm-2">          
-        <input type="text" class="form-control" id="" name="actuacion_fecha" value="{{$actuacion->actuacion_fecha}}">
+        <input type="text" class="form-control datepicker" id="" name="actuacion_fecha" value="{{$actuacion->actuacion_fecha}}">
       </div>
     </div>
 
@@ -148,7 +148,12 @@
 
 
 $('document').ready(function(){
-	
+	 
+    $('.datepicker').datepicker({
+              format: 'yyyy-mm-dd'
+              ,language:'es'
+              ,autoclose: true}
+    );
 });
 
 </script>

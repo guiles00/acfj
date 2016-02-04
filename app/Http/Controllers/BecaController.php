@@ -556,13 +556,15 @@ public function exportar(){
 	private function enviaEmail($datos_destinatario,$html){
 
 		$to      = 'guillermo.caserotto@gmail.com';
-		$subject = 'the subject';
+		$subject = 'Departamento de Becas - Documentación';
 		$message = $html;
-		$headers = 'From: gcaserotto@jusbaires.gov.ar' . "\r\n" .
-		    'Reply-To: gcaserotto@jusbaires.gov.ar' . "\r\n" .
-		    'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-		    'Bcc: gcaserotto@jusbaires.gov.ar' . "\r\n" .
-		    'X-Mailer: PHP/' . phpversion();
+		$headers = 'From: becas@jusbaires.gov.ar' . "\r\n" .
+   			   'Reply-To: becas@jusbaires.gov.ar' . "\r\n" .
+			   'Bcc: gcaserotto@jusbaires.gov.ar' . "\r\n" .
+			   'Return-Path: return@jusbaires.gov.ar' . "\r\n" .
+			   'MIME-Version: 1.0' . "\r\n" .
+			   'Content-Type: text/html; charset=ISO-8859-1' . "\r\n" .
+			   'X-Mailer: PHP/' . phpversion();
 
 		$res = mail($to, $subject, $message, $headers);
 
