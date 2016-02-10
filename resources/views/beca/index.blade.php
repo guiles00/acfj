@@ -40,9 +40,11 @@ $helper = new App\Domain\Helper();
 <div class="panel-body">
 
     <div class="table-responsive">
+      <?php $total = count($becas);?>
         <table class="table table-responsive table-striped table-bordered table-hover" id="beca">
             <thead>
                 <tr>
+                   <th></th>
                    <th>Fecha</th>
                    <!--th>beca_id</th-->
                    <th>Tipo</th>
@@ -57,10 +59,11 @@ $helper = new App\Domain\Helper();
                </tr>
            </thead>
            <tbody>
-
+            
             @foreach ($becas as $beca)
             
             <tr>
+                <td> {{ $total-- }} </td>
                 <td> {{ Utils::formatDate($beca->timestamp) }} </td>
                 <!--td> {{ $beca->beca_id}} </td-->
                 <td> {{ $helper->getHelperByDominioAndId('tipo_beca',$beca->tipo_beca_id)  }} </td>
