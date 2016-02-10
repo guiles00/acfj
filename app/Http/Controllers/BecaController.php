@@ -555,8 +555,8 @@ public function exportar(){
 
 	private function enviaEmail($datos_destinatario,$html){
 
-		$to      = 'guillermo.caserotto@gmail.com';
-		$subject = 'Departamento de Becas - Documentación';
+		$to      = $datos_destinatario[0]->usi_email;
+		$subject = 'Departamento de Becas';
 		$message = $html;
 		$headers = 'From: becas@jusbaires.gov.ar' . "\r\n" .
    			   'Reply-To: becas@jusbaires.gov.ar' . "\r\n" .
