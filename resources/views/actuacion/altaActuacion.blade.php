@@ -37,10 +37,10 @@
 	  <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
 
 	  <div class="form-group">
-      <label class="control-label col-sm-2" >Actuaci&oacute;n</label>
+      <label class="control-label  col-sm-2" >Actuaci&oacute;n</label>
          <div class="col-sm-2">
         
-         <select class="form-control" name="codigo_actuacion">
+         <select class="form-control" name="codigo_actuacion" id="a_codigo_actuacion">
             <option value="" selected></option>
             <option value="BEC">BEC</option>
             <option value="CAP">CAP</option>
@@ -53,66 +53,88 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2">Fecha</label>
+      <label class="control-label  col-sm-2">Fecha</label>
       <div class="col-sm-2">          
         <input type="text" class="form-control datepicker" id="" name="actuacion_fecha" value="">
       </div>
     </div>
 
     <div class="form-group">
-      <label class="control-label col-sm-2">Asunto</label>
+      <label class="control-label  col-sm-2">Asunto</label>
       <div class="col-sm-8">          
         <textarea type="text" class="form-control" id="" name="actuacion_asunto"></textarea>
       </div>
     </div>
     
     <div class="form-group">
-      <label class="control-label col-sm-2">Dirigido</label>
-      <div class="col-sm-2">          
-        <input type="text" class="form-control" id="" name="actuacion_dirigido">
+      <label class="control-label  col-sm-2">Dirigido</label>
+      <div class="col-sm-6">          
+        <input type="text" class="form-control" id="" name="actuacion_dirigido" value="Molina Quiroga, Eduardo">
       </div>
     </div>
+
+    <div class="form-group">
+      <label class="control-label  col-md-2">Destino</label>
+        <div class="col-md-4">
+          <select class="form-control select2" name="area_destino_id" id="a_area_destino_id">
+          <option value="0">-</option>
+          @foreach($area_cfj as $key=>$area)
+          <option value="{{$area->area_cfj_id}}">{{$area->area_nombre}} ( {{$area->area_responsable}} )</option>
+          @endforeach
+          </select>
+        </div>
+    </div>    
     
     <div class="form-group">
-      <label class="control-label col-sm-2">Remite</label>
-      <div class="col-sm-2">          
+      <label class="control-label  col-sm-2">Remite</label>
+      <div class="col-sm-6">          
         <input type="text" class="form-control" id="" name="actuacion_remite">
       </div>
     </div>
     
-    <div class="form-group">
-      <label class="control-label col-sm-2">Recibi&oacute;</label>
-      <div class="col-sm-2">          
+    <!--div class="form-group">
+      <label class="control-label  col-sm-2">Recibi&oacute;</label>
+      <div class="col-sm-6">          
         <input type="text" class="form-control" id="" name="actuacion_conste">
       </div>
-    </div>
-    
+    </div-->
+   
+   <div class="form-group">
+      <label class="control-label col-md-2">Recibi&oacute;</label>
+        <div class="col-md-4">
+          <select class="form-control select2" name="conste_agente_id">
+          <option value="0">-</option>
+          @foreach($conste_agente as $key=>$agente)
+          <option value="{{$agente->agente_id}}">{{$agente->agente_nombre}}</option>
+          @endforeach
+          </select>
+        </div>
+    </div>      
+
     <div class="form-group">
-      <label class="control-label col-sm-2">Fojas</label>
+      <label class="control-label  col-sm-2">Fojas</label>
       <div class="col-sm-2">          
         <input type="number" class="form-control" id="" name="actuacion_fojas">
       </div>
     </div>
 
-    
-    <!--div class="form-group">
+    <div class="form-group">
+      <label class="control-label  col-sm-2">Observaciones</label>
+      <div class="col-sm-8">          
+        <textarea type="text" class="form-control" id="" name="actuacion_observaciones"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
       <label class="control-label col-md-2">Archivo</label>
         <div class="col-md-4">
-          <select class="form-control" name="archivo_actuacion_id">
+          <select class="form-control select2" name="archivo_actuacion_id">
           <option value="0">-</option>
           @foreach($archivo_actuacion as $key=>$archivo)
           <option value="{{$archivo->archivo_actuacion_id}}">{{$archivo->nombre_archivo}}</option>
           @endforeach
           </select>
         </div>
-    </div-->
-
-
-    <div class="form-group">
-      <label class="control-label col-sm-2">Observaciones</label>
-      <div class="col-sm-8">          
-        <textarea type="text" class="form-control" id="" name="actuacion_observaciones"></textarea>
-      </div>
     </div>
     
     <div class="form-group"> 
@@ -134,6 +156,10 @@ $(document).ready(function() {
                     ,autoclose: true
                   }
                 );
+              $('.datepicker').datepicker('setDate', new Date());
+              $('.datepicker').datepicker('update');
+              $('.datepicker').val('');
+              
 
               $('#a_numero_actuacion').on('change', function(d) {
               
@@ -190,7 +216,27 @@ $(document).ready(function() {
 
                  return false; //is superfluous, but I put it here as a fallback
             });
+  
+            //Esta harcodeado para ver si es asi como deberia funcionar
+            //Las constantes BEC,ADM,CAP y CNV las dejo
+            // Traer de la base (SI ES NECESARIO) las relaciones entre codigo y area 
+            $("#a_codigo_actuacion").on('change', function(d) {
 
+              var codigo_actuacion = $("#a_codigo_actuacion").val();
+               
+               if( codigo_actuacion == 'BEC' || codigo_actuacion == 'CNV' ){
+                $("#a_area_destino_id").val(1).change();;     
+               }
+
+               if( codigo_actuacion == 'ADM' || codigo_actuacion == 'CAP' ){
+                $("#a_area_destino_id").val(2).change();;     
+               }
+
+               if( codigo_actuacion == '' ){
+                $("#a_area_destino_id").val(0).change();;     
+               }                
+
+            });
 
 });
 </script>

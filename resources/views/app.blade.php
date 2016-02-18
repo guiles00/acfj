@@ -363,10 +363,13 @@
                                 <a href="#"><i class="fa fa-sitemap fa-fw"></i>Mesa de Entradas<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="{!! URL::asset('/altaActuacion') !!}">Alta</a>
+                                        <a href="{!! URL::asset('/altaActuacion') !!}">Alta Actuaci&oacute;n</a>
                                     </li>
                                     <li>
-                                        <a href="{!! URL::asset('/listActuacion') !!}">Listado</a>
+                                        <a href="{!! URL::asset('/listActuacion') !!}">Listado Actuaciones</a>
+                                    </li>
+                                    <li>
+                                        <a href="{!! URL::asset('/listRemitidos') !!}">Remitidos</a>
                                     </li>
                                 </ul>
                                 

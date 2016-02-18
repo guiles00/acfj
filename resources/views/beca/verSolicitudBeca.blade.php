@@ -139,7 +139,7 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 									</div>
 								</div>
 								<div class="row">
-									<div class="form-group">
+								<div class="form-group">
 									<label class="control-label col-md-2">Fuero</label>
 									<div class="col-md-8">
 										<select class="form-control" name="fuero_id">

@@ -372,7 +372,11 @@ public function exportar(){
 		$data = DB::table('beca')
             ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
             ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id')
-           // ->join('cargo','usuario_sitio.usi_car_id','=','cargo.car_id')
+            ->leftJoin('dependencia','beca.dependencia_id','=','dependencia.dep_id')
+            ->leftJoin('titulo','beca.titulo_id','=','titulo.titulo_id')
+            ->leftJoin('universidad_sigla','beca.universidad_id','=','universidad_sigla.universidad_id')
+            ->leftJoin('cargo','usuario_sitio.usi_car_id','=','cargo.car_id')
+
             ->select('*')
             //->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
             //->where('beca.estado_id', '=', $input['estado_id'])
@@ -380,29 +384,67 @@ public function exportar(){
             ->orderBy('beca.beca_id','DESC')
             ->get();
      
+     $excel = array();
      $row = array();
-	 
-     foreach ($data as $registro) {
+	 //echo "<pre>";
+     foreach($data as $registro){
      	
-     	//print_r($dat);
-     	foreach ($registro as $key =>$valor) {
-			
-			$row[$key] = $valor;
-			
-     	}
-     		$excel[] = $row;
 
-     	/*exit;
-  			$row['beca_id'] = $value->beca_id;
-            $row['nombre'] = $value->usi_nombre;
-            $row['tipo_beca_id'] = $value->tipo_beca_id;
-    		
-    		$excel[] = $row;*/
-    }
+     	//print_r($registro);
+     	$row['nombre y apellido'] = $registro->usi_nombre;
+     	$row['Nro de Actuacion'] = '';
+		$row['Identificador de Legajo'] = '';
+		$row['DNI'] = $registro->usi_dni;
+		$row['Domicilio'] = $registro->domicilio_constituido;
+		$row['Telefono'] = $registro->telefono_laboral;
+		$row['Correo electronico'] = $registro->usi_email;
+		$row['Antiguedad'] = '';
+		$row['Titulo de grado'] = $registro->titulo;
+		$row['Dictamen evaluativo del superior jerarquico'] = $registro->dictamen_por;
+		$row['Curriculum Vitae'] = '';
+		$row['Superposicion horaria: si/no'] = ($registro->sup_horaria == 1)?'SI':'NO';
+		$row['Autorizacion de presidencia, etc.: si/no'] = '';
+		$row['Estudio a realizar a mas de 50 km CABA'] = '';
+		$row['Renovacion'] = ($registro->renovacion_id == 2)?'SI':'NO';
+		$row['Segunda carrera en adelante'] = '';
+		$row['Cargo'] = $registro->car_nombre;
+		$row['Dependencia'] = $registro->dep_nombre;
+		$row['Origen'] = '';
+		$row['Remuneracion'] = '';
+		$row['Carrera'] = $registro->actividad_nombre;
+		$row['Universidad'] = $registro->universidad;
+		$row['Duracion'] = $registro->duracion;
+		$row['Convenio: si/no'] = '';
+		$row['Beca: si/no'] = '';
+		$row['Valor de la carrera'] = $registro->costo;
+		$row['Valor con convenio o beca'] = '';
+		$row['Monto solicitado'] = $registro->monto;
+		$row['Maximo por Art. 7 - Reg. Becas'] = '';
+		$row['Monto otorgable'] = '';
+		$row['Monto final'] = '';
+		$row['Monto adicional'] = '';
+		$row['Monto desafectado'] = '';
+		$row['Normativa que otorga o deniega la beca'] = '';
+		$row['Renuncia Total/Parcial'] = '';
+		$row['Caducidad'] = '';
+		$row['Reintegro/s.'] = '';
+
+
+     	$excel[] = $row;
+     }
+     
+     	//print_r($dat);
+     	//foreach ($registro as $key =>$valor) {
+			
+		
+
+     	
+     	//}
+     		//$excel[] = $row;
     $data = $excel;
-    //$data = $datos;
+    
 	//echo "<pre>";
-	//print_r($data);
+	//print_r($excel);
 	//exit;
 	return view('beca.exportar')->with('data',$data);
 

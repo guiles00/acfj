@@ -126,12 +126,27 @@ Route::get('eliminarVinculoActuacion/{id}', 'BecaController@eliminarVinculoActua
 /*
 Actuaciones
 */
-Route::resource('actuacion','ActuacionController');
-Route::get('altaActuacion','ActuacionController@altaActuacion');
-Route::post('storeActuacion', 'ActuacionController@store');
-Route::get('listActuacion','ActuacionController@listActuacion');
-Route::post('updateActuacion','ActuacionController@update');
-Route::get('editActuacion/{id}','ActuacionController@edit');
-Route::get('getDatosActuacion','ActuacionController@getDatosActuacion');
-Route::get('getNumeroActuacion','ActuacionController@getNumeroActuacion');
+
+
+
+Route::group(['middleware' => ['session_expired']], function () {
+	
+	Route::resource('actuacion','ActuacionController');
+    Route::get('altaActuacion','ActuacionController@altaActuacion');
+    Route::get('listActuacion','ActuacionController@listActuacion');
+    Route::post('storeActuacion', 'ActuacionController@store');
+	Route::get('listActuacion','ActuacionController@listActuacion');
+	Route::post('updateActuacion','ActuacionController@update');
+	Route::get('editActuacion/{id}','ActuacionController@edit');
+	Route::get('getDatosActuacion','ActuacionController@getDatosActuacion');
+	Route::get('getNumeroActuacion','ActuacionController@getNumeroActuacion');
+});
+
 //});
+
+/* Archivos Remitidos */
+Route::get('listRemitidos','RemitidosController@listRemitidos');
+Route::get('altaRemitidos','RemitidosController@altaRemitidos');
+Route::post('storeRemitidos', 'RemitidosController@store');
+Route::get('editRemitidos/{id}','RemitidosController@edit');
+Route::post('updateRemitidos','RemitidosController@update');

@@ -2,7 +2,9 @@
 
 @section('content')
 
-<? use App\domain\Utils;
+<? 
+use App\domain\Utils;
+use App\domain\Actuacion;
 ?>
 
   <!--div class="row">
@@ -20,21 +22,74 @@
  
  <div class="panel-heading">
       <div class="form-group pull-left">
-                <button type="button" class="btn btn-default pull-left" aria-label="Left Align">
-                <a href="{!! URL::action('ActuacionController@altaActuacion'); !!}" aria-label="Left Align">Alta Actuaci&oacute;n</a></button>
+                <!--button type="button" class="btn btn-default pull-left" aria-label="Left Align"-->
+                <a  class="btn btn-default pull-left" href="{!! URL::action('ActuacionController@altaActuacion'); !!}" aria-label="Left Align">Alta Actuaci&oacute;n</a><!--/button-->
               </div>
      <div class="row">      
-        <form method="GET" action="{{action('ActuacionController@listActuacion')}}" class="navbar-form navbar-left pull-right" role="search">
-            <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
-            <div class="row">
+      
+        <div class="row">
               <div class="form-group">
-                    <input type="text" class="form-control " name="str_actuacion" placeholder="" id="search_actuacion">
-                    <button type="submit" class="btn btn-default" id="buscar_actuacion">Buscar</button>
+                <!--button type="submit" class="btn btn-default glyphicon glyphicon-search" id="a_abuscar_actuacion" data-target="#basicModal"></button-->
+                <a href="#" class="btn glyphicon glyphicon-search" data-toggle="modal" data-target="#basicModal"></a>
+
+                <form method="GET" action="{{action('ActuacionController@listActuacion')}}" class="navbar-form navbar-left pull-right" role="search">
+                            <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+                            <input type="text" class="form-control " name="str_actuacion" placeholder="" id="search_actuacion">
+                            <button type="submit" class="btn btn-default" id="buscar_actuacion">Buscar</button>
+                </form>
               </div>   
          </div>
-        </form>
+        
     </div>
 </div>
+<!-- Modal Busqueda -->
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title" id="myModalLabel">B&uacute;squeda de Actuaciones</h4>
+            </div>
+            <form method="GET" action="{{action('ActuacionController@listActuacion')}}" role="search">
+                <div class="modal-body">
+        
+
+        <div class="row">
+          <div class="col-lg-12 col-md-12">
+            
+            <div class="row"> 
+              <div class="form-group">
+                <label class="control-label col-md-2">Destino</label>
+                <div class="col-md-8"><input class="form-control input-sm" name="str_destino" value=''></div>
+              </div>
+            </div>  
+            <br>
+            <div class="row"> 
+              <div class="form-group">
+                <label class="control-label col-md-2">Recibi&oacute;</label>
+                <div class="col-md-8"><input class="form-control input-sm" name="str_actuacion" value=''></div>
+              </div>
+            </div> 
+        </div>
+      </div>
+
+                </div>
+                <div class="modal-footer">
+             
+                <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary" >Buscar</button>
+             
+            </div>
+         </form>
+    </div>
+  </div>
+</div>
+
+<!-- -->
+
+
 
 <div class="panel-body">
     <div class="table-responsive">
@@ -42,26 +97,31 @@
             <thead>
                 <tr>                   
                    <!--th>actuacion_id</th-->
+                   <th></th>
                    <th>PREF.</th>
                    <th>ACTUACI&Oacute;N</th>
                    <th>FECHA</th>
                    <th>ASUNTO</th>
                    <th>DIRIGIDO</th>  
+                   <th>DESTINO</th>
                    <th>REMITE</th>
                    <th>RECIBIO</th>
                    <th></th>
                </tr>
            </thead>
            <tbody>
+              <?php $total = count($actuaciones);?> 
             @foreach ($actuaciones as $actuacion)
             <tr>
+                <td> {{ $total-- }} </td>
                 <td> {{ $actuacion->prefijo }} </td>
                 <td> {{ $actuacion->numero_actuacion  }} </td>
                 <td> {{ Utils::formatDate($actuacion->actuacion_fecha) }} </td>
                 <td> {{ $actuacion->asunto}} </td>
                 <td> {{ $actuacion->dirigido}} </td>
+                <td> {{ Actuacion::getDestinoById($actuacion->area_destino_id) }} </td>
                 <td> {{ $actuacion->remite}} </td>
-                <td> {{ $actuacion->conste}} </td>
+                <td> {{ Actuacion::getAgenteById($actuacion->conste_agente_id)}} </td>
                 <!--td> {{ $actuacion->actuacion_id}} </td-->
                 <td> <a href="{!! URL::action('ActuacionController@edit',$actuacion->actuacion_id); !!}">Ver</a></td>
 
@@ -112,7 +172,9 @@ $(document).ready(function() {
 
                 });
               */
-
+              $('#a_buscar_actuacion').on('click', function(d) {
+                alert('buscala');
+               });  
             });
 </script>
 @stop

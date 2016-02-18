@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Request;
 use App\Actuacion;
 use App\ArchivoActuacion;
+use App\AreaCfj;
+use App\Agente;
 use DB;
 use App\domain\MyAuth;
 use App\domain\User;
@@ -27,14 +29,14 @@ class ActuacionController extends Controller {
 
 
 
-		if (  MyAuth::check() )
+		/*if (  MyAuth::check() )
 		{
 			//Aca algo voy a hacer
 			//Levanto los datos el usuario
 		}else{
 
 	        return Redirect::to('/');
-		}
+		}*/
 	
 	}
 
@@ -68,12 +70,17 @@ class ActuacionController extends Controller {
 	 */
 	public function edit($id)
 	{
+
 		//
 		$actuacion = Actuacion::find($id);
 		
 		$archivo_actuacion = ArchivoActuacion::get();
-		
-		return view('actuacion.editActuacion')->with('actuacion',$actuacion)->with('archivo_actuacion',$archivo_actuacion);
+		$area_cfj = AreaCfj::get();
+		$conste_agente = Agente::get();
+
+		return view('actuacion.editActuacion')->with('actuacion',$actuacion)
+		->with('archivo_actuacion',$archivo_actuacion)->with('area_cfj',$area_cfj)
+		->with('conste_agente',$conste_agente);
 	}
 
 	/**
@@ -97,14 +104,19 @@ class ActuacionController extends Controller {
     	$actuacion->conste = $input['actuacion_conste'];
     	$actuacion->fojas = $input['actuacion_fojas'];
     	$actuacion->observaciones = $input['actuacion_observaciones'];
-    	//$actuacion->archivo_actuacion_id = $input['archivo_actuacion_id'];
+    	$actuacion->archivo_actuacion_id = $input['archivo_actuacion_id'];
+    	$actuacion->area_destino_id = $input['area_destino_id'];
+    	$actuacion->conste_agente_id = $input['conste_agente_id'];
 		$actuacion->save();
 		//echo "<pre>";
 		//print_r($actuacion);
 		//exit;
 		$archivo_actuacion = ArchivoActuacion::get();
+		$area_cfj = AreaCfj::get();
+		$conste_agente = Agente::get();
 
-		return view('actuacion.editActuacion')->with('actuacion',$actuacion)->with('archivo_actuacion',$archivo_actuacion)->with('edited',true);
+		return view('actuacion.editActuacion')->with('actuacion',$actuacion)->with('archivo_actuacion',$archivo_actuacion)
+		->with('area_cfj',$area_cfj)->with('conste_agente',$conste_agente)->with('edited',true);
 	}
 
 	/**
@@ -120,10 +132,16 @@ class ActuacionController extends Controller {
 
 	public function altaActuacion()
 	{
+
+		//if(session_status() == 1)
+		//return Redirect::to('/');	
 		//
 		$archivo_actuacion = ArchivoActuacion::get();
+		$area_cfj = AreaCfj::get();
+		$conste_agente = Agente::get();
 
-		return view('actuacion.altaActuacion')->with('archivo_actuacion',$archivo_actuacion);
+		return view('actuacion.altaActuacion')->with('archivo_actuacion',$archivo_actuacion)
+		->with('area_cfj',$area_cfj)->with('conste_agente',$conste_agente);
 	}
 
 	/**
@@ -148,7 +166,9 @@ class ActuacionController extends Controller {
     	$actuacion->conste = $input['actuacion_conste'];
     	$actuacion->fojas = $input['actuacion_fojas'];
     	$actuacion->observaciones = $input['actuacion_observaciones'];
-    	//$actuacion->archivo_actuacion_id = $input['archivo_actuacion_id'];
+    	$actuacion->area_destino_id = $input['area_destino_id'];
+    	$actuacion->archivo_actuacion_id = $input['archivo_actuacion_id'];
+    	$actuacion->conste_agente_id = $input['conste_agente_id'];
 		
 		try {
 
@@ -178,7 +198,7 @@ class ActuacionController extends Controller {
 	 */
 	public function listActuacion()
 	{
-
+		/*
 		if (  MyAuth::check() )
 		{
 			//Aca algo voy a hacer
@@ -187,7 +207,7 @@ class ActuacionController extends Controller {
 
 	        return Redirect::to('/');
 		}
-
+		*/
 		$input = Request::all();
 		//print_r($input);
 

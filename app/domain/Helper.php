@@ -42,3 +42,4 @@ if( empty($res[0]) ) return 'S/D';
             return $res[0]->nombre;
   }
 }
+

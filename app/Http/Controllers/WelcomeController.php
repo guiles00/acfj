@@ -69,7 +69,7 @@ class WelcomeController extends Controller {
 
 		 // attempt to do the login
 	     if ( MyAuth::attempt($userdata) ) {
-	        
+	       
 	        return Redirect::to('bienvenido');
 
 	    } else {        

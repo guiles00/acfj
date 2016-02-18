@@ -5,7 +5,7 @@ use DB;
 class MyAuth {
 
 	public function sayHi(){
-		echo "hola mundo";
+		//echo "hola mundo";
 
 		$test = DB::table('beca')
             ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
