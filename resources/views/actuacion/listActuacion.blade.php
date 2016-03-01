@@ -59,7 +59,7 @@ use App\domain\Actuacion;
             
             <div class="row"> 
               <div class="form-group">
-                <label class="control-label col-md-2">Destino</label>
+                <label class="control-label col-md-2">Asignaci&oacute;n Inicial</label>
                 <div class="col-md-8"><input class="form-control input-sm" name="str_destino" value=''></div>
               </div>
             </div>  
@@ -103,9 +103,9 @@ use App\domain\Actuacion;
                    <th>FECHA</th>
                    <th>ASUNTO</th>
                    <th>DIRIGIDO</th>  
-                   <th>DESTINO</th>
-                   <th>REMITE</th>
-                   <th>RECIBIO</th>
+                   <th>ASIGNACI&Oacute;N INICIAL</th>
+                   <th>CAUSANTE</th>
+                   <th>RECIBI&Oacute;</th>
                    <th></th>
                </tr>
            </thead>

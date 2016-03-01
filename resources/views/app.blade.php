@@ -382,7 +382,9 @@
                                     <li>
                                         <a target="_blank" href="{!! URL::asset('../backstage/web/') !!}">Tablas</a>
                                     </li>
-                                    
+                                    <li>
+                                        <a target="_blank" href="{!! URL::asset('http://cfj.gov.ar/test/dcfj/') !!}">Panel</a>
+                                    </li>
                                 </ul>
                             </li>
                             <?}?>

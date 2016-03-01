@@ -13,7 +13,11 @@ $helper = new App\Domain\Helper();
       <!--/div-->
 <div class="panel panel-default">
  <div class="panel-heading">
-     <div class="row">      
+
+     <div class="row">
+        <!--label class="btn glyphicon glyphicon-search pull-left">Búsqueda</label-->  
+        <!--a href="#" class="btn glyphicon glyphicon-search pull-left" data-toggle="modal" data-target="#basicModal"> Búsqueda</a-->
+         <a href="#" class="btn glyphicon glyphicon-search pull-right" data-toggle="modal" data-target="#basicModal"></a>
          <form method="GET" action="{{action('BecaController@index')}}" class="navbar-form navbar-left pull-right" role="search">
             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
             <div class="row">
@@ -37,6 +41,61 @@ $helper = new App\Domain\Helper();
     </div>
 </div>
 
+<!-- Modal Busqueda -->
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title" id="myModalLabel">B&uacute;squeda de Actuaciones</h4>
+            </div>
+            <form method="GET" action="{{action('BecaController@index')}}" role="search">
+                <div class="modal-body">
+        
+
+        <div class="row">
+          <div class="col-lg-12 col-md-12">
+            
+            <div class="row"> 
+              <div class="form-group">
+                <label class="control-label col-md-2">Tipo</label>
+                <div class="col-md-8"><input class="form-control input-sm" name="str_destino" value=''></div>
+              </div>
+            </div>  
+            <br>
+            <div class="row"> 
+              <div class="form-group">
+                <label class="control-label col-md-2">Estado</label>
+                <div class="col-md-8"><input class="form-control input-sm" name="str_destino" value=''></div>
+              </div>
+            </div>  
+            <br>
+            <div class="row"> 
+              <div class="form-group">
+                <label class="control-label col-md-2">Renovaci&oacute;n</label>
+                <div class="col-md-8"><input class="form-control input-sm" name="str_actuacion" value=''></div>
+              </div>
+            </div> 
+        </div>
+      </div>
+
+                </div>
+                <div class="modal-footer">
+             
+                <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary" >Buscar</button>
+             
+            </div>
+         </form>
+    </div>
+  </div>
+</div>
+
+<!-- -->
+
+
 <div class="panel-body">
 
     <div class="table-responsive">
@@ -44,7 +103,7 @@ $helper = new App\Domain\Helper();
         <table class="table table-responsive table-striped table-bordered table-hover" id="beca">
             <thead>
                 <tr>
-                   <th></th>
+                   <th><a href="#" class="btn glyphicon glyphicon-search" data-toggle="modal" data-target="#basicModal"></a></th>
                    <th>Fecha</th>
                    <!--th>beca_id</th-->
                    <th>Tipo</th>

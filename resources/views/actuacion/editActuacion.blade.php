@@ -83,7 +83,7 @@ $codigos_actuacion = ["0"=>"","BEC"=>"BEC","CAP"=>"CAP","CNV"=>"CNV","ADM"=>"ADM
     </div>
     
     <div class="form-group">
-      <label class="control-label  col-md-2">Destino</label>
+      <label class="control-label  col-md-2">Asignaci&oacute;n Inicial</label>
         <div class="col-md-6">
           <select class="form-control select2" name="area_destino_id" id="a_area_destino_id">
           <option value="0">-</option>
@@ -99,7 +99,7 @@ $codigos_actuacion = ["0"=>"","BEC"=>"BEC","CAP"=>"CAP","CNV"=>"CNV","ADM"=>"ADM
     </div>  
 
     <div class="form-group">
-      <label class="control-label col-sm-2">Remite</label>
+      <label class="control-label col-sm-2">Causante</label>
       <div class="col-sm-6">          
         <input type="text" class="form-control" id="" name="actuacion_remite" value="{{$actuacion->remite}}">
       </div>

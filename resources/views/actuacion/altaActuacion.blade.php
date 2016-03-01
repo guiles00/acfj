@@ -74,7 +74,7 @@
     </div>
 
     <div class="form-group">
-      <label class="control-label  col-md-2">Destino</label>
+      <label class="control-label  col-md-2">Asignaci&oacute;n Inicial</label>
         <div class="col-md-4">
           <select class="form-control select2" name="area_destino_id" id="a_area_destino_id">
           <option value="0">-</option>
@@ -86,7 +86,7 @@
     </div>    
     
     <div class="form-group">
-      <label class="control-label  col-sm-2">Remite</label>
+      <label class="control-label  col-sm-2">Causante</label>
       <div class="col-sm-6">          
         <input type="text" class="form-control" id="" name="actuacion_remite">
       </div>
@@ -225,11 +225,11 @@ $(document).ready(function() {
               var codigo_actuacion = $("#a_codigo_actuacion").val();
                
                if( codigo_actuacion == 'BEC' || codigo_actuacion == 'CNV' ){
-                $("#a_area_destino_id").val(1).change();;     
+                $("#a_area_destino_id").val(3).change();;     
                }
 
                if( codigo_actuacion == 'ADM' || codigo_actuacion == 'CAP' ){
-                $("#a_area_destino_id").val(2).change();;     
+                $("#a_area_destino_id").val(4).change();;     
                }
 
                if( codigo_actuacion == '' ){
