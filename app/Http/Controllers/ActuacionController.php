@@ -101,7 +101,7 @@ class ActuacionController extends Controller {
 	    $actuacion->asunto = $input['actuacion_asunto']; 
     	$actuacion->dirigido = $input['actuacion_dirigido'];
     	$actuacion->remite = $input['actuacion_remite'];
-    	$actuacion->conste = $input['actuacion_conste'];
+    	//$actuacion->conste = $input['actuacion_conste'];
     	$actuacion->fojas = $input['actuacion_fojas'];
     	$actuacion->observaciones = $input['actuacion_observaciones'];
     	$actuacion->archivo_actuacion_id = $input['archivo_actuacion_id'];
@@ -163,7 +163,7 @@ class ActuacionController extends Controller {
 	    $actuacion->asunto = $input['actuacion_asunto']; 
     	$actuacion->dirigido = $input['actuacion_dirigido'];
     	$actuacion->remite = $input['actuacion_remite'];
-    	$actuacion->conste = $input['actuacion_conste'];
+    	//$actuacion->conste = $input['actuacion_conste'];
     	$actuacion->fojas = $input['actuacion_fojas'];
     	$actuacion->observaciones = $input['actuacion_observaciones'];
     	$actuacion->area_destino_id = $input['area_destino_id'];
@@ -186,7 +186,7 @@ class ActuacionController extends Controller {
 		//print_r($input);
 
 		//return view('actuacion.store')->with('actuacion',$actuacion);
-		$actuaciones = Actuacion::orderBy( DB::raw('convert(numero_actuacion, decimal)') ,'desc')->get();	
+		$actuaciones = Actuacion::orderBy( DB::raw('convert(numero_actuacion, decimal)') ,'desc')->paginate(20);// ->get();	
 
 		return view('actuacion.listActuacion')->with('actuaciones',$actuaciones);//->with('actuacion',$actuacion);
 	}
@@ -213,16 +213,21 @@ class ActuacionController extends Controller {
 
 		//CAST(field_name as SIGNED INTEGER) ->orderBy('actuacion_fecha', 'desc')
 		//$actuaciones = Actuacion::all();
-		if( empty($input) ){
-			$actuaciones = Actuacion::orderBy( DB::raw('convert(numero_actuacion, decimal)') ,'desc')->get();	
-		}else{
-			$actuaciones = Actuacion::where('numero_actuacion', 'LIKE', '%'.$input['str_actuacion'].'%')
-			->orWhere('dirigido', 'LIKE', '%'.$input['str_actuacion'].'%')
-			->orWhere('remite', 'LIKE', '%'.$input['str_actuacion'].'%')
-			->orderBy( DB::raw('convert(numero_actuacion, decimal)') ,'desc')->get();			
-		}
+		$str_actuacion = (isset($input['str_actuacion']))?$input['str_actuacion']:'';
+		//if( empty($str_actuacion) ){
+			//$actuaciones = Actuacion::orderBy( DB::raw('convert(numero_actuacion, decimal)') ,'desc')->paginate(20);//->get();	
+		//}else{
+			$actuaciones = Actuacion::where('numero_actuacion', 'LIKE', '%'.$str_actuacion.'%')
+			->orWhere('dirigido', 'LIKE', '%'.$str_actuacion.'%')
+			->orWhere('remite', 'LIKE', '%'.$str_actuacion.'%')
+			->orWhere('asunto', 'LIKE', '%'.$str_actuacion.'%')
+			->orderBy( DB::raw('convert(numero_actuacion, decimal)') ,'desc')->paginate(20);//->get();
+			
+		//}
 		
-		
+		 $actuaciones->setPath('listActuacion');
+		 //$actuaciones->appends(array('dirigido' => $str_actuacion,'remite' => $str_actuacion,'asunto' => $str_actuacion));			
+		$actuaciones->appends(array('str_actuacion' => $str_actuacion));			
 
 		//print_r($actuaciones);
 		

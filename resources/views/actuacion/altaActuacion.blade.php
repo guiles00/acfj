@@ -75,7 +75,7 @@
 
     <div class="form-group">
       <label class="control-label  col-md-2">Asignaci&oacute;n Inicial</label>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <select class="form-control select2" name="area_destino_id" id="a_area_destino_id">
           <option value="0">-</option>
           @foreach($area_cfj as $key=>$area)
@@ -101,7 +101,7 @@
    
    <div class="form-group">
       <label class="control-label col-md-2">Recibi&oacute;</label>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <select class="form-control select2" name="conste_agente_id">
           <option value="0">-</option>
           @foreach($conste_agente as $key=>$agente)

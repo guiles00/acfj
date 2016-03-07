@@ -678,6 +678,8 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 							<a href="{!! URL::action('BecaController@index'); !!}" class="btn btn-default">Cancelar</a>
 							<button type="button" class="btn btn-default" id="b_preview_email_documentacion">Previsualizar contenido Email</button>
 							<button type="button" class="btn btn-default" id="b_enviar_email_documentacion">Enviar Email Documentaci&oacute;n</button>
+							<a type="button" href="{{action('BecaController@imprimirSolicitud',$beca->beca_id)}}" class="btn btn-default" target="_target" id="b_imprimir_solicitud">Imprimir Solicitud</a>
+
 						</div>
 					</div>
 				</div>

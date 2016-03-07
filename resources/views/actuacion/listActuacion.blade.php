@@ -97,7 +97,7 @@ use App\domain\Actuacion;
             <thead>
                 <tr>                   
                    <!--th>actuacion_id</th-->
-                   <th></th>
+                   <!--th></th-->
                    <th>PREF.</th>
                    <th>ACTUACI&Oacute;N</th>
                    <th>FECHA</th>
@@ -113,13 +113,13 @@ use App\domain\Actuacion;
               <?php $total = count($actuaciones);?> 
             @foreach ($actuaciones as $actuacion)
             <tr>
-                <td> {{ $total-- }} </td>
+                <!--td> {{ $total-- }} </td-->
                 <td> {{ $actuacion->prefijo }} </td>
                 <td> {{ $actuacion->numero_actuacion  }} </td>
                 <td> {{ Utils::formatDate($actuacion->actuacion_fecha) }} </td>
                 <td> {{ $actuacion->asunto}} </td>
                 <td> {{ $actuacion->dirigido}} </td>
-                <td> {{ Actuacion::getDestinoById($actuacion->area_destino_id) }} </td>
+                <td> {{ Actuacion::getDestinoById($actuacion->area_destino_id) }} ( {{ Actuacion::getResponsableByAreaId($actuacion->area_destino_id)}} )</td>
                 <td> {{ $actuacion->remite}} </td>
                 <td> {{ Actuacion::getAgenteById($actuacion->conste_agente_id)}} </td>
                 <!--td> {{ $actuacion->actuacion_id}} </td-->
@@ -130,7 +130,7 @@ use App\domain\Actuacion;
         </tbody>
     </table>
   </div>
-<?php //echo $becas->render(); ?>
+<?php echo $actuaciones->render(); ?>
 
 <div id="res"></div>
 

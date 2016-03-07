@@ -41,5 +41,18 @@ if( empty($res[0]) ) return 'S/D';
             
             return $res[0]->nombre;
   }
+
+
+    static public function getInstitucionPropuestaId($institucion_propuesta){
+
+      $res = DB::table('universidad_sigla')
+            ->select('*')
+            ->where('universidad_id','=', $institucion_propuesta )
+            ->get();
+
+if( empty($res[0]) ) return 'S/D';
+            
+            return $res[0]->universidad;
+  }
 }
 

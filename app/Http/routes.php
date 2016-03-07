@@ -111,6 +111,7 @@ Route::get('mgrupo','TableroController@mgrupo');
 //Route::resource('listBecas', 'BecaController');
 Route::resource('listBecas', 'BecaController@index');
 Route::get('verSolicitud/{id}', 'BecaController@verSolicitud');
+Route::get('imprimirSolicitud/{id}', 'BecaController@imprimirSolicitud');
 Route::get('verDocAdjunta/{id}', 'BecaController@verDocAdjunta');
 Route::post('saveBeca', 'BecaController@save');
 Route::get('exportar', 'BecaController@exportar');

@@ -197,6 +197,42 @@ class BecaController extends Controller {
 
 	}
 
+public function imprimirSolicitud($id){
+
+		$helper = new Helper();
+		$tipo_becas = $helper->getHelperByDominio('tipo_beca');
+		$renovacion = $helper->getHelperByDominio('renovacion');
+		$tipo_actividad = $helper->getHelperByDominio('tipo_actividad');
+		$s_horaria = $helper->getHelperByDominio('s_horaria');
+		$estado_beca = $helper->getHelperByDominio('estado_beca');
+
+//echo "<pre>";
+//print_r($estado_beca);
+
+		$solicitud_beca = DB::table('beca')
+            ->select('*')
+            ->leftJoin('cargo','beca.cargo_id','=','cargo.car_id')
+            ->leftJoin('dependencia','beca.dependencia_id','=','dependencia.dep_id')
+            ->leftJoin('titulo','beca.titulo_id','=','titulo.titulo_id')
+            ->leftJoin('universidad_sigla','beca.universidad_id','=','universidad_sigla.universidad_id')
+            ->leftJoin('facultad','beca.facultad_id','=','facultad.facultad_id')
+            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
+            ->where('beca.beca_id', '=', $id)
+            ->get(); 
+            
+            
+            $cargos = DB::table('cargo')->get();
+            $universidades = DB::table('universidad_sigla')->get();
+            $fuero = DB::table('fuero')->get();
+			$titulos = DB::table('titulo')->get();
+			$facultades = DB::table('facultad')->get();
+			$dependencias = DB::table('dependencia')->get();
+
+			
+		return view('beca.imprimirSolicitudBeca')->with('beca',$solicitud_beca[0]);
+
+	}
+
 	public function verDocAdjunta($id){
 
 		//$input = Request::all();

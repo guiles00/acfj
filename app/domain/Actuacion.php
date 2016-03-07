@@ -40,6 +40,18 @@ class Actuacion {
 		
 		return  $res[0]->agente_nombre ;
 	}
+	public static function getResponsableByAreaId($area_destino_id){
+
+
+      $res = DB::table('area_cfj')
+            ->select('*')
+            ->where('area_cfj_id','=',$area_destino_id)
+            ->get();
+		
+		if(empty($res)) return '';
+		
+		return  $res[0]->area_responsable ;
+	}
 
 }
 ?>

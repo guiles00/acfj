@@ -168,8 +168,8 @@ $codigos_actuacion = ["0"=>"","BEC"=>"BEC","CAP"=>"CAP","CNV"=>"CNV","ADM"=>"ADM
     </div-->
 <!-- ########## TABS ########## -->
 
-<!--ul class="nav nav-tabs" >
-  <li class="active" ><a data-toggle="tab" href="#pases">Pases</a></li>
+<ul class="nav nav-tabs" >
+  <li class="active" ><a data-toggle="tab" href="#pases">Movimientos</a></li>
 </ul>
 <div class="tab-content">
 
@@ -178,7 +178,7 @@ $codigos_actuacion = ["0"=>"","BEC"=>"BEC","CAP"=>"CAP","CNV"=>"CNV","ADM"=>"ADM
           <thead>
             <tr>
               <th>FECHA</th>
-              <th>Nro Pase</th>
+              <th>Nro Mov. /Pase</th>
                 <th>ORIGEN</th>
                 <th>DESTINO</th>  
                 <th>RECIBIDO</th>
@@ -196,7 +196,7 @@ $codigos_actuacion = ["0"=>"","BEC"=>"BEC","CAP"=>"CAP","CNV"=>"CNV","ADM"=>"ADM
                 <td> SI</td>
                 
                 <td> 
-                  <a href="" onClick="return confirm('desea eliminar?')" >Ver</a>
+                  <a href="" onClick="return confirm('desea ver?')" >Ver</a>
                   <a href="" onClick="return confirm('desea eliminar?')" >Eliminar</a>
                 </td>
 
@@ -209,7 +209,7 @@ $codigos_actuacion = ["0"=>"","BEC"=>"BEC","CAP"=>"CAP","CNV"=>"CNV","ADM"=>"ADM
                 <td> SI</td>
                 
                 <td> 
-                  <a href="" onClick="return confirm('desea eliminar?')" >Ver</a>
+                  <a href="" onClick="return confirm('desea ver?')" >Ver</a>
                   <a href="" onClick="return confirm('desea eliminar?')" >Eliminar</a>
                 </td>
 
@@ -222,13 +222,13 @@ $codigos_actuacion = ["0"=>"","BEC"=>"BEC","CAP"=>"CAP","CNV"=>"CNV","ADM"=>"ADM
         <div class="row">
           <div class="form-group"> 
             <div class="col-md-10">
-              <a href="" class="btn btn-default">Agregar Pase</a>
+              <a href="" class="btn btn-default">Agregar Movimiento</a>
             </div>
           </div>
         </div>
       </div>
 
-  </div-->
+  </div>
 
 
 <!-- ########## END TABS ########## -->
