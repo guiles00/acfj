@@ -15,6 +15,7 @@ use App\domain\Helper;
 use App\domain\Documentacion;
 use Redirect;
 use App\domain\User;
+use App\PasoBeca;
 
 class BecaController extends Controller {
 
@@ -189,11 +190,15 @@ class BecaController extends Controller {
 			$documentacion = Documentacion::traeDocumentacion($id);
 			//echo $id;
 			$actuaciones = DB::table('actuacion')->where('beca_id','=',$id)->get();
+			$pasos_beca = DB::table('paso_beca')->where('beca_id','=',$id)->get();
 			//echo "<pre>";
 			//print_r($actuaciones);
 			//exit;
 
-		return view('beca.verSolicitudBeca')->with('beca',$solicitud_beca[0])->with('helpers',$helpers)->with('documentacion',$documentacion)->with('actuaciones',$actuaciones);
+		return view('beca.verSolicitudBeca')->with('beca',$solicitud_beca[0])->with('helpers',$helpers)
+		->with('documentacion',$documentacion)
+		->with('actuaciones',$actuaciones)
+		->with('pasos_beca',$pasos_beca);
 
 	}
 
@@ -540,9 +545,51 @@ public function exportar(){
 			$res = $this->enviaEmail($datos_destinatario,$html);
 
 			$res_html = ($res)?'<b>Email enviado con &eacute;xito</b>':'<br><br><b>Oh no, ocurrí&oacute; un error, comun&iacute;quese con el administrador</b>';
+
+			$this->agregaAccion(1,$beca->beca_id);
+
 			return $res_html;
 
 	}
+	private function agregaAccion($tipo_paso_beca_id,$beca_id){
+		//Agrega accion que envio email
+
+		$paso_beca = new PasoBeca();
+		$paso_beca->beca_id = $beca_id;
+		$paso_beca->tipo_paso_beca_id = $tipo_paso_beca_id;
+		$paso_beca->save();
+
+		return true;
+	}
+
+	public function addPasoBeca($id){
+		//$input = Request::all();
+		$t_pasos = DB::table('t_paso_beca')->get();
+		return view('beca.addPasoBeca')->with('t_pasos',$t_pasos)->with('beca_id',$id);
+
+	}
+
+	public function savePasoBeca(){
+		$input = Request::all();
+		
+		$paso_beca = new PasoBeca();
+		$paso_beca->beca_id = $input['beca_id'];
+		$paso_beca->tipo_paso_beca_id = $input['tipo_paso_beca_id'];
+		$paso_beca->save();
+
+		//return view('beca.verSolicitudBeca')->with('beca_id',$id);
+		$url = 'verSolicitud/'.$input['beca_id'];
+		return Redirect::to($url);
+	}
+
+	public function deletePasoBeca($id){
+
+		$paso_beca = PasoBeca::find($id);
+		$paso_beca->delete();
+
+		return redirect()->back();
+	}	
+
 
 	public function previewEmailDocumentacion(){
 

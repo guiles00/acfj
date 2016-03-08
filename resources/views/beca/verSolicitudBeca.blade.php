@@ -23,7 +23,8 @@
 		Volver a Becas
 	</div>
 <?php  
-
+use App\domain\PasoBeca;
+use App\domain\Utils;
 
 $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 //echo "<pre>";
@@ -399,13 +400,13 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 			<div class="row">
 					<div class="form-group">
 						<label class="control-label col-md-2">Fecha Inicio</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="fecha_inicio" value='<?=$beca->fecha_inicio?>' id="b_fecha_inicio"></div>
+						<div class="col-md-8"><input class="form-control input-sm datepicker" name="fecha_inicio" value='<?=$beca->fecha_inicio?>' id="b_fecha_inicio"></div>
 					</div>
 				</div>
 				<div class="row">	
 					<div class="form-group">
 						<label class="control-label col-md-2">Fecha Fin</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="fecha_fin" value='<?=$beca->fecha_fin?>' id="b_fecha_fin"></div>
+						<div class="col-md-8"><input class="form-control input-sm datepicker" name="fecha_fin" value='<?=$beca->fecha_fin?>' id="b_fecha_fin"></div>
 					</div>
 				</div>
 				<div class="row">	
@@ -504,6 +505,7 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#menu1">Documentaci&oacute;n</a></li>
   <li><a data-toggle="tab" href="#menu2">Actuaciones</a></li>
+   <li><a data-toggle="tab" href="#b_paso_beca">Acciones</a></li>
 </ul>
 
 <div class="tab-content">
@@ -658,6 +660,47 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 			</div>
 
 	</div>
+
+	<div id="b_paso_beca" class="tab-pane fade">
+	    	 <table class="table table-condensed table-bordered table-striped volumes">
+	        <thead>
+	          <tr>
+	            <th>Nro.</th>
+	            <th>ASUNTO</th>
+	            <th>FECHA</th>
+                <th width="10%"></th>
+	          </tr>
+	        </thead>
+	        <tbody>
+
+       	 <!-- FOREACH -->
+       	  @foreach ($pasos_beca as $paso_beca)
+            <tr>
+                <td> {{ $paso_beca->paso_beca_id }} </td>
+                <td> {{ PasoBeca::getTipoPasoById($paso_beca->tipo_paso_beca_id) }} </td>                
+                <td> {{ Utils::formatDate($paso_beca->timestamp) }}</td>
+                <!--td> {{ $actuacion->actuacion_id}} </td-->
+                <td> <a href="{!! URL::action('BecaController@deletePasoBeca',$paso_beca->paso_beca_id); !!}" onClick="return confirm('desea eliminar?')" >Eliminar</a></td>
+
+            </tr>
+            <!-- ENDFOREACH -->
+         @endforeach    
+
+	        </tbody>
+	      </table>
+
+	    	<div class="col-sm-12">
+				<div class="row">
+					<div class="form-group"> 
+						<div class="col-md-10">
+							<a href="{!! URL::action('BecaController@addPasoBeca',$beca->beca_id); !!}" class="btn btn-default">Agregar Acci&oacute;n</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+	</div>
+
 </div>	
 
 	<div class="col-sm-12">
@@ -919,9 +962,15 @@ $('document').ready(function(){
 
 
 
-$('#b_fecha_inicio').datepicker({dateFormat:"yy-mm-dd"});
-$('#b_fecha_fin').datepicker({dateFormat:"yy-mm-dd"});
+//$('#b_fecha_inicio').datepicker({dateFormat:"yy-mm-dd"});
+//$('#b_fecha_fin').datepicker({dateFormat:"yy-mm-dd"});
 
+$('.datepicker').datepicker({
+                    format: 'yyyy-mm-dd'
+                    ,language:'es'
+                    ,autoclose: true
+                  }
+                );
 	
 });
 

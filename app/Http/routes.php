@@ -122,6 +122,9 @@ Route::post('saveActuacion', 'BecaController@saveActuacion');
 Route::get('addActuacion/{id}', 'BecaController@addActuacion');
 Route::get('eliminarVinculoActuacion/{id}', 'BecaController@eliminarVinculoActuacion');
 
+Route::get('addPasoBeca/{id}', 'BecaController@addPasoBeca');
+Route::post('savePasoBeca', 'BecaController@savePasoBeca');
+Route::get('deletePasoBeca/{id}', 'BecaController@deletePasoBeca');
 //Route::group(['middleware' => 'auth'], function () {
 
 /*
