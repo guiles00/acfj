@@ -40,6 +40,7 @@
 <body>
 <? 
 use app\domain\Helper;
+$datetime = new DateTime();
 //echo "<pre>";
 //print_r($beca);
 ?>
@@ -65,7 +66,7 @@ DE BECAS DEL CENTRO DE FORMACIÓN JUDICIAL (Res. CACFJ Nº 25/11)</b>
 DE SOLICITUD</b></p>
 <p align="right">
 <font size="2" style="font-size: 10pt">Buenos
-Aires,  de  de </font></p>
+Aires, <?=$datetime->format("d");?> de <?=$datetime->format("m");?> de <?=$datetime->format("Y");?></font></p>
 </p>
 
 <div id="g_table_content">
@@ -177,7 +178,10 @@ Aires,  de  de </font></p>
 			DE INGRESO AL PJCABA:</font></font>
 		</td>
 		<td width="273">
-		<?=$beca->f_ingreso_caba?>
+		<?
+		$date = date("d/m/Y", strtotime($beca->f_ingreso_caba));
+	 	echo $date;
+		?>
 		</td>
 	</tr>
 	<tr>
@@ -246,7 +250,10 @@ Aires,  de  de </font></p>
 			DE INICIO:</font></font>
 		</td>
 		<td width="273">
-		<?=$beca->fecha_inicio?>		
+		<?
+		$date = date("d/m/Y", strtotime($beca->fecha_inicio));
+		echo $date;
+		?>		
 		</td>
 	</tr>
 	<tr>
@@ -256,7 +263,10 @@ Aires,  de  de </font></p>
 			
 		</td>
 		<td width="273">
-		<?=$beca->fecha_fin?>
+		<?
+		$date = date("d/m/Y", strtotime($beca->fecha_fin));
+	 	echo $date;
+		?>
 		</td>
 	</tr>
 	<tr>
@@ -302,7 +312,7 @@ Aires,  de  de </font></p>
 			HORARIA SI/NO:</font></font>
 		</td>
 		<td width="273">
-			<?=($beca->sup_horaria == 0 )? 'SI' : 'NO'; ?>
+			<?=($beca->sup_horaria == 0 )? 'NO' : 'SI'; ?>
 		</td>
 	</tr>
 </table>
