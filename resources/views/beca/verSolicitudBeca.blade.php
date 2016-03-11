@@ -679,7 +679,6 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
                 <td> {{ $paso_beca->paso_beca_id }} </td>
                 <td> {{ PasoBeca::getTipoPasoById($paso_beca->tipo_paso_beca_id) }} </td>                
                 <td> {{ Utils::formatDate($paso_beca->timestamp) }}</td>
-                <!--td> {{ $actuacion->actuacion_id}} </td-->
                 <td> <a href="{!! URL::action('BecaController@deletePasoBeca',$paso_beca->paso_beca_id); !!}" onClick="return confirm('desea eliminar?')" >Eliminar</a></td>
 
             </tr>
