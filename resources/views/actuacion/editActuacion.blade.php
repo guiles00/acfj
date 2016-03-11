@@ -167,7 +167,7 @@ $codigos_actuacion = ["0"=>"","BEC"=>"BEC","CAP"=>"CAP","CNV"=>"CNV","ADM"=>"ADM
       </div>
     </div-->
 <!-- ########## TABS ########## -->
-
+<!--
 <ul class="nav nav-tabs" >
   <li class="active" ><a data-toggle="tab" href="#pases">Movimientos</a></li>
 </ul>
@@ -230,7 +230,7 @@ $codigos_actuacion = ["0"=>"","BEC"=>"BEC","CAP"=>"CAP","CNV"=>"CNV","ADM"=>"ADM
 
   </div>
 
-
+-->
 <!-- ########## END TABS ########## -->
 
     <div class="form-group"> 
