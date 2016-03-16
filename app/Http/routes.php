@@ -107,7 +107,7 @@ Route::get('mgrupo','TableroController@mgrupo');
 //Route::get('hobbits','HobbitController@index');
 
 /*Rutas Para Becas*/
-
+//Route::group(['middleware' => ['session_expired']], function () {
 //Route::resource('listBecas', 'BecaController');
 Route::resource('listBecas', 'BecaController@index');
 Route::get('verSolicitud/{id}', 'BecaController@verSolicitud');
@@ -125,8 +125,10 @@ Route::get('eliminarVinculoActuacion/{id}', 'BecaController@eliminarVinculoActua
 Route::get('addPasoBeca/{id}', 'BecaController@addPasoBeca');
 Route::post('savePasoBeca', 'BecaController@savePasoBeca');
 Route::get('deletePasoBeca/{id}', 'BecaController@deletePasoBeca');
+Route::get('editPasoBeca/{id}', 'BecaController@editPasoBeca');
+Route::post('updatePasoBeca/{id}', 'BecaController@updatePasoBeca');
 //Route::group(['middleware' => 'auth'], function () {
-
+//});
 /*
 Actuaciones
 */

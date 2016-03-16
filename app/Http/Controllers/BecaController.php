@@ -575,6 +575,7 @@ public function exportar(){
 		$paso_beca = new PasoBeca();
 		$paso_beca->beca_id = $input['beca_id'];
 		$paso_beca->tipo_paso_beca_id = $input['tipo_paso_beca_id'];
+		$paso_beca->observaciones = $input['paso_beca_observaciones'];
 		$paso_beca->save();
 
 		//return view('beca.verSolicitudBeca')->with('beca_id',$id);
@@ -590,6 +591,29 @@ public function exportar(){
 		return redirect()->back();
 	}	
 
+	public function editPasoBeca($id){
+
+		$paso_beca = PasoBeca::find($id);
+		
+		$t_pasos = DB::table('t_paso_beca')->get();
+
+		return view('beca.editPasoBeca')->with('t_pasos',$t_pasos)->with('paso_beca',$paso_beca);
+	}	
+
+	public function updatePasoBeca(){
+		
+		$input = Request::all();
+		
+		$paso_beca = PasoBeca::find($input['paso_beca_id']);
+		//$paso_beca->beca_id = $input['beca_id'];
+		$paso_beca->tipo_paso_beca_id = $input['tipo_paso_beca_id'];
+		$paso_beca->observaciones = $input['paso_beca_observaciones'];
+		$paso_beca->save();
+
+		//return view('beca.verSolicitudBeca')->with('beca_id',$id);
+		$url = 'verSolicitud/'.$input['beca_id'];
+		return Redirect::to($url);
+	}
 
 	public function previewEmailDocumentacion(){
 

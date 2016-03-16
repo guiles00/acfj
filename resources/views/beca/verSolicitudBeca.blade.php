@@ -666,8 +666,10 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 	        <thead>
 	          <tr>
 	            <th>Nro.</th>
-	            <th>ASUNTO</th>
-	            <th>FECHA</th>
+	            <th>Asunto</th>
+	            <th>Observaciones</th>
+	            <th>Fecha</th>
+                <th width="10%"></th>
                 <th width="10%"></th>
 	          </tr>
 	        </thead>
@@ -678,7 +680,9 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
             <tr>
                 <td> {{ $paso_beca->paso_beca_id }} </td>
                 <td> {{ PasoBeca::getTipoPasoById($paso_beca->tipo_paso_beca_id) }} </td>                
+                <td> {{ $paso_beca->observaciones }} </td>
                 <td> {{ Utils::formatDate($paso_beca->timestamp) }}</td>
+                <td> <a href="{!! URL::action('BecaController@editPasoBeca',$paso_beca->paso_beca_id); !!}">Ver</a></td>
                 <td> <a href="{!! URL::action('BecaController@deletePasoBeca',$paso_beca->paso_beca_id); !!}" onClick="return confirm('desea eliminar?')" >Eliminar</a></td>
 
             </tr>

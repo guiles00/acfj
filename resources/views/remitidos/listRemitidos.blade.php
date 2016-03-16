@@ -6,6 +6,8 @@
 use App\domain\Utils;
 use App\domain\Remitidos;
 use App\domain\Helper;
+use App\domain\Agente;
+use App\domain\ArchivoActuacion;
 
 $helper = new Helper();
 ?>
@@ -41,7 +43,7 @@ $helper = new Helper();
                   <thead>
                       <tr>                   
                          <!--th>remitido_id</th-->
-                         <th></th> 
+                         <!--th></th--> 
                          <th>FECHA</th>
                          <th>TIPO</th>
                          <th>NUMERO</th>
@@ -54,18 +56,18 @@ $helper = new Helper();
                      </tr>
                  </thead>
                  <tbody>
-                 <?php $total = count($remitidos);?> 
+                 
                  @foreach ($remitidos as $remitido)
                   <tr>
                       
-                      <td> {{ $total-- }} </td>
+                      
                       <td> {{ Utils::formatDate($remitido->fecha_remitidos) }} </td>
                       <td> {{ $helper->getHelperByDominioAndId('tipo_memo',$remitido->tipo_remitido_id) }} </td>
                       <td> {{ $remitido->numero_memo }} </td>
                       <td> {{ $remitido->asunto }} </td>
-                      <td> {{ $remitido->firmado_id }} </td>
+                      <td> {{ Agente::getResponsableByAreaId($remitido->firmado_id) }} </td>
                       <td> {{ $remitido->dirigido }} </td>
-                      <td> {{ $remitido->archivo_remitidos_id }} </td>
+                      <td> {{ ArchivoActuacion::getArchivoNomnbreById($remitido->archivo_remitidos_id) }} </td>
                       <td> {{ $remitido->conste }} </td>
                       <td> <a href="{!! URL::action('RemitidosController@edit',$remitido->remitidos_id); !!}">Ver</a></td>
 
