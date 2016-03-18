@@ -469,6 +469,7 @@ public function exportar(){
 		$row['Renuncia Total/Parcial'] = '';
 		$row['Caducidad'] = '';
 		$row['Reintegro/s.'] = '';
+		$row['Estado'] = Helper::getHelperByDominioAndId('estado_beca',$registro->estado_id);
 
 
      	$excel[] = $row;
