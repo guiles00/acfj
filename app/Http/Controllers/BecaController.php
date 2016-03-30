@@ -453,7 +453,7 @@ public function exportar(){
 		$row['Origen'] = '';
 		$row['Remuneracion'] = '';
 		$row['Carrera'] = $registro->actividad_nombre;
-		$row['Universidad'] = $registro->universidad;
+		$row['Universidad'] = Helper::getInstitucionPropuestaId($registro->institucion_propuesta);
 		$row['Duracion'] = $registro->duracion;
 		$row['Convenio: si/no'] = '';
 		$row['Beca: si/no'] = '';

@@ -20,10 +20,7 @@ $codigos_actuacion = ["0"=>"","BEC"=>"BEC","CAP"=>"CAP","CNV"=>"CNV","ADM"=>"ADM
 </ul>
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<button type="button" class="btn btn-default" aria-label="Left Align">
-			<a href="{{action('ActuacionController@listActuacion')}}" class="glyphicon glyphicon-arrow-left"></a>
-		</button>
-		
+			<a <a class="btn btn-default glyphicon glyphicon-arrow-left" href="{{action('ActuacionController@listActuacion')}}" ></a>
 	</div>
 
   <div class="panel-body">

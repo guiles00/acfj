@@ -19,11 +19,8 @@
 </ul>
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<button type="button" class="btn btn-default" aria-label="Left Align">
-			<a href="{{action('ActuacionController@listActuacion')}}" class="glyphicon glyphicon-arrow-left"></a>
-		</button>
-		
-	</div>
+			<a class="btn btn-default glyphicon glyphicon-arrow-left" href="{{action('ActuacionController@listActuacion')}}"></a>
+		</div>
 
     <div class="alert alert-success alert-dismissable" style="display:none" id="a_alert_esta">
                     <i class="fa fa-check"></i>

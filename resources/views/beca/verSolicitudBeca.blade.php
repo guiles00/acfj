@@ -13,14 +13,9 @@
 </style>
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<button type="button" class="btn btn-default" aria-label="Left Align">
-			<a href="{!! URL::action('BecaController@index'); !!}" class="glyphicon glyphicon-arrow-left"></a>
-
+			<a class="btn btn-default glyphicon glyphicon-arrow-left" href="{!! URL::action('BecaController@index'); !!}" class="glyphicon glyphicon-arrow-left"></a>
 			<!--a href="{{action('AlumnosController@create')}}" class="glyphicon glyphicon-plus" align="right"></a-->
-
-			<!--span class="glyphicon glyphicon-plus" aria-hidden="true"></span-->
-		</button>
-		Volver a Becas
+			<!--span class="glyphicon glyphicon-plus" aria-hidden="true"></span-->		
 	</div>
 <?php  
 use App\domain\PasoBeca;
