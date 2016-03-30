@@ -542,12 +542,24 @@ public function exportar(){
 				}
 			}
 			
-			$html = $this->arma_html($datos_destinatario[0],$documentacion_papeles);
-			$res = $this->enviaEmail($datos_destinatario,$html);
+			if($beca->estado_id == 2){
 
+				$html = $this->arma_html($datos_destinatario[0],$documentacion_papeles);
+				$this->agregaAccion(1,$beca->beca_id);
+				$res = $this->enviaEmail($datos_destinatario,$html);
+
+			}else if($beca->estado_id == 3){
+
+				$html = $this->arma_html_completo($datos_destinatario[0],$documentacion_papeles);
+				$this->agregaAccion(1,$beca->beca_id);
+				$res = $this->enviaEmail($datos_destinatario,$html);
+			}else{
+				return 'No hay nada para mandar';
+			}
+			
 			$res_html = ($res)?'<b>Email enviado con &eacute;xito</b>':'<br><br><b>Oh no, ocurrí&oacute; un error, comun&iacute;quese con el administrador</b>';
 
-			$this->agregaAccion(1,$beca->beca_id);
+			
 
 			return $res_html;
 
@@ -663,8 +675,15 @@ public function exportar(){
     			unset($documentacion_papeles[$key]);
 				}
 			}
-			
-			$html = $this->arma_html($datos_destinatario[0],$documentacion_papeles);
+			 
+			//Se arman dos emails, si esta compĺeto o incompleto
+			if( $beca->estado_id == 2) {
+				$html = $this->arma_html($datos_destinatario[0],$documentacion_papeles);	
+			}else if($beca->estado_id == 3){
+				$html = $this->arma_html_completo($datos_destinatario[0]);	
+			}else{
+				return '';
+			}
 			
 			return $html;
 
@@ -703,6 +722,22 @@ public function exportar(){
 		return $html_email;
 	}
 
+	private function arma_html_completo($datos_destinatario){
+
+		$html_email = "Estimado/a: ".$datos_destinatario->usi_nombre."<br>"."<p>Nos comunicamos con Ud. con motivo de la solicitud de beca en tr&aacute;mite ante este Centro. <br>
+		Del an&aacute;lisis de su presentaci&oacute;n surge que a la fecha se encuentra toda la documentaci&oacute;n presentada.</p>";
+
+		$html_email .= 'Cordialmente, <br>';
+		$html_email .= '<p style="font-size:14px">
+		Departamento de Coordinaci&oacute;n de Convenios, Becas y Publicaciones.
+		</p>
+ 		<br>
+		<div align="center"><b><i style="font-size:12px">
+		Bolivar 177 Piso 3ro -  Ciudad Aut&oacute;noma de Buenos Aires  -   CP: C1066AAC   -  Tel: 4008-0284  -  Email: becas@jusbaires.gov.ar
+		</i></b><div>';
+		//$html_email .= '<i>Por favor, NO responda a este mensaje, es un env&iacute;o autom&aacute;tico. Por cualquier inconveniente comuniques</i>';
+		return $html_email;
+	}
 	private function enviaEmail($datos_destinatario,$html){
 
 		$to      = $datos_destinatario[0]->usi_email;
