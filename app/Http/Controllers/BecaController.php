@@ -548,12 +548,12 @@ public function exportar(){
 				$this->agregaAccion(1,$beca->beca_id);
 				$res = $this->enviaEmail($datos_destinatario,$html);
 
-			}else if($beca->estado_id == 3){
+			}/*else if($beca->estado_id == 3){
 
 				$html = $this->arma_html_completo($datos_destinatario[0],$documentacion_papeles);
 				$this->agregaAccion(1,$beca->beca_id);
 				$res = $this->enviaEmail($datos_destinatario,$html);
-			}else{
+			}*/else{
 				return 'No hay nada para mandar';
 			}
 			
@@ -679,9 +679,9 @@ public function exportar(){
 			//Se arman dos emails, si esta compĺeto o incompleto
 			if( $beca->estado_id == 2) {
 				$html = $this->arma_html($datos_destinatario[0],$documentacion_papeles);	
-			}else if($beca->estado_id == 3){
+			}/*else if($beca->estado_id == 3){
 				$html = $this->arma_html_completo($datos_destinatario[0]);	
-			}else{
+			}*/else{
 				return '';
 			}
 			
