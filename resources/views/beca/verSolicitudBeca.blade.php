@@ -131,7 +131,7 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-md-2">Fecha Ingreso PJCABA</label>
-										<div class="col-md-8"><input class="form-control input-sm" name="f_ingreso_caba" value='<?=$beca->f_ingreso_caba?>'></div>
+										<div class="col-md-8"><input class="form-control input-sm datepicker" name="f_ingreso_caba" value='<?=$beca->f_ingreso_caba?>'></div>
 									</div>
 								</div>
 								<div class="row">
