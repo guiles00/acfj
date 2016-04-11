@@ -121,7 +121,7 @@ Route::get('previewEmailDocumentacion', 'BecaController@previewEmailDocumentacio
 
 Route::post('saveActuacion', 'BecaController@saveActuacion');
 Route::get('addActuacion/{id}', 'BecaController@addActuacion');
-Route::get('eliminarVinculoActuacion/beca_id/{beca_id}/actuacion_id/{actuacion_id}', 'BecaController@eliminarVinculoActuacion');
+Route::get('eliminarVinculoActuacion/{id}', 'BecaController@eliminarVinculoActuacion');
 
 Route::get('addPasoBeca/{id}', 'BecaController@addPasoBeca');
 Route::post('savePasoBeca', 'BecaController@savePasoBeca');

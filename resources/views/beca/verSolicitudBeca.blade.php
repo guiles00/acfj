@@ -640,7 +640,7 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
                 <td> {{ $actuacion->remite}} </td>
                 <td> {{ $actuacion->conste}} </td>
                 <!--td> {{ $actuacion->actuacion_id}} </td-->
-                <td> <a href="{!! URL::action('BecaController@eliminarVinculoActuacion',array($beca->beca_id,$actuacion->actuacion_id)); !!}" onClick="return confirm('desea eliminar?')" >Eliminar</a></td>
+                <td> <a href="{!! URL::action('BecaController@eliminarVinculoActuacion',$actuacion->beca_actuacion_id); !!}" onClick="return confirm('desea eliminar?')" >Eliminar</a></td>
 
             </tr>
             @endforeach    

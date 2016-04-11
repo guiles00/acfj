@@ -826,11 +826,11 @@ public function exportar(){
 
 	}
 
-	public function eliminarVinculoActuacion($beca_id,$actuacion_id)
+	public function eliminarVinculoActuacion($id)
 	{
 		//Traigo tabla intermedia y elimino la asociacion entre beca_id y actuacion_id
 		
-		$actuacion = BecaActuacion::where('actuacion_id','=',$actuacion_id)->where('beca_id','=',$beca_id)->first();
+		$actuacion = BecaActuacion::find($id);//where('actuacion_id','=',$actuacion_id)->where('beca_id','=',$beca_id)->first();
 		$actuacion->delete();
 
 		return redirect()->back();
