@@ -16,9 +16,8 @@ use App\domain\Documentacion;
 use Redirect;
 use App\domain\User;
 use App\PasoBeca;
-use App\BecaActuacion;
 
-class BecaController extends Controller {
+class BecaOtorgadaController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -146,7 +145,7 @@ class BecaController extends Controller {
 	}
 
 
-	public function verSolicitud($id){
+	public function verBecaOtorgada($id){
 
 		//$input = Request::all();
 		//echo "<pre>";
@@ -189,22 +188,14 @@ class BecaController extends Controller {
 			$helpers['estado_beca'] = $estado_beca;
 			
 			$documentacion = Documentacion::traeDocumentacion($id);
-			/*
-			SELECT * 
-			FROM beca_actuacion b, actuacion a
-			WHERE b.actuacion_id = a.actuacion_id
-			AND b.beca_id =425
-			*/
-			
-			$actuaciones = DB::table('beca_actuacion')->join('actuacion','beca_actuacion.actuacion_id','=','actuacion.actuacion_id')->where('beca_actuacion.beca_id','=',$id)
-			->get();
-			
+			//echo $id;
+			$actuaciones = DB::table('actuacion')->where('beca_id','=',$id)->get();
 			$pasos_beca = DB::table('paso_beca')->where('beca_id','=',$id)->get();
-			/*echo "<pre>";
-			print_r($actuaciones);
-			exit;*/
-			
-		return view('beca.verSolicitudBeca')->with('beca',$solicitud_beca[0])->with('helpers',$helpers)
+			//echo "<pre>";
+			//print_r($actuaciones);
+			//exit;
+
+		return view('otorgada.verBecaOtorgada')->with('beca',$solicitud_beca[0])->with('helpers',$helpers)
 		->with('documentacion',$documentacion)
 		->with('actuaciones',$actuaciones)
 		->with('pasos_beca',$pasos_beca);
@@ -271,9 +262,10 @@ public function imprimirSolicitud($id){
 
 		$input = Request::all();
 		
-		//echo "<pre>";
-		//print_r($input);
-		//exit;
+		echo "<pre>";
+		echo "Y que hago con esto?";
+		print_r($input);
+		exit;
 		//echo "muestro la solicitud";		
 		//guardo datos de beca, los de usuario_sitio hay que confirmar que datos se pueden modificar.
 		$beca = Beca::find($input['_id']);
@@ -390,23 +382,22 @@ return redirect()->back()->with('edited',true);
 		return view('beca.index')->with('becas',$becas);
 */
 	}
-//Este metodo muestra el panel para asociar la actuacion
+
 public function addActuacion($id){
 	$input = Request::all();
+	//echo "<pre>";
+	//print_r($input);
 
 	return view('beca.addActuacion')->with('beca_id',$id);
 
 }
 
-//Este metodo asocia la actuacion con la beca
 public function saveActuacion(){
 	$input = Request::all();
-
-	$beca_actuacion = new BecaActuacion();
-	$beca_actuacion->beca_id = $input['beca_id'];
-	$beca_actuacion->actuacion_id = $input['actuacion_id'];
-	$beca_actuacion->save();
-
+	$actuacion = Actuacion::find($input['actuacion_id']);
+	$actuacion->beca_id = $input['beca_id'];
+	$actuacion->save();
+	//return view('beca.verSolicitudBeca')->with('beca_id',$id);
 	$url = 'verSolicitud/'.$input['beca_id'];
 	return Redirect::to($url);
 
@@ -471,7 +462,7 @@ public function exportar(){
 		$row['Valor con convenio o beca'] = '';
 		$row['Monto solicitado'] = $registro->monto;
 		$row['Maximo por Art. 7 - Reg. Becas'] = '';
-		$row['Monto otorgable'] = '';
+		$row['Monto otorgada'] = '';
 		$row['Monto final'] = '';
 		$row['Monto adicional'] = '';
 		$row['Monto desafectado'] = '';
@@ -771,7 +762,6 @@ public function exportar(){
 
 	public function listadoBecas(){
 
-
 		$input = Request::all();
 		
 		$str = (isset($input['str_beca']))?$input['str_beca']:'';
@@ -822,16 +812,17 @@ public function exportar(){
             $becas->setPath('listBecas');
             $becas->appends(array('estado_id' => $input['estado_id'],'str_beca' => $str));
             
-		return view('beca.index')->with('becas',$becas);
+		return view('otorgada.listadoBecas')->with('becas',$becas);
 
 	}
 
-	public function eliminarVinculoActuacion($beca_id,$actuacion_id)
+	public function eliminarVinculoActuacion($id)
 	{
-		//Traigo tabla intermedia y elimino la asociacion entre beca_id y actuacion_id
+		//Traigo actuacion y desasocio la beca de la tabla actuacion (beca_id)
 		
-		$actuacion = BecaActuacion::where('actuacion_id','=',$actuacion_id)->where('beca_id','=',$beca_id)->first();
-		$actuacion->delete();
+		$actuacion = Actuacion::find($id);
+		$actuacion->beca_id = null;
+		$actuacion->save();
 
 		return redirect()->back();
 	}

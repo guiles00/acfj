@@ -109,7 +109,8 @@ Route::get('mgrupo','TableroController@mgrupo');
 /*Rutas Para Becas*/
 //Route::group(['middleware' => ['session_expired']], function () {
 //Route::resource('listBecas', 'BecaController');
-Route::resource('listBecas', 'BecaController@index');
+Route::resource('listSolicitudesBecas', 'BecaController@index');
+
 Route::get('verSolicitud/{id}', 'BecaController@verSolicitud');
 Route::get('imprimirSolicitud/{id}', 'BecaController@imprimirSolicitud');
 Route::get('verDocAdjunta/{id}', 'BecaController@verDocAdjunta');
@@ -120,15 +121,26 @@ Route::get('previewEmailDocumentacion', 'BecaController@previewEmailDocumentacio
 
 Route::post('saveActuacion', 'BecaController@saveActuacion');
 Route::get('addActuacion/{id}', 'BecaController@addActuacion');
-Route::get('eliminarVinculoActuacion/{id}', 'BecaController@eliminarVinculoActuacion');
+Route::get('eliminarVinculoActuacion/beca_id/{beca_id}/actuacion_id/{actuacion_id}', 'BecaController@eliminarVinculoActuacion');
 
 Route::get('addPasoBeca/{id}', 'BecaController@addPasoBeca');
 Route::post('savePasoBeca', 'BecaController@savePasoBeca');
 Route::get('deletePasoBeca/{id}', 'BecaController@deletePasoBeca');
 Route::get('editPasoBeca/{id}', 'BecaController@editPasoBeca');
 Route::post('updatePasoBeca/{id}', 'BecaController@updatePasoBeca');
-//Route::group(['middleware' => 'auth'], function () {
-//});
+
+
+
+Route::group(['middleware' => 'session_expired'], function () {
+
+	Route::get('listadoBecas', 'BecaOtorgadaController@listadoBecas');
+	Route::get('verBecaOtorgada/{id}', 'BecaOtorgadaController@verBecaOtorgada');
+	Route::post('saveBecaOtorgada', 'BecaOtorgadaController@save');
+
+});
+
+
+
 /*
 Actuaciones
 */

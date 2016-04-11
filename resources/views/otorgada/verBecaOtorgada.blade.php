@@ -12,12 +12,12 @@
 }
 </style>
  <ul class="breadcrumb">
-    <li>Solicitud Becas</li>
-    <li class="active">Ver Solicitud {{$beca->beca_id}}</li>
-</ul>  
+    <li>Becas</li>
+    <li class="active">Ver Beca</li>
+</ul> 
 <div class="panel panel-default">
 	<div class="panel-heading">
-			<a class="btn btn-default glyphicon glyphicon-arrow-left" href="{!! URL::action('BecaController@index'); !!}" class="glyphicon glyphicon-arrow-left"></a>
+			<a class="btn btn-default glyphicon glyphicon-arrow-left" href="{!! URL::action('BecaOtorgadaController@listadoBecas'); !!}" class="glyphicon glyphicon-arrow-left"></a>
 			<!--a href="{{action('AlumnosController@create')}}" class="glyphicon glyphicon-plus" align="right"></a-->
 			<!--span class="glyphicon glyphicon-plus" aria-hidden="true"></span-->		
 	</div>
@@ -25,9 +25,6 @@
 use App\domain\PasoBeca;
 use App\domain\Utils;
 
-$generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
-//echo "<pre>";
-//print_r($documentacion);
 ?>
 
 <?php if(Session::get('edited') == true){?>
@@ -41,11 +38,11 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 
 	<div class="row">
 	
-	<form method="POST" action="{{action('BecaController@save')}}" accept-charset="UTF-8" class="form-horizontal" role="form">
+	<form method="POST" action="{{action('BecaOtorgadaController@save')}}" accept-charset="UTF-8" class="form-horizontal" role="form">
 					<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
 					<input type="hidden" name="_id" value="{{$beca->beca_id}}" id="b_beca_id"/>
 
-		<div class="col-lg-6 col-md-6">
+		<div class="col-lg-6 col-md-6" style="display: none">
 			
 				<div class="row">
 						<div class="col-sm-12">
@@ -88,27 +85,12 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 					</div>
 				</div>
 				<div class="row">
-									<div class="form-group">
-										<label class="control-label col-md-2">Tel. Laboral</label>
-										<div class="col-md-8"><input class="form-control input-sm" name="tel_laboral" value='<?=$beca->telefono_laboral?>'></div>
-									</div>
-								</div>
-				<div class="row">	
 					<div class="form-group">
-						<label class="control-label col-md-2">G&eacute;nero</label>
-					<div class="col-md-8">
-						<select class="form-control" name="car_id" disabled>
-						@foreach($generos as $key=>$genero)
-						<?php if( $key == $beca->usi_genero ){?>
-						<option value="{{$key}}" selected>{{$genero}}</option>
-						<?php }else{?>
-						<option value="{{$key}}">{{$genero}}</option>
-						<?php }?>
-						@endforeach
-						</select>
-					</div>
+						<label class="control-label col-md-2">Tel. Laboral</label>
+						<div class="col-md-8"><input class="form-control input-sm" name="tel_laboral" value='<?=$beca->telefono_laboral?>'></div>
 					</div>
 				</div>
+				
 				<div class="row">
 					<div class="form-group">
 						<label class="control-label col-md-2">Fecha de Nacimiento</label>
@@ -118,7 +100,7 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 
 	</div>
 					
-					<div class="col-lg-6 col-md-6">
+					<div class="col-lg-6 col-md-6" style="display: none">
 								<div class="row">
 										<div class="col-sm-12">
 											<div class="form-group" style="background-color:#d1dfee">
@@ -126,12 +108,7 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 											</div>
 										</div>
 								</div>
-								<!--div class="row">
-									<div class="form-group">
-										<label class="control-label col-md-2">Email</label>
-										<div class="col-md-8"><input class="form-control input-sm" name="email" value='<?=$beca->f_ingreso_caba?>'></div>
-									</div>
-								</div-->
+								
 								<div class="row">
 									<div class="form-group">
 										<label class="control-label col-md-2">Fecha Ingreso PJCABA</label>
@@ -195,14 +172,6 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 										</div>
 									</div>
 								</div>	
-								<!--div class="row" id="b_cargo_otro">	
-									<div class="form-group">
-										<label class="control-label col-md-2">Otro Cargo</label>
-										<div class="col-md-8">
-											<input class="form-control input-sm" name="otro_cargo" value='<?=$beca->telefono_laboral?>'>
-										</div>
-									</div>
-								</div-->
 								
 								<div class="row">
 										<div class="form-group">
@@ -295,89 +264,45 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 			</div>
 
 		<div class="col-lg-6 col-md-6">
-				<div class="row">
-									<div class="form-group">
-										<label class="control-label col-md-2">Fecha de Solicitud</label>
-										<div class="col-md-8"><input class="form-control input-sm" name="fecha" value='<?=$beca->timestamp?>' disabled></div>
-									</div>
-				</div>
+		
 				<div class="row">
 					<div class="form-group">
-						<label class="control-label col-md-2">Renovaci&oacute;n</label>
-						<div class="col-md-4">
-						<select class="form-control" name="renovacion_id" id="b_renovacion_id">
-												@foreach($helpers['renovacion'] as $key=>$renovacion)
-												<?php if( $renovacion->dominio_id == $beca->renovacion_id ){?>
-												<option value="{{$renovacion->dominio_id}}" selected>{{$renovacion->nombre}}</option>
-												<?php }else{?>
-												<option value="{{$renovacion->dominio_id}}">{{$renovacion->nombre}}</option>
-												<?php }?>
-												@endforeach
-								</select>
-						</div>
+						<label class="control-label col-md-2">A&ntilde;o</label>
+						<div class="col-md-4"><input class="form-control input-sm" name="apynom" value='2016'></div>
 					</div>
 				</div>
+
 				<div class="row">	
 					<div class="form-group">
-						<label class="control-label col-md-2">Tipo de Beca</label>
-						<div class="col-md-8">
-							
-								<select class="form-control" name="tipo_beca_id">
-												@foreach($helpers['tipo_becas'] as $key=>$tipo_beca)
-												<?php if( $tipo_beca->dominio_id == $beca->tipo_beca_id ){?>
-												<option value="{{$tipo_beca->dominio_id}}" selected>{{$tipo_beca->nombre}}</option>
-												<?php }else{?>
-												<option value="{{$tipo_beca->dominio_id}}">{{$tipo_beca->nombre}}</option>
-												<?php }?>
-												@endforeach
-								</select>
-						</div>
+						<label class="control-label col-md-2">Apellido y Nombre</label>
+						<? $nombre_email = $beca->usi_nombre.' ( '.$beca->usi_email.' )'; ?>
+						<div class="col-md-8"><input class="form-control input-sm" name="apynom" value='<?=$nombre_email?>'></div>
 					</div>
 				</div>
+				
+
 				<div class="row">	
 					<div class="form-group">
-						<label class="control-label col-md-2">Tipo de Actividad</label>
-						<div class="col-md-8">
-								<select class="form-control" name="tipo_actividad_id">
-												@foreach($helpers['tipo_actividad'] as $key=>$tipo_actividad)
-												<?php if( $tipo_actividad->dominio_id == $beca->tipo_actividad_id ){?>
-												<option value="{{$tipo_actividad->dominio_id}}" selected>{{$tipo_actividad->nombre}}</option>
-												<?php }else{?>
-												<option value="{{$tipo_actividad->dominio_id}}">{{$tipo_actividad->nombre}}</option>
-												<?php }?>
-												@endforeach
-								</select>
-						</div>
+						<label class="control-label col-md-2">Carrera</label>
+						<div class="col-md-8"><input class="form-control input-sm" name="actividad_nombre" value='<?=$beca->actividad_nombre?>'></div>
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="form-group">
+						<label class="control-label col-md-2">Tel. Laboral</label>
+						<div class="col-md-8"><input class="form-control input-sm" name="tel_laboral" value='<?=$beca->telefono_laboral?>'></div>
+					</div>
+				</div>
+
 				<div class="row">	
 					<div class="form-group">
-						<label class="control-label col-md-2">Instituci&oacute;n propuesta</label>
-						<div class="col-md-8">
-								<select class="form-control" name="inst_prop_id">
-												@foreach($helpers['universidades'] as $key=>$inst_prop)
-												<?php if( $inst_prop->universidad_id == $beca->institucion_propuesta ){?>
-												<option value="{{$inst_prop->universidad_id}}" selected>{{$inst_prop->universidad}}</option>
-												<?php }else{?>
-												<option value="{{$inst_prop->universidad_id}}">{{$inst_prop->universidad}}</option>
-												<?php }?>
-												@endforeach
-								</select>
-						</div>
+						<label class="control-label col-md-2">Monto Otorgado</label>
+						<div class="col-md-8"><input class="form-control input-sm" name="monto_otorgado" value=''></div>
 					</div>
 				</div>
-				<div class="row">	
-					<div class="form-group">
-						<label class="control-label col-md-2">Costo</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="costo" value='<?=$beca->costo?>'></div>
-					</div>
-				</div>
-				<div class="row">	
-					<div class="form-group">
-						<label class="control-label col-md-2">Monto Solicitado</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="monto" value='<?=$beca->monto?>'></div>
-					</div>
-				</div>
+
+				
 				<div class="row">
 		        	<div class="form-group">
 								<label class="control-label col-md-2">Estado de la Solicitud</label>
@@ -394,73 +319,60 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 								</div>
 							</div>
 		        </div>
+
+		    <div class="form-group">
+		      <label class="control-label col-sm-2">Observaciones</label>
+		      <div class="col-sm-10">          
+		        <textarea type="text" class="form-control" id="" name="beca_observaciones"></textarea>
+		      </div>
+		    </div>
+
 		</div>
 		<div class="col-lg-6 col-md-6">
-			<div class="row">
-					<div class="form-group">
-						<label class="control-label col-md-2">Fecha Inicio</label>
-						<div class="col-md-8"><input class="form-control input-sm datepicker" name="fecha_inicio" value='<?=$beca->fecha_inicio?>' id="b_fecha_inicio"></div>
+			
+				<div class="row">	
+					<div class="form-group" style="visibility: hidden">
+						<label class="control-label col-md-2"></label>
+						<div class="col-md-8"><input class="form-control input-sm"  value=''disabled></div>
 					</div>
 				</div>
 				<div class="row">	
 					<div class="form-group">
-						<label class="control-label col-md-2">Fecha Fin</label>
-						<div class="col-md-8"><input class="form-control input-sm datepicker" name="fecha_fin" value='<?=$beca->fecha_fin?>' id="b_fecha_fin"></div>
-					</div>
-				</div>
-				<div class="row">	
-					<div class="form-group">
-						<label class="control-label col-md-2">Nombre Actividad</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="actividad_nombre" value='<?=$beca->actividad_nombre?>'></div>
+						<label class="control-label col-md-2">Legajo</label>
+						<div class="col-md-8"><input class="form-control input-sm"  value='<?=$beca->usi_legajo?>' ></div>
 					</div>
 				</div>
 
 				<div class="row">	
 					<div class="form-group">
-						<label class="control-label col-md-2">Duraci&oacute;n</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="duracion" value='<?=$beca->duracion?>'></div>
-					</div>
-				</div>
-				<div class="row">	
-					<div class="form-group">
-						<label class="control-label col-md-2">Dictamen</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="dictamen_por" value='<?=$beca->dictamen_por?>'></div>
-					</div>
-				</div>
-				<div class="row">	
-					<div class="form-group">
-						<label class="control-label col-md-2">Superposici&oacute;n</label>
+						<label class="control-label col-md-2">Universidad</label>
 						<div class="col-md-8">
-								<select class="form-control" name="s_horaria" id="b_sup_horaria">
-												@foreach($helpers['s_horaria'] as $key=>$s_horaria)
-												<?php if( $s_horaria->dominio_id == $beca->sup_horaria ){?>
-												<option value="{{$s_horaria->dominio_id}}" selected>{{$s_horaria->nombre}}</option>
+								<select class="form-control" name="inst_prop_id">
+												@foreach($helpers['universidades'] as $key=>$inst_prop)
+												<?php if( $inst_prop->universidad_id == $beca->institucion_propuesta ){?>
+												<option value="{{$inst_prop->universidad_id}}" selected>{{$inst_prop->universidad}}</option>
 												<?php }else{?>
-												<option value="{{$s_horaria->dominio_id}}">{{$s_horaria->nombre}}</option>
+												<option value="{{$inst_prop->universidad_id}}">{{$inst_prop->universidad}}</option>
 												<?php }?>
 												@endforeach
 								</select>
 						</div>
 					</div>
 				</div>
+
+				<div class="row">	
+					<div class="form-group" style="visibility: hidden">
+						<label class="control-label col-md-2">Duraci&oacute;n</label>
+						<div class="col-md-8"><input class="form-control input-sm" name="duracion" value='<?=$beca->duracion?>'></div>
+					</div>
+				</div>
 				<div class="row">	
 					<div class="form-group">
-						<label class="control-label col-md-2">Monto Otorgado</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="monto_otorgado" value=''></div>
+						<label class="control-label col-md-2">Archivado</label>
+						<div class="col-md-8"><input class="form-control input-sm" name="archivado" value=''></div>
 					</div>
 				</div>
-
 		</div>
-		
-			<!--div class="col-sm-12">
-				<div class="row">
-					<div class="col-sm-12">
-						<div class="form-group" style="background-color:#d1dfee">
-							<h3 >Documentaci&oacute;n</h3>
-						</div>
-					</div>
-				</div>
-			</div-->
 
 
 	<div class="col-sm-12">
@@ -475,28 +387,6 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 
 
 
-	<!--div class="col-sm-12">
-				<div class="row">
-					<div class="col-sm-12">
-						<div class="form-group" style="background-color:#d1dfee">
-							<hr>
-						</div>
-					</div>
-				</div>
-	</div-->
-
-
-			<!--div class="col-sm-12">
-				<div class="row">
-					<div class="form-group"> 
-						<div class="col-md-offset-1 col-md-10">
-							<button type="submit" class="btn btn-default" id="b_save_beca">Guardar</button>
-							<a href="{!! URL::action('BecaController@index'); !!}" class="btn btn-default">Cancelar</a>
-							<button type="button" class="btn btn-default">Enviar Email Documentaci&oacute;n</button>
-						</div>
-					</div>
-				</div>
-			</div-->
 
 		
 	</div> <!-- row --> 
@@ -640,7 +530,7 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
                 <td> {{ $actuacion->remite}} </td>
                 <td> {{ $actuacion->conste}} </td>
                 <!--td> {{ $actuacion->actuacion_id}} </td-->
-                <td> <a href="{!! URL::action('BecaController@eliminarVinculoActuacion',array($beca->beca_id,$actuacion->actuacion_id)); !!}" onClick="return confirm('desea eliminar?')" >Eliminar</a></td>
+                <td> <a href="{!! URL::action('BecaController@eliminarVinculoActuacion',$actuacion->actuacion_id); !!}" onClick="return confirm('desea eliminar?')" >Eliminar</a></td>
 
             </tr>
             @endforeach    
@@ -721,10 +611,10 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 						<div class="col-md-12">
 							<button type="submit" class="btn btn-default" id="b_save_beca">Guardar</button>
 							<a href="{!! URL::action('BecaController@index'); !!}" class="btn btn-default">Cancelar</a>
-							<button type="button" class="btn btn-default" id="b_preview_email_documentacion">Previsualizar contenido Email</button>
-							<button type="button" class="btn btn-default" id="b_enviar_email_documentacion">Enviar Email Documentaci&oacute;n</button>
-							<a type="button" href="{{action('BecaController@imprimirSolicitud',$beca->beca_id)}}" class="btn btn-default" target="_target" id="b_imprimir_solicitud">Imprimir Solicitud</a>
-
+							<!--button type="button" class="btn btn-default" id="b_preview_email_documentacion">Previsualizar contenido Email</button>
+							<button type="button" class="btn btn-default" id="b_enviar_email_documentacion">Enviar Email Documentaci&oacute;n</button-->
+							<!--a type="button" href="{{action('BecaController@imprimirSolicitud',$beca->beca_id)}}" class="btn btn-default" target="_target" id="b_imprimir_solicitud">Imprimir Solicitud</a-->
+							<a type="button" href="{{action('BecaController@verSolicitud',$beca->beca_id)}}" class="btn btn-default">Ver Datos Solicitud</a>
 						</div>
 					</div>
 				</div>
