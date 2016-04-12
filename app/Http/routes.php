@@ -66,6 +66,7 @@ Route::post('dwarfs','DwarfController@store');
 
 //Route::get('dwarfs', 'HobbitController@index');
 Route::get('becas','BecaController@index');
+Route::get('listBecas','BecaController@listBecas');
 //Route::get('becas/create','DwarfController@create');
 Route::get('becas/{id}','DwarfController@show');
 
@@ -110,6 +111,8 @@ Route::get('mgrupo','TableroController@mgrupo');
 //Route::group(['middleware' => ['session_expired']], function () {
 //Route::resource('listBecas', 'BecaController');
 Route::resource('listSolicitudesBecas', 'BecaController@index');
+Route::get('busquedaAvanzada', 'BecaController@busquedaAvanzada');
+
 
 Route::get('verSolicitud/{id}', 'BecaController@verSolicitud');
 Route::get('imprimirSolicitud/{id}', 'BecaController@imprimirSolicitud');

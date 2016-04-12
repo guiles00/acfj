@@ -41,7 +41,7 @@ $helper = new App\Domain\Helper();
     </div>
 </div>
 
-<!-- Modal Busqueda -->
+<!-- Modal Busqueda Avanzada-->
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -49,31 +49,52 @@ $helper = new App\Domain\Helper();
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
             <h4 class="modal-title" id="myModalLabel">B&uacute;squeda de Actuaciones</h4>
             </div>
-            <form method="GET" action="{{action('BecaController@index')}}" role="search">
-                <div class="modal-body">
-        
+            <form method="GET" action="{!! URL::action('BecaController@busquedaAvanzada'); !!}" role="search">
 
+                <div class="modal-body">
         <div class="row">
           <div class="col-lg-12 col-md-12">
             
             <div class="row"> 
               <div class="form-group">
                 <label class="control-label col-md-2">Tipo</label>
-                <div class="col-md-8"><input class="form-control input-sm" name="str_destino" value=''></div>
+
+                <div class="col-md-8">
+                    <select class="form-control" name="tipo_beca_id">
+                      <option value="">-</option>
+                      @foreach($helpers['tipo_beca'] as $key=>$t_beca)
+                      <option value="{{$t_beca->dominio_id}}">{{$t_beca->nombre}}</option>
+                      @endforeach
+                    </select>
+                </div>
               </div>
             </div>  
             <br>
             <div class="row"> 
               <div class="form-group">
                 <label class="control-label col-md-2">Estado</label>
-                <div class="col-md-8"><input class="form-control input-sm" name="str_destino" value=''></div>
+                <div class="col-md-8">
+                   <select class="form-control" name="estado_id" >
+                      <option value="">-</option>
+                      @foreach($helpers['estado_beca'] as $key=>$t_beca)
+                      <option value="{{$t_beca->dominio_id}}">{{$t_beca->nombre}}</option>
+                      @endforeach
+                    </select>
+                </div>
               </div>
             </div>  
             <br>
             <div class="row"> 
               <div class="form-group">
                 <label class="control-label col-md-2">Renovaci&oacute;n</label>
-                <div class="col-md-8"><input class="form-control input-sm" name="str_actuacion" value=''></div>
+                <div class="col-md-8">
+                  <select class="form-control" name="renovacion_id" >
+                      <option value="">-</option>
+                      @foreach($helpers['renovacion'] as $key=>$t_beca)
+                      <option value="{{$t_beca->dominio_id}}">{{$t_beca->nombre}}</option>
+                      @endforeach
+                    </select>
+                </div>
               </div>
             </div> 
         </div>

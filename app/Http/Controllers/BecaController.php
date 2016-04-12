@@ -28,7 +28,7 @@ class BecaController extends Controller {
 	public function index()
 	{
 		//$becas = Beca::all();
-		//echo 'index';
+		echo 'index';
 
 
 		if (  MyAuth::check() )
@@ -88,8 +88,12 @@ class BecaController extends Controller {
 
             $becas->setPath('listSolicitudesBecas');
             $becas->appends(array('estado_id' => $input['estado_id'],'str_beca' => $str));
-            
-		return view('beca.index')->with('becas',$becas);
+         
+        $helpers = self::traeHelpers();    
+       //// echo "<pre>";
+      //  print_r($helper);
+       // exit;
+		return view('beca.index')->with('becas',$becas)->with('helpers',$helpers);
 	}
 
 		public function listBecas(){
@@ -147,72 +151,49 @@ class BecaController extends Controller {
 
 	public function busquedaAvanzada()
 	{
-		//$becas = Beca::all();
-		
-
-
-		if (  MyAuth::check() )
-		{
-			//Aca algo voy a hacer
-			//Levanto los datos el usuario
-		}else{
-
-	        return Redirect::to('/');
-		}
-
 		$input = Request::all();
 		
-		$str = (isset($input['str_beca']))?$input['str_beca']:'';
 		//print_r($input);
 		echo 'busquedaAvanzada';
-		$helper = new Helper();
-		/*$becas = Beca::where('usi_nombre', 'LIKE', "%$str%")
-		->orWhere('usi_dni', 'LIKE', "%$str%")
-		->orWhere('usi_nombre', 'LIKE', "%$str%")
-		->orWhere('usi_legajo', 'LIKE', "%$str%")
-		->paginate(30);
-		*/
-		//$alumnos->setPath('alumnos');
-		$input['estado_id'] = (isset($input['estado_id']))?$input['estado_id']:'-1';
-		if($input['estado_id'] == -1){
-			$data = DB::table('beca')
-	            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
-	            ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id')
-	           // ->join('cargo','usuario_sitio.usi_car_id','=','cargo.car_id')
-	            ->select('*')
-	            ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
-                ->where('beca.estado_id', '<>', 0)
-
-	           // ->groupBy('cargo.car_nombre')
-	            ->orderBy('beca.beca_id','DESC')
-	            //->toSql();
-	            ->paginate(20); // El paginate funciona como get()
-	            //->get(); 
-        	
-		}else{
-		$data = DB::table('beca')
+		$helpers = self::traeHelpers();
+		
+		
+		$query = DB::table('beca')
             ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
-            ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id')
-           // ->join('cargo','usuario_sitio.usi_car_id','=','cargo.car_id')
-            ->select('*')
-            ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
-            ->where('beca.estado_id', '=', $input['estado_id'])
-            ->where('beca.estado_id', '<>', 0)
-           // ->groupBy('cargo.car_nombre')
-            ->orderBy('beca.beca_id','DESC')
-           // ->toSql();
-            ->paginate(20); // El paginate funciona como get()
-            //->get(); 
+            ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id');
 
-        }
-            $becas = $data;
+        $query->select('*');
+       
+        if(!empty($input['renovacion_id'])) $query->where('beca.renovacion_id', '=', $input['renovacion_id']);	
+        if(!empty($input['estado_id'])) $query->where('beca.estado_id', '=', $input['estado_id']);	
+        if(!empty($input['tipo_beca_id'])) $query->where('beca.tipo_beca_id', '=', $input['tipo_beca_id']);	
 
-            $becas->setPath('listBecas');
-            $becas->appends(array('estado_id' => $input['estado_id'],'str_beca' => $str));
+        
+        $data = $query->orderBy('beca.beca_id','DESC')->paginate(500);
+           
+        $becas = $data;
+
+        // $becas->setPath('listSolicitudesBecas');
+        // $becas->appends(array('estado_id' => $input['estado_id'],'str_beca' => $str));
             
-		return view('beca.index')->with('becas',$becas);
+		return view('beca.index')->with('becas',$becas)->with('helpers',$helpers);
 	}
 
+	private static function traeHelpers(){
+
+
+			$helper = new Helper();
+			$tipo_beca = $helper->getHelperByDominio('tipo_beca');
+			$renovacion = $helper->getHelperByDominio('renovacion');
+		    $estado_beca = $helper->getHelperByDominio('estado_beca');
+
+		    $helpers = array();
+			$helpers['renovacion'] = $renovacion;
+			$helpers['estado_beca'] = $estado_beca;
+			$helpers['tipo_beca'] = $tipo_beca;
+
+		return $helpers;
+	}
 
 	public function verSolicitud($id){
 
