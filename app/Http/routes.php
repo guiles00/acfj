@@ -171,3 +171,31 @@ Route::get('altaRemitidos','RemitidosController@altaRemitidos');
 Route::post('storeRemitidos', 'RemitidosController@store');
 Route::get('editRemitidos/{id}','RemitidosController@edit');
 Route::post('updateRemitidos','RemitidosController@update');
+
+
+
+Route::group(['middleware' => ['session_expired']], function () {
+	
+	Route::get('editUsuario/{id}','UsuarioController@edit');
+	Route::post('updateUsuario','UsuarioController@update');
+	Route::get('listUsuarios','UsuarioController@listUsuarios');
+	
+	Route::get('listPerfiles','PerfilController@listPerfiles');
+	Route::get('editPerfil/{id}','PerfilController@edit');
+	Route::post('addMenuPerfil','PerfilController@ajaxAddMenu');
+	Route::post('deleteMenuPerfil','PerfilController@ajaxDeleteMenu');
+
+	Route::get('loadTableMenuPerfil','PerfilController@loadTableMenuPerfil');
+
+	Route::get('listMenu','MenuController@listMenu');
+
+	Route::get('editMenu/{id}','MenuController@edit');	
+	Route::post('updateMenu','MenuController@update');
+	Route::get('altaMenu','MenuController@altaMenu');
+	Route::post('addMenu','MenuController@add');
+	
+	
+});
+
+
+	

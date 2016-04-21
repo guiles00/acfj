@@ -28,7 +28,7 @@ class BecaController extends Controller {
 	public function index()
 	{
 		//$becas = Beca::all();
-		echo 'index';
+		//echo 'index';
 
 
 		if (  MyAuth::check() )
@@ -154,7 +154,7 @@ class BecaController extends Controller {
 		$input = Request::all();
 		
 		//print_r($input);
-		echo 'busquedaAvanzada';
+		//echo 'busquedaAvanzada';
 		$helpers = self::traeHelpers();
 		
 		

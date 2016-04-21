@@ -9,6 +9,7 @@ class User {
     protected $_usuario;
     protected $_username;
     protected $_acl;
+    protected $_perfil_id;
     private static $_instance;
     
  //Singleton  
@@ -22,6 +23,10 @@ class User {
         
         $this->_session_id =  (isset($_SESSION['cfj_userinfo']['user_id']))?$_SESSION['cfj_userinfo']['user_id']:null;
         $this->_username =  (isset($_SESSION['cfj_userinfo']['username']))?$_SESSION['cfj_userinfo']['username']:null;
+
+        $user = DB::table('users')->where('user_id','=',$this->_session_id)->get();
+        
+        $this->_perfil_id = $user[0]->perfil_id;
 
         //$this->_usuario = new Domain_Usuario($this->_session_id);
         //$this->_acl = new Domain_Acl($this->_session_id) ;
@@ -62,5 +67,8 @@ class User {
      if( empty($res) ) return false;
      
       return true;
+    }
+    function getPerfilId(){
+        return $this->_perfil_id;
     }
 }
