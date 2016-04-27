@@ -198,16 +198,7 @@ class ActuacionController extends Controller {
 	 */
 	public function listActuacion()
 	{
-		/*
-		if (  MyAuth::check() )
-		{
-			//Aca algo voy a hacer
-			//Levanto los datos el usuario
-		}else{
-
-	        return Redirect::to('/');
-		}
-		*/
+		
 		$input = Request::all();
 		//print_r($input);
 
