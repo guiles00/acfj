@@ -112,14 +112,14 @@
         <textarea type="text" class="form-control" id="" name="remitidos_observaciones"></textarea>
       </div>
     </div-->
-
+<?// echo "<pre>"; print_r($archivo_remitidos);?>
     <div class="form-group">
       <label class="control-label col-md-2">Archivo</label>
         <div class="col-md-4">
           <select class="form-control select2" name="archivo_remitidos_id">
           <option value="0">-</option>
           @foreach($archivo_remitidos as $key=>$archivo)
-          <option value="{{$archivo->archivo_remitidos_id}}">{{$archivo->nombre_archivo}}</option>
+          <option value = "{{ $archivo->archivo_actuacion_id }}" >{{$archivo->nombre_archivo}}</option>
           @endforeach
           </select>
         </div>

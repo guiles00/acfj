@@ -168,6 +168,17 @@ $menu = Menu::getMenuByPerfil(User::getInstance()->getPerfilId());
                                 </ul>
                             </li-->
                             <?}?>
+                            <!--li>
+                            <a href="#"><i class=""></i>Probando<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="{!! URL::asset('/categorias') !!}"  class="ajaxCall">Esta para vos</a>
+                                    </li>
+                                    <li>
+                                        <a href="{!! URL::asset('/mgrupo') !!}"  class="ajaxCall">Esta otra para vos</a>
+                                    </li>
+                                </ul>
+                            </li-->
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -193,6 +204,13 @@ $menu = Menu::getMenuByPerfil(User::getInstance()->getPerfilId());
     <script src="{!! URL::asset('/bower_components/datatables/media/js/jquery.dataTables.min.js'); !!}"></script>
     <script src="{!! URL::asset('/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js'); !!}"></script>
 
+    <script>
+    $('.ajaxCall').click(function(e){
+        e.preventDefault();
+        console.debug('click');
+        $('#page-wrapper').load('./');
+    });
+    </script>
 
 </body>
 
