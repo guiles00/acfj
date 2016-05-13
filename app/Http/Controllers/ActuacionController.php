@@ -172,7 +172,7 @@ class ActuacionController extends Controller {
 		
 		try {
 
-		//	$actuacion->save();
+			$actuacion->save();
 
 		} catch (Exception $e) {
 			
