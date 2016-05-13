@@ -159,7 +159,7 @@ class ActuacionController extends Controller {
 		$actuacion = new Actuacion;
 		$actuacion->numero_actuacion = $input['nro_actuacion'];
 		$actuacion->prefijo = $input['codigo_actuacion'];
-		$actuacion->actuacion_fecha =	$input['actuacion_fecha'];
+		$actuacion->actuacion_fecha = $input['actuacion_fecha'];
 	    $actuacion->asunto = $input['actuacion_asunto']; 
     	$actuacion->dirigido = $input['actuacion_dirigido'];
     	$actuacion->remite = $input['actuacion_remite'];
@@ -172,7 +172,7 @@ class ActuacionController extends Controller {
 		
 		try {
 
-			$actuacion->save();
+		//	$actuacion->save();
 
 		} catch (Exception $e) {
 			
@@ -180,16 +180,55 @@ class ActuacionController extends Controller {
 			exit;
 		}
 		
+		//trae los datos del area destino
 
-		//echo "<pre>";
+		//echo "comunico a quien sea";
 		
-		//print_r($input);
 
+		self::comunicarPase($input['area_destino_id']);
+		
 		//return view('actuacion.store')->with('actuacion',$actuacion);
 		$actuaciones = Actuacion::orderBy( DB::raw('convert(numero_actuacion, decimal)') ,'desc')->paginate(20);// ->get();	
 
 		return view('actuacion.listActuacion')->with('actuaciones',$actuaciones);//->with('actuacion',$actuacion);
 	}
+
+
+	private function comunicarPase($area_id){
+		$area = AreaCfj::where('area_cfj_id', '=',$area_id)->get();
+		//echo "<pre>";
+		//echo "Le manda email a esta persona";
+		//print_r($area[0]->responsable_email);
+		$html = '<html>Holis</html>';
+		$this->enviaEmail($area[0]->responsable_email,$html);
+	}
+
+	private function enviaEmail($responsable_email,$html){
+
+		//echo $responsable_email;
+		//echo $html;
+
+		$to      = 'gcaserotto@jusbaires.gov.ar';
+		$subject = 'Departamento de Becas';
+		$message = $html;
+		$headers = 'From: no-reply@jusbaires.gov.ar' . "\r\n" .
+   			   'Reply-To: no-reply@jusbaires.gov.ar' . "\r\n" .
+			   //'Bcc: gcaserotto@jusbaires.gov.ar' . "\r\n" .
+			   'Return-Path: return@jusbaires.gov.ar' . "\r\n" .
+			   'MIME-Version: 1.0' . "\r\n" .
+			   'Content-Type: text/html; charset=ISO-8859-1' . "\r\n" .
+			   'X-Mailer: PHP/' . phpversion();
+
+		$res = mail($to, $subject, $message, $headers);
+
+		//ver error 
+		if(!$res) echo 'hubo un error al notificar';
+
+		return $res;
+	}
+
+
+
 
 	/**
 	 * Display a listing of the resource.
