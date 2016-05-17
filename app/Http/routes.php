@@ -198,4 +198,18 @@ Route::group(['middleware' => ['session_expired']], function () {
 });
 
 
+Route::group(['middleware' => ['session_expired']], function () {
+	
+	//Route::resource('actuacion','ActuacionController');
+    Route::get('listAreas','AreaNotificacionController@listAreas');
+    Route::get('verAreaNotificacion','AreaNotificacionController@verAreaNotificacion');
+    /*Route::get('listActuacion','ActuacionController@listActuacion');
+    Route::post('storeActuacion', 'ActuacionController@store');
+	Route::get('listActuacion','ActuacionController@listActuacion');
+	Route::post('updateActuacion','ActuacionController@update');
+	Route::get('editActuacion/{id}','ActuacionController@edit');
+	Route::get('getDatosActuacion','ActuacionController@getDatosActuacion');
+	Route::get('getNumeroActuacion','ActuacionController@getNumeroActuacion');*/
+});
+
 	

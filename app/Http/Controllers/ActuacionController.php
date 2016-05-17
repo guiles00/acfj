@@ -136,6 +136,7 @@ class ActuacionController extends Controller {
 		//if(session_status() == 1)
 		//return Redirect::to('/');	
 		//
+
 		$archivo_actuacion = ArchivoActuacion::get();
 		$area_cfj = AreaCfj::get();
 		$conste_agente = Agente::get();
@@ -197,18 +198,30 @@ class ActuacionController extends Controller {
 	private function comunicarPase($area_id){
 		$area = AreaCfj::where('area_cfj_id', '=',$area_id)->get();
 		//echo "<pre>";
-		//echo "Le manda email a esta persona";
-		//print_r($area[0]->responsable_email);
+		//echo "Le manda email a estas personas";
+		
+		$notificacion_cfj = DB::table('notificacion_area_cfj')
+  				                ->leftJoin('agente','notificacion_area_cfj.agente_id','=','agente.agente_id')
+								->where('notificacion_area_cfj.area_cfj_id','=',$area_id)->get();
+
+		//print_r($notificacion_cfj);
+		$agentes = array();
+		foreach ($notificacion_cfj as $agente) {
+			$agentes[] = $agente->agente_email;
+		}
+
+		$notificacion_agentes = implode(',',$agentes);
+		
 		$html = '<html>Holis</html>';
-		$this->enviaEmail($area[0]->responsable_email,$html);
+		$this->enviaEmail($notificacion_agentes,$html);
 	}
 
-	private function enviaEmail($responsable_email,$html){
+	private function enviaEmail($notificacion_agentes,$html){
 
-		//echo $responsable_email;
+		//echo $notificacion_agentes;
 		//echo $html;
 
-		$to      = 'gcaserotto@jusbaires.gov.ar';
+		$to      = $notificacion_agentes;
 		$subject = 'Departamento de Becas';
 		$message = $html;
 		$headers = 'From: no-reply@jusbaires.gov.ar' . "\r\n" .
