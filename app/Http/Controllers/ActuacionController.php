@@ -186,7 +186,7 @@ class ActuacionController extends Controller {
 		//echo "comunico a quien sea";
 		
 
-		self::comunicarPase($input['area_destino_id']);
+		self::comunicarPase($input['area_destino_id'],$actuacion);
 		
 		//return view('actuacion.store')->with('actuacion',$actuacion);
 		$actuaciones = Actuacion::orderBy( DB::raw('convert(numero_actuacion, decimal)') ,'desc')->paginate(20);// ->get();	
@@ -195,7 +195,7 @@ class ActuacionController extends Controller {
 	}
 
 
-	private function comunicarPase($area_id){
+	private function comunicarPase($area_id,$actuacion){
 		$area = AreaCfj::where('area_cfj_id', '=',$area_id)->get();
 		//echo "<pre>";
 		//echo "Le manda email a estas personas";
@@ -212,21 +212,43 @@ class ActuacionController extends Controller {
 
 		$notificacion_agentes = implode(',',$agentes);
 		
-		$html = '<html>Holis</html>';
-		$this->enviaEmail($notificacion_agentes,$html);
+
+		$html = '<html>
+<body>
+	<p><b><u>Alta </u></b>
+	</p>
+	<table>
+		<tr>
+			<td><b>Actuaci&oacute;n: </b></td><td>'.$actuacion->prefijo.'-'.$actuacion->numero_actuacion.'</td>
+		</tr>
+		<tr>
+			<td><b>Asunto: </b></td><td>'.$actuacion->asunto.'</td>
+		</tr>
+	</table>
+	<br>
+	<p style="font-size:10">Mesa de Entradas Interna - Centro de Formaci&oacute;n Judicial</p>
+</body>
+</html>';
+
+		$subject = 'CFJ-MEI - Alta Actuación Nro: '.$actuacion->prefijo.'-'.$actuacion->numero_actuacion;
+		//echo "<pre>";
+		
+		//print_r($html);
+		//print_r($actuacion);
+		$this->enviaEmail($notificacion_agentes,$html,$subject);
 	}
 
-	private function enviaEmail($notificacion_agentes,$html){
+	private function enviaEmail($notificacion_agentes,$html,$subject){
 
 		//echo $notificacion_agentes;
 		//echo $html;
 
 		$to      = $notificacion_agentes;
-		$subject = 'Departamento de Becas';
+		$subject = $subject;
 		$message = $html;
 		$headers = 'From: no-reply@jusbaires.gov.ar' . "\r\n" .
    			   'Reply-To: no-reply@jusbaires.gov.ar' . "\r\n" .
-			   //'Bcc: gcaserotto@jusbaires.gov.ar' . "\r\n" .
+			   'Bcc: gcaserotto@jusbaires.gov.ar' . "\r\n" .
 			   'Return-Path: return@jusbaires.gov.ar' . "\r\n" .
 			   'MIME-Version: 1.0' . "\r\n" .
 			   'Content-Type: text/html; charset=ISO-8859-1' . "\r\n" .
