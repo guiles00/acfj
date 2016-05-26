@@ -212,17 +212,23 @@ class ActuacionController extends Controller {
 
 		$notificacion_agentes = implode(',',$agentes);
 		
-
+//<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		$html = '<html>
 <body>
 	<p><b><u>Alta </u></b>
 	</p>
 	<table>
 		<tr>
+			<td><b>Fecha: </b></td><td>'.utf8_encode($actuacion->actuacion_fecha).'</td>
+		</tr>
+		<tr>
 			<td><b>Actuaci&oacute;n: </b></td><td>'.$actuacion->prefijo.'-'.$actuacion->numero_actuacion.'</td>
 		</tr>
 		<tr>
-			<td><b>Asunto: </b></td><td>'.$actuacion->asunto.'</td>
+			<td><b>Causante: </b></td><td>'.$actuacion->remite.'</td>
+		</tr>
+		<tr>
+			<td><b>Observaciones: </b></td><td>'.$actuacion->observaciones.'</td>
 		</tr>
 	</table>
 	<br>
@@ -234,8 +240,8 @@ class ActuacionController extends Controller {
 		//echo "<pre>";
 		
 		//print_r($html);
-		//print_r($actuacion);
-		$this->enviaEmail($notificacion_agentes,$html,$subject);
+		//print_r($subject);
+		$this->enviaEmail($notificacion_agentes,$html,utf8_encode($subject));
 	}
 
 	private function enviaEmail($notificacion_agentes,$html,$subject){
