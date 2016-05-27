@@ -57,8 +57,8 @@ $('document').ready(function(){
      var categoria = $("#a-categoria").val();
      var anio = $("#a-anio").val();
 
-    $.ajax({
-                          url:'http://10.48.135.16/content/cfj-cfj/admin_cfj/public/listadoGrupoDosCursos'
+    $.ajax({ //http://10.48.135.16/content/cfj-cfj/admin_cfj/public
+                          url:'./listadoGrupoDosCursos'
                           //url: './cfj-cfj/admin_cfj/public/listadoGrupoDosCursos',
                           ,data: {'gcu_id':categoria,'anio':anio},
                           success: function(data){

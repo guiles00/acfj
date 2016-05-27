@@ -217,7 +217,7 @@ var datos_o = JSON.parse(datos);
 <script>
     //console.debug('datos'); 
     //console.debug(datos);
-    var w = 1224;
+ /*   var w = 1224;
     var arr_categories = new Array();
     var arr_cantidad = new Array();
 
@@ -335,5 +335,6 @@ var datos_o = JSON.parse(datos);
               .append('text')
               .attr({'x':function(d) {return xscale(d)/2.2; },'y':function(d,i){ return yscale(i)+35; }})
               .text(function(d){ return d; }).style({'fill':'#ffff','font-size':'14px'});
+              */
 </script>
 @stop
