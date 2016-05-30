@@ -197,14 +197,11 @@ class ActuacionController extends Controller {
 
 	private function comunicarPase($area_id,$actuacion){
 		$area = AreaCfj::where('area_cfj_id', '=',$area_id)->get();
-		//echo "<pre>";
-		//echo "Le manda email a estas personas";
 		
 		$notificacion_cfj = DB::table('notificacion_area_cfj')
   				                ->leftJoin('agente','notificacion_area_cfj.agente_id','=','agente.agente_id')
 								->where('notificacion_area_cfj.area_cfj_id','=',$area_id)->get();
 
-		//print_r($notificacion_cfj);
 		$agentes = array();
 		foreach ($notificacion_cfj as $agente) {
 			$agentes[] = $agente->agente_email;
@@ -212,36 +209,32 @@ class ActuacionController extends Controller {
 
 		$notificacion_agentes = implode(',',$agentes);
 		
-//<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 		$html = '<html>
-<body>
-	<p><b><u>Alta </u></b>
-	</p>
-	<table>
-		<tr>
-			<td><b>Fecha: </b></td><td>'.utf8_encode($actuacion->actuacion_fecha).'</td>
-		</tr>
-		<tr>
-			<td><b>Actuaci&oacute;n: </b></td><td>'.$actuacion->prefijo.'-'.$actuacion->numero_actuacion.'</td>
-		</tr>
-		<tr>
-			<td><b>Causante: </b></td><td>'.$actuacion->remite.'</td>
-		</tr>
-		<tr>
-			<td><b>Observaciones: </b></td><td>'.$actuacion->observaciones.'</td>
-		</tr>
-	</table>
-	<br>
-	<p style="font-size:10">Mesa de Entradas Interna - Centro de Formaci&oacute;n Judicial</p>
-</body>
-</html>';
+					<body>
+						<p><b><u>Alta </u></b>
+						</p>
+						<table>
+							<tr>
+								<td><b>Fecha: </b></td><td>'.$actuacion->actuacion_fecha.'</td>
+							</tr>
+							<tr>
+								<td><b>Actuaci&oacute;n: </b></td><td>'.$actuacion->prefijo.'-'.$actuacion->numero_actuacion.'</td>
+							</tr>
+							<tr>
+								<td><b>Causante: </b></td><td>'.htmlentities($actuacion->remite, ENT_QUOTES, "UTF-8").'</td>
+							</tr>
+							<tr>
+								<td><b>Observaciones: </b></td><td>'.htmlentities($actuacion->observaciones, ENT_QUOTES, "UTF-8").'</td>
+							</tr>
+						</table>
+						<br>
+						<p style="font-size:10">Mesa de Entradas Interna - Centro de Formaci&oacute;n Judicial</p>
+					</body>
+					</html>';
 
 		$subject = 'CFJ-MEI - Alta Actuación Nro: '.$actuacion->prefijo.'-'.$actuacion->numero_actuacion;
-		//echo "<pre>";
-		
-		//print_r($html);
-		//print_r($subject);
-		$this->enviaEmail($notificacion_agentes,$html,utf8_encode($subject));
+		$this->enviaEmail($notificacion_agentes,$html,$subject);
 	}
 
 	private function enviaEmail($notificacion_agentes,$html,$subject){
@@ -257,10 +250,11 @@ class ActuacionController extends Controller {
 			   'Bcc: gcaserotto@jusbaires.gov.ar' . "\r\n" .
 			   'Return-Path: return@jusbaires.gov.ar' . "\r\n" .
 			   'MIME-Version: 1.0' . "\r\n" .
-			   'Content-Type: text/html; charset=ISO-8859-1' . "\r\n" .
+			   'Content-Type: text/html; charset=UTF-8' . "\r\n" .
+			   'Content-Transfer-Encoding: 7bit'.
 			   'X-Mailer: PHP/' . phpversion();
 
-		$res = mail($to, $subject, $message, $headers);
+		$res = mail($to, '=?UTF-8?B?'.base64_encode($subject), $message, $headers);
 
 		//ver error 
 		if(!$res) echo 'hubo un error al notificar';
@@ -269,6 +263,8 @@ class ActuacionController extends Controller {
 	}
 
 
+
+	
 
 
 	/**
