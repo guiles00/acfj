@@ -233,7 +233,7 @@ class ActuacionController extends Controller {
 					</body>
 					</html>';
 
-		$subject = 'CFJ-MEI - Alta Actuación Nro: '.$actuacion->prefijo.'-'.$actuacion->numero_actuacion;
+		$subject = 'CFJ-MEI - Alta ACTUACION: '.$actuacion->prefijo.'-'.$actuacion->numero_actuacion;
 		$this->enviaEmail($notificacion_agentes,$html,$subject);
 	}
 
@@ -254,7 +254,7 @@ class ActuacionController extends Controller {
 			   'Content-Transfer-Encoding: 7bit'.
 			   'X-Mailer: PHP/' . phpversion();
 
-		$res = mail($to, '=?UTF-8?B?'.base64_encode($subject), $message, $headers);
+		$res = mail($to, $subject, $message, $headers);
 
 		//ver error 
 		if(!$res) echo 'hubo un error al notificar';
