@@ -219,6 +219,9 @@ class ActuacionController extends Controller {
 								<td><b>Fecha: </b></td><td>'.$actuacion->actuacion_fecha.'</td>
 							</tr>
 							<tr>
+								<td><b>Asunto: </b></td><td>'.htmlentities($actuacion->asunto, ENT_QUOTES, "UTF-8").'</td>
+							</tr>
+							<tr>
 								<td><b>Actuaci&oacute;n: </b></td><td>'.$actuacion->prefijo.'-'.$actuacion->numero_actuacion.'</td>
 							</tr>
 							<tr>
