@@ -61,7 +61,8 @@ class BecaController extends Controller {
 	            ->select('*')
 	            ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
                 ->where('beca.estado_id', '<>', 0)
-
+                ->where('beca.otorgada', '=', 0)
+				->where(DB::raw('YEAR(beca.timestamp)'), '=', DB::raw('YEAR(now())')) //SIEMPRE TRAE LAS DEL CORRIENTE AÑO
 	           // ->groupBy('cargo.car_nombre')
 	            ->orderBy('beca.beca_id','DESC')
 	            //->toSql();
@@ -77,13 +78,17 @@ class BecaController extends Controller {
             ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
             ->where('beca.estado_id', '=', $input['estado_id'])
             ->where('beca.estado_id', '<>', 0)
+            ->where('beca.otorgada', '=', 0)
+            ->where(DB::raw('YEAR(beca.timestamp)'), '=', DB::raw('YEAR(now())')) //SIEMPRE TRAE LAS DEL CORRIENTE AÑO
            // ->groupBy('cargo.car_nombre')
             ->orderBy('beca.beca_id','DESC')
-           // ->toSql();
+            //->toSql();
             ->paginate(20); // El paginate funciona como get()
             //->get(); 
 
         }
+           
+        
             $becas = $data;
 
             $becas->setPath('listSolicitudesBecas');
@@ -167,6 +172,8 @@ class BecaController extends Controller {
         if(!empty($input['renovacion_id'])) $query->where('beca.renovacion_id', '=', $input['renovacion_id']);	
         if(!empty($input['estado_id'])) $query->where('beca.estado_id', '=', $input['estado_id']);	
         if(!empty($input['tipo_beca_id'])) $query->where('beca.tipo_beca_id', '=', $input['tipo_beca_id']);	
+		if(!empty($input['anio'])) $query->where(DB::raw('YEAR(beca.timestamp)'), '=', $input['anio']);	
+		            
 
         
         $data = $query->orderBy('beca.beca_id','DESC')->paginate(500);
@@ -636,7 +643,8 @@ public function exportar(){
 
 	public function addPasoBeca($id){
 		//$input = Request::all();
-		$t_pasos = DB::table('t_paso_beca')->get();
+		$t_pasos = DB::table('t_paso_beca')->Where('t_accion_id','=',1)->orderBy('orden')->get();
+
 		return view('beca.addPasoBeca')->with('t_pasos',$t_pasos)->with('beca_id',$id);
 
 	}
@@ -667,7 +675,7 @@ public function exportar(){
 
 		$paso_beca = PasoBeca::find($id);
 		
-		$t_pasos = DB::table('t_paso_beca')->get();
+		$t_pasos = DB::table('t_paso_beca')->Where('t_accion_id','=',1)->orderBy('orden')->get();
 
 		return view('beca.editPasoBeca')->with('t_pasos',$t_pasos)->with('paso_beca',$paso_beca);
 	}	
@@ -885,6 +893,19 @@ public function exportar(){
 		return redirect()->back();
 	}
 
+
+
+	public function otorgarBeca($id){
+
+		$solicitud_beca = Beca::find($id);
+		$solicitud_beca->estado_id = 7; //ESTADO EN TRAMITE   ----> SACAR EL HARDCODEO
+		$solicitud_beca->otorgada = 1; //ESTADO EN TRAMITE
+		$solicitud_beca->save();
+
+		$url = 'verSolicitud/'.$id;
+		return Redirect::to($url)->with('otorgada',true);;
+
+	}
 	/**
 	 * Show the form for creating a new resource.
 	 *

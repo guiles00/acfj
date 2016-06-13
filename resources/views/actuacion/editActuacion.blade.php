@@ -86,9 +86,9 @@ $codigos_actuacion = ["0"=>"","BEC"=>"BEC","CAP"=>"CAP","CNV"=>"CNV","ADM"=>"ADM
           <option value="0">-</option>
           @foreach($area_cfj as $key=>$area)
             <?php if( $area->area_cfj_id == $actuacion->area_destino_id ){?>
-            <option value="{{$area->area_cfj_id}}" selected>{{$area->area_nombre}}</option>
+            <option value="{{$area->area_cfj_id}}" selected>{{$area->area_nombre}} ( {{$area->area_responsable}} )</option>
             <?}else{?>
-            <option value="{{$area->area_cfj_id}}">{{$area->area_nombre}}</option>
+            <option value="{{$area->area_cfj_id}}">{{$area->area_nombre}} ( {{$area->area_responsable}} )</option>
             <?}?>
           @endforeach
           </select>

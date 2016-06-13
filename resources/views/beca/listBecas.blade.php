@@ -37,7 +37,7 @@
         <table class="table table-responsive table-striped table-bordered table-hover" id="beca">
             <thead>
                 <tr>
-                   <th>ffecha</th>
+                   <th>fecha</th>
                    <th>beca_id</th>
                    <th>tipo_beca_id</th>
                    <th>Nombre</th>

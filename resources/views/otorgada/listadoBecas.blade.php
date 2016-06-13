@@ -104,11 +104,9 @@ $helper = new App\Domain\Helper();
                 <tr>
                    <th><a href="#" class="btn glyphicon glyphicon-search" data-toggle="modal" data-target="#basicModal"></a></th>
                    <th>Fecha</th>
-                   <!--th>beca_id</th-->
+                   <th>Legajo</th>
                    <th>Tipo</th>
                    <th>Nombre</th>
-                   <th>Costo</th>
-                   <th>Solicitado</th>
                    <th>Otorgado</th>
                    <th>Renovaci&oacute;n</th>
                    <th>estado</th>
@@ -121,14 +119,13 @@ $helper = new App\Domain\Helper();
             @foreach ($becas as $beca)
             
             <tr>
-                <td> {{ $total-- }} </td>
+                <td></td>
+                <!--td> {{ $total-- }} </td-->
                 <td> {{ Utils::formatDate($beca->timestamp) }} </td>
-                <!--td> {{ $beca->beca_id}} </td-->
+                <td> {{ $beca->legajo_beca}} </td>
                 <td> {{ $helper->getHelperByDominioAndId('tipo_beca',$beca->tipo_beca_id)  }} </td>
                 <td> {{ $beca->usi_nombre}} </td>
-                <td> {{ $beca->costo}} </td>
-                <td> {{ $beca->monto}} </td>
-                <td> {{ '00.00' }}</td>
+                <td> {{ $beca->otorgado}} </td>
                 <td> {{ $helper->getHelperByDominioAndId('renovacion',$beca->renovacion_id)  }} </td>
                 <td> {{ $beca->estado_beca}} </td>
                 <td> <a href="{{action('BecaOtorgadaController@verBecaOtorgada',$beca->beca_id)}}">Ver</a></td>

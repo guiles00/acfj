@@ -118,9 +118,10 @@ class BecaOtorgadaController extends Controller {
 	            ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
 	           // ->groupBy('cargo.car_nombre')
 	            ->orderBy('beca.beca_id','DESC')
-	            //->toSql();
+	          //  ->toSql();
 	            ->paginate(20); // El paginate funciona como get()
 	            //->get(); 
+
         	
 		}else{
 		$data = DB::table('beca')
@@ -190,7 +191,21 @@ class BecaOtorgadaController extends Controller {
 			$documentacion = Documentacion::traeDocumentacion($id);
 			//echo $id;
 			$actuaciones = DB::table('actuacion')->where('beca_id','=',$id)->get();
-			$pasos_beca = DB::table('paso_beca')->where('beca_id','=',$id)->get();
+			$pasos_beca = DB::table('paso_beca')
+			->join('t_paso_beca', 'paso_beca.tipo_paso_beca_id', '=', 't_paso_beca.t_paso_beca_id')
+			->where('t_paso_beca.t_accion_id','=',1)
+			->where('beca_id','=',$id)
+			->orderBy('paso_beca.paso_beca_id','DESC')
+			->get();
+
+			$pasos_vencimiento_beca = DB::table('paso_beca')
+			->join('t_paso_beca', 'paso_beca.tipo_paso_beca_id', '=', 't_paso_beca.t_paso_beca_id')
+			->where('t_paso_beca.t_accion_id','=',2)
+			->where('beca_id','=',$id)
+			->orderBy('paso_beca.paso_beca_id','DESC')
+			->get();
+			
+
 			//echo "<pre>";
 			//print_r($actuaciones);
 			//exit;
@@ -198,7 +213,8 @@ class BecaOtorgadaController extends Controller {
 		return view('otorgada.verBecaOtorgada')->with('beca',$solicitud_beca[0])->with('helpers',$helpers)
 		->with('documentacion',$documentacion)
 		->with('actuaciones',$actuaciones)
-		->with('pasos_beca',$pasos_beca);
+		->with('pasos_beca',$pasos_beca)
+		->with('pasos_vencimiento_beca',$pasos_vencimiento_beca);
 
 	}
 
@@ -262,10 +278,6 @@ public function imprimirSolicitud($id){
 
 		$input = Request::all();
 		
-		echo "<pre>";
-		echo "Y que hago con esto?";
-		print_r($input);
-		exit;
 		//echo "muestro la solicitud";		
 		//guardo datos de beca, los de usuario_sitio hay que confirmar que datos se pueden modificar.
 		$beca = Beca::find($input['_id']);
@@ -279,29 +291,30 @@ public function imprimirSolicitud($id){
 		$beca->facultad_otro = $input['facultad_otro'];
 		$beca->titulo_id = $input['titulo_id'];
 		$beca->titulo_otro = $input['titulo_otro'];
-		$beca->tipo_beca_id = $input['tipo_beca_id'];
-		$beca->tipo_actividad_id = $input['tipo_actividad_id'];
+		$beca->otorgado = $input['monto_otorgado'];
+		$beca->legajo_beca = $input['legajo_beca'];
+		//$beca->tipo_actividad_id = $input['tipo_actividad_id'];
 		$beca->institucion_propuesta = $input['inst_prop_id'];
-		$beca->costo = $input['costo'];
-		$beca->monto = $input['monto'];
-		$beca->fecha_inicio = $input['fecha_inicio'];
-		$beca->fecha_fin = $input['fecha_fin'];
+		//$beca->costo = $input['costo'];
+		//$beca->monto = $input['monto'];
+		//$beca->fecha_inicio = $input['fecha_inicio'];
+		//$beca->fecha_fin = $input['fecha_fin'];
 		$beca->actividad_nombre = $input['actividad_nombre'];
-		$beca->duracion = $input['duracion'];
-		$beca->sup_horaria = $input['s_horaria'];
+		//$beca->duracion = $input['duracion'];
+		//$beca->sup_horaria = $input['s_horaria'];
 		$beca->f_ingreso_caba = $input['f_ingreso_caba'];
 		$beca->dependencia_id = $input['dependencia_id'];
 		$beca->dependencia_otro = $input['dependencia_otro'];
 		$beca->telefono_laboral = $input['tel_laboral'];
 		$beca->telefono_particular = $input['tel_particular'];
-		$beca->dictamen_por = $input['dictamen_por'];
-		$beca->renovacion_id = $input['renovacion_id'];
+		//$beca->dictamen_por = $input['dictamen_por'];
+		//$beca->renovacion_id = $input['renovacion_id'];
 
 		$beca->estado_id = $input['estado_id'];
 
 		$beca->save();
 
-
+/*
 		$documentacion = \App\Documentacion::where('beca_id',$input['_id'])->first();
 		
 		
@@ -314,7 +327,7 @@ public function imprimirSolicitud($id){
         $documentacion->autorizacion_superposicion = ( empty($input['doc_autorizacion_superposicion']) )? 0 : 1;
 
         $documentacion->save();
-
+*/
 		//echo "<pre>";
 		//echo $input['_id'];
 		//print_r($input);
@@ -388,7 +401,7 @@ public function addActuacion($id){
 	//echo "<pre>";
 	//print_r($input);
 
-	return view('beca.addActuacion')->with('beca_id',$id);
+	return view('otorgada.addActuacion')->with('beca_id',$id);
 
 }
 
@@ -398,7 +411,7 @@ public function saveActuacion(){
 	$actuacion->beca_id = $input['beca_id'];
 	$actuacion->save();
 	//return view('beca.verSolicitudBeca')->with('beca_id',$id);
-	$url = 'verSolicitud/'.$input['beca_id'];
+	$url = 'verBecaOtorgada/'.$input['beca_id'];
 	return Redirect::to($url);
 
 }
@@ -576,10 +589,22 @@ public function exportar(){
 		return true;
 	}
 
-	public function addPasoBeca($id){
+	
+	public function addPasoVencimientoBeca($id){
+		
 		//$input = Request::all();
-		$t_pasos = DB::table('t_paso_beca')->get();
-		return view('beca.addPasoBeca')->with('t_pasos',$t_pasos)->with('beca_id',$id);
+		$t_pasos = DB::table('t_paso_beca')->where('t_accion_id','=',2)->OrderBy('orden')->get();
+
+		return view('otorgada.addPasoVencimientoBeca')->with('t_pasos',$t_pasos)->with('beca_id',$id);
+
+	}
+
+	public function addPasoBeca($id){
+		
+		//$input = Request::all();
+		$t_pasos = DB::table('t_paso_beca')->where('t_accion_id','=',1)->OrderBy('orden')->get();
+
+		return view('otorgada.addPasoBeca')->with('t_pasos',$t_pasos)->with('beca_id',$id);
 
 	}
 
@@ -589,11 +614,13 @@ public function exportar(){
 		$paso_beca = new PasoBeca();
 		$paso_beca->beca_id = $input['beca_id'];
 		$paso_beca->tipo_paso_beca_id = $input['tipo_paso_beca_id'];
+		$paso_beca->fecha = $input['paso_beca_fecha'];
 		$paso_beca->observaciones = $input['paso_beca_observaciones'];
+		$paso_beca->fecha_vencimiento = (isset($input['paso_beca_fecha_vencimiento']))?$input['paso_beca_fecha_vencimiento']:'';
 		$paso_beca->save();
 
 		//return view('beca.verSolicitudBeca')->with('beca_id',$id);
-		$url = 'verSolicitud/'.$input['beca_id'];
+		$url = 'verBecaOtorgada/'.$input['beca_id'];
 		return Redirect::to($url);
 	}
 
@@ -609,9 +636,9 @@ public function exportar(){
 
 		$paso_beca = PasoBeca::find($id);
 		
-		$t_pasos = DB::table('t_paso_beca')->get();
+		$t_pasos = DB::table('t_paso_beca')->where('t_accion_id','=',1)->OrderBy('orden')->get();
 
-		return view('beca.editPasoBeca')->with('t_pasos',$t_pasos)->with('paso_beca',$paso_beca);
+		return view('otorgada.editPasoBeca')->with('t_pasos',$t_pasos)->with('paso_beca',$paso_beca);
 	}	
 
 	public function updatePasoBeca(){
@@ -622,10 +649,40 @@ public function exportar(){
 		//$paso_beca->beca_id = $input['beca_id'];
 		$paso_beca->tipo_paso_beca_id = $input['tipo_paso_beca_id'];
 		$paso_beca->observaciones = $input['paso_beca_observaciones'];
+		$paso_beca->fecha = $input['paso_beca_observaciones'];
 		$paso_beca->save();
 
 		//return view('beca.verSolicitudBeca')->with('beca_id',$id);
-		$url = 'verSolicitud/'.$input['beca_id'];
+		$url = 'verBecaOtorgada/'.$input['beca_id'];
+		return Redirect::to($url);
+	}
+
+
+
+	public function editPasoBecaVencimiento($id){
+
+		$paso_beca = PasoBeca::find($id);
+		
+		$t_pasos = DB::table('t_paso_beca')->where('t_accion_id','=',2)->OrderBy('orden')->get();
+
+		return view('otorgada.editPasoBecaVencimiento')->with('t_pasos',$t_pasos)->with('paso_beca',$paso_beca);
+	}	
+
+	public function updatePasoBecaVencimiento(){
+		
+		$input = Request::all();
+
+		$paso_beca = PasoBeca::find($input['paso_beca_id']);
+		//$paso_beca->beca_id = $input['beca_id'];
+		$paso_beca->tipo_paso_beca_id = $input['tipo_paso_beca_id'];
+		$paso_beca->observaciones = $input['paso_beca_observaciones'];
+		$paso_beca->fecha = $input['paso_beca_fecha'];
+		$paso_beca->fecha_vencimiento = (isset($input['paso_beca_fecha_vencimiento']))?$input['paso_beca_fecha_vencimiento']:'';
+
+		$paso_beca->save();
+
+		//return view('beca.verSolicitudBeca')->with('beca_id',$id);
+		$url = 'verBecaOtorgada/'.$input['beca_id'];
 		return Redirect::to($url);
 	}
 
@@ -782,7 +839,7 @@ public function exportar(){
 	           // ->join('cargo','usuario_sitio.usi_car_id','=','cargo.car_id')
 	            ->select('*')
 	            ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
-                ->whereIn('beca.estado_id', array(2,3) )
+                ->where('beca.otorgada','=',1 )
 
 	           // ->groupBy('cargo.car_nombre')
 	            ->orderBy('beca.beca_id','DESC')
@@ -799,8 +856,8 @@ public function exportar(){
             ->select('*')
             ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
             ->where('beca.estado_id', '=', $input['estado_id'])
-            ->whereIn('beca.estado_id', array(2,3) )
-           // ->groupBy('cargo.car_nombre')
+			->where('beca.otorgada','=',1 )
+			// ->groupBy('cargo.car_nombre')
             ->orderBy('beca.beca_id','DESC')
            // ->toSql();
             ->paginate(20); // El paginate funciona como get()

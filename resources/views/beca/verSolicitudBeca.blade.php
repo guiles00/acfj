@@ -36,7 +36,17 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <b>Beca Editada!</b>
             </div>
-<?php } ?>            
+<?php } ?>    
+
+
+<?php if(Session::get('otorgada') == true){?>
+<div class="alert alert-success alert-dismissable">
+                <i class="fa fa-check"></i>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <b>BECA OTORGADA! A Partir de ahora se accede desde el listado de becas.</b>
+            </div>
+<?php } ?>  
+
 <div class="panel-body">
 
 	<div class="row">
@@ -724,7 +734,10 @@ $generos = ["1"=>"Masculino","2"=>"Femenino","3"=>"Otro"];
 							<button type="button" class="btn btn-default" id="b_preview_email_documentacion">Previsualizar contenido Email</button>
 							<button type="button" class="btn btn-default" id="b_enviar_email_documentacion">Enviar Email Documentaci&oacute;n</button>
 							<a type="button" href="{{action('BecaController@imprimirSolicitud',$beca->beca_id)}}" class="btn btn-default" target="_target" id="b_imprimir_solicitud">Imprimir Solicitud</a>
-
+						<?php 
+						if($beca->estado_id == 3){?>
+							<a href="{{action('BecaController@otorgarBeca',$beca->beca_id)}}" class="btn btn-default">OTORGAR</a>
+						<?php } ?>
 						</div>
 					</div>
 				</div>

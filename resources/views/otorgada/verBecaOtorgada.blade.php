@@ -13,7 +13,7 @@
 </style>
  <ul class="breadcrumb">
     <li>Becas</li>
-    <li class="active">Ver Beca</li>
+    <li class="active">Ver Beca {{ $beca->beca_id}}</li>
 </ul> 
 <div class="panel panel-default">
 	<div class="panel-heading">
@@ -33,7 +33,8 @@ use App\domain\Utils;
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <b>Beca Editada!</b>
             </div>
-<?php } ?>            
+<?php } ?>
+            
 <div class="panel-body">
 
 	<div class="row">
@@ -298,14 +299,14 @@ use App\domain\Utils;
 				<div class="row">	
 					<div class="form-group">
 						<label class="control-label col-md-2">Monto Otorgado</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="monto_otorgado" value=''></div>
+						<div class="col-md-8"><input class="form-control input-sm" name="monto_otorgado" value='<?=$beca->otorgado?>'></div>
 					</div>
 				</div>
 
 				
 				<div class="row">
 		        	<div class="form-group">
-								<label class="control-label col-md-2">Estado de la Solicitud</label>
+								<label class="control-label col-md-2">Estado de la Beca</label>
 								<div class="col-md-4">
 								<select class="form-control" name="estado_id">
 														@foreach($helpers['estado_beca'] as $key=>$estado_beca)
@@ -323,7 +324,7 @@ use App\domain\Utils;
 		    <div class="form-group">
 		      <label class="control-label col-sm-2">Observaciones</label>
 		      <div class="col-sm-10">          
-		        <textarea type="text" class="form-control" id="" name="beca_observaciones"></textarea>
+		        <textarea type="text" class="form-control" id="" name="beca_observaciones" ></textarea>
 		      </div>
 		    </div>
 
@@ -331,14 +332,14 @@ use App\domain\Utils;
 		<div class="col-lg-6 col-md-6">
 			
 				<div class="row">	
-					<div class="form-group" style="visibility: hidden">
-						<label class="control-label col-md-2"></label>
-						<div class="col-md-8"><input class="form-control input-sm"  value=''disabled></div>
+					<div class="form-group">
+						<label class="control-label col-md-2">Legajo BECA</label>
+						<div class="col-md-8"><input class="form-control input-sm"  name='legajo_beca' value='{{$beca->legajo_beca}}'></div>
 					</div>
 				</div>
 				<div class="row">	
 					<div class="form-group">
-						<label class="control-label col-md-2">Legajo</label>
+						<label class="control-label col-md-2">Legajo Personal</label>
 						<div class="col-md-8"><input class="form-control input-sm"  value='<?=$beca->usi_legajo?>' ></div>
 					</div>
 				</div>
@@ -360,16 +361,37 @@ use App\domain\Utils;
 					</div>
 				</div>
 
-				<div class="row">	
+				<!--div class="row">	
 					<div class="form-group" style="visibility: hidden">
 						<label class="control-label col-md-2">Duraci&oacute;n</label>
 						<div class="col-md-8"><input class="form-control input-sm" name="duracion" value='<?=$beca->duracion?>'></div>
 					</div>
+				</div-->
+				<div class="row">	
+					<div class="form-group">
+						<label class="control-label col-md-2">Certificado</label>
+						<div class="col-md-8">
+							<!--input class="form-control input-sm" name="beca_art_20_id" value=''-->
+								<select class="form-control" name="beca_art_20_id">
+												<option value="">CUMPLE</option>
+												<option value="">CUMPLE PARC.</option>
+												<option value="">NO CUMPLE</option>
+												<option value="">N/C</option>
+								</select>
+						</div>
+					</div>
 				</div>
 				<div class="row">	
 					<div class="form-group">
-						<label class="control-label col-md-2">Archivado</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="archivado" value=''></div>
+						<label class="control-label col-md-2">DDJJ</label>
+						<div class="col-md-8">
+							<!--input class="form-control input-sm" name="beca_ddjj_id" value=''-->
+							<select class="form-control" name="beca_ddjj_id">
+												<option value="">SI</option>
+												<option value="">NO</option>
+												<option value="">N/C</option>
+							</select>
+						</div>
 					</div>
 				</div>
 		</div>
@@ -392,119 +414,14 @@ use App\domain\Utils;
 	</div> <!-- row --> 
 
 <ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" href="#menu1">Documentaci&oacute;n</a></li>
-  <li><a data-toggle="tab" href="#menu2">Actuaciones</a></li>
+  <li class="active"><a data-toggle="tab" href="#menu2">Actuaciones</a></li>
    <li><a data-toggle="tab" href="#b_paso_beca">Acciones</a></li>
+   <li><a data-toggle="tab" href="#b_paso_vencimiento">Pr&oacute;rroga/Intimaciones</a></li>
+
 </ul>
 
 <div class="tab-content">
-  <div id="menu1" class="tab-pane fade in active">
-		<br>
-		    <div class="col-sm-12">
-		        <div class="row">
-		        	<div class="form-group">
-							
-								<label class="control-label col-sm-2">Formulario de Solicitud</label>
-								<div class="btn-group col-sm-2" data-toggle="buttons">
-									<?php if($documentacion->formulario_solicitud == 1){ ?> 
-										<label class="btn btn-default active">
-										<input type="checkbox" name="doc_formulario_solicitud" checked>
-									<?php }else{ ?> 
-										<label class="btn btn-default">
-										<input type="checkbox" name="doc_formulario_solicitud">
-									<?php } ?>
-									<span class="glyphicon glyphicon-ok"></span>
-									</label>
-								</div>
-									<label class="control-label col-sm-2">Certificado Laboral</label>
-								<div class="btn-group col-sm-2" data-toggle="buttons">
-									<?php if($documentacion->certificado_laboral == 1){ ?>
-										<label class="btn btn-default active">
-										<input type="checkbox" name="doc_certificado_laboral" checked>
-									<?php }else{ ?> 
-										<label class="btn btn-default">
-										<input type="checkbox" name="doc_certificado_laboral">
-									<?php } ?> 
-									<span class="glyphicon glyphicon-ok"></span>
-									</label>
-								</div>
-
-								<label class="control-label col-sm-1">Dictamen Evaluativo</label>
-								<div class="btn-group col-sm-1" data-toggle="buttons">
-									<?php if($documentacion->dictamen_evaluativo == 1){ ?>
-										<label class="btn btn-default active">
-										<input type="checkbox" name="doc_dictamen_evaluativo" checked>
-									<?php }else{ ?> 
-										<label class="btn btn-default">
-										<input type="checkbox" name="doc_dictamen_evaluativo">
-									<?php } ?> 
-									<span class="glyphicon glyphicon-ok"></span>
-									</label>
-								</div>
-							
-								<label class="control-label col-sm-1" id="b_autorizacion_label">Autorizaci&oacute;n Superposici&oacute;n Horaria</label>
-								<div class="btn-group col-sm-1" data-toggle="buttons" id="b_autorizacion_div">
-									<?php if($documentacion->autorizacion_superposicion == 1){ ?>
-										<label class="btn btn-default active">
-										<input type="checkbox" name="doc_autorizacion_superposicion" checked>
-									<?php }else{ ?> 
-										<label class="btn btn-default">
-										<input type="checkbox" name="doc_autorizacion_superposicion">
-									<?php } ?> 
-									<span class="glyphicon glyphicon-ok"></span>
-									</label>
-								</div>
-				    </div>
-		       
-		        </div>
-		        <div class="row">
-		        	<div class="form-group">
-							
-								<label class="control-label col-sm-2" id="b_curriculum_vitae_label">Curriculum Vitae</label>
-								<div class="btn-group col-sm-2" data-toggle="buttons" id="b_curriculum_vitae_div">
-									<?php if($documentacion->curriculum_vitae == 1){ ?>
-										<label class="btn btn-default active">
-										<input type="checkbox" name="doc_curriculum_vitae" checked>
-									<?php }else{ ?> 
-										<label class="btn btn-default">
-										<input type="checkbox" name="doc_curriculum_vitae">
-									<?php } ?> 
-									<span class="glyphicon glyphicon-ok"></span>
-									</label>
-								</div>
-
-								<label class="control-label col-sm-2" id="b_informacion_actividad_label">Informaci&oacute;n de Actividad</label>
-								<div class="btn-group col-sm-2" data-toggle="buttons" id="b_informacion_actividad_div">
-									<?php if($documentacion->informacion_actividad == 1){ ?>
-									<label class="btn btn-default active">
-									<input type="checkbox" name="doc_informacion_actividad" checked>
-									
-									<?php }else{ ?> 
-									<label class="btn btn-default">
-									<input type="checkbox" name="doc_informacion_actividad">
-									<?php } ?>
-									<span class="glyphicon glyphicon-ok"></span>
-									</label>
-								</div>
-
-								<label class="control-label col-sm-1" id="b_copia_titulo_label">Copia Certificada T&iacute;tulo Universitario</label>
-								<div class="btn-group col-sm-1" data-toggle="buttons" id="b_copia_titulo_div">
-									<?php if($documentacion->copia_titulo == 1){ ?>
-										<label class="btn btn-default active">
-										<input type="checkbox" name="doc_copia_titulo" checked>
-									<?php }else{ ?> 
-										<label class="btn btn-default">
-										<input type="checkbox" name="doc_copia_titulo">
-									<?php } ?>
-									<span class="glyphicon glyphicon-ok"></span>
-									</label>
-								</div>
-				    </div>
-		       
-		        </div>
-	</div>
-  </div>
-	  <div id="menu2" class="tab-pane fade">
+	  <div id="menu2" class="tab-pane fade active in">
 	    	 <table class="table table-condensed table-bordered table-striped volumes">
 	        <thead>
 	          <tr>
@@ -542,7 +459,7 @@ use App\domain\Utils;
 				<div class="row">
 					<div class="form-group"> 
 						<div class="col-md-10">
-							<a href="{!! URL::action('BecaController@addActuacion',$beca->beca_id); !!}" class="btn btn-default">Agregar Actuaci&oacute;n</a>
+							<a href="{!! URL::action('BecaOtorgadaController@addActuacion',$beca->beca_id); !!}" class="btn btn-default">Agregar Actuaci&oacute;n</a>
 						</div>
 					</div>
 				</div>
@@ -571,8 +488,8 @@ use App\domain\Utils;
                 <td> {{ PasoBeca::getTipoPasoById($paso_beca->tipo_paso_beca_id) }} </td>                
                 <td> {{ $paso_beca->observaciones }} </td>
                 <td> {{ Utils::formatDate($paso_beca->timestamp) }}</td>
-                <td> <a href="{!! URL::action('BecaController@editPasoBeca',$paso_beca->paso_beca_id); !!}">Ver</a></td>
-                <td> <a href="{!! URL::action('BecaController@deletePasoBeca',$paso_beca->paso_beca_id); !!}" onClick="return confirm('desea eliminar?')" >Eliminar</a></td>
+                <td> <a href="{!! URL::action('BecaOtorgadaController@editPasoBeca',$paso_beca->paso_beca_id); !!}">Ver</a></td>
+                <td> <a href="{!! URL::action('BecaOtorgadaController@deletePasoBeca',$paso_beca->paso_beca_id); !!}" onClick="return confirm('desea eliminar?')" >Eliminar</a></td>
 
             </tr>
             <!-- ENDFOREACH -->
@@ -585,7 +502,52 @@ use App\domain\Utils;
 				<div class="row">
 					<div class="form-group"> 
 						<div class="col-md-10">
-							<a href="{!! URL::action('BecaController@addPasoBeca',$beca->beca_id); !!}" class="btn btn-default">Agregar Acci&oacute;n</a>
+							<a href="{!! URL::action('BecaOtorgadaController@addPasoBeca',$beca->beca_id); !!}" class="btn btn-default">Agregar Acci&oacute;n</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+	</div>
+
+	<div id="b_paso_vencimiento" class="tab-pane fade">
+	    	 <table class="table table-condensed table-bordered table-striped volumes">
+	        <thead>
+	          <tr>
+	            <th>Nro.</th>
+	            <th>Asunto</th>
+	            <th>Observaciones</th>
+	            <th>Fecha Ingreso</th>
+	            <th>Fecha Vencimiento</th>
+                <th width="10%"></th>
+                <th width="10%"></th>
+	          </tr>
+	        </thead>
+	        <tbody>
+
+       	 <!-- FOREACH -->
+       	  @foreach ($pasos_vencimiento_beca as $paso_beca)
+            <tr>
+                <td> {{ $paso_beca->paso_beca_id }} </td>
+                <td> {{ PasoBeca::getTipoPasoById($paso_beca->tipo_paso_beca_id) }} </td>                
+                <td> {{ $paso_beca->observaciones }} </td>
+                <td> {{ Utils::formatDate($paso_beca->fecha) }}</td>
+                <td> {{ Utils::formatDate($paso_beca->fecha_vencimiento) }}</td>
+                <td> <a href="{!! URL::action('BecaOtorgadaController@editPasoBecaVencimiento',$paso_beca->paso_beca_id); !!}">Ver</a></td>
+                <td> <a href="{!! URL::action('BecaOtorgadaController@deletePasoBeca',$paso_beca->paso_beca_id); !!}" onClick="return confirm('desea eliminar?')" >Eliminar</a></td>
+
+            </tr>
+            <!-- ENDFOREACH -->
+         @endforeach    
+
+	        </tbody>
+	      </table>
+
+	    	<div class="col-sm-12">
+				<div class="row">
+					<div class="form-group"> 
+						<div class="col-md-10">
+							<a href="{!! URL::action('BecaOtorgadaController@addPasoVencimientoBeca',$beca->beca_id); !!}" class="btn btn-default">Agregar</a>
 						</div>
 					</div>
 				</div>
