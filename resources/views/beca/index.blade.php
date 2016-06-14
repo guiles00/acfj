@@ -22,6 +22,7 @@ $helper = new App\Domain\Helper();
          <a href="#" class="btn glyphicon glyphicon-search pull-right" data-toggle="modal" data-target="#basicModal"></a>
          <form method="GET" action="{{action('BecaController@index')}}" class="navbar-form navbar-left pull-right" role="search">
             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+            <input type="hidden" name="busqueda"/>
             <div class="row">
                   <div class="form-group">      
                     <div class="col-md-4">

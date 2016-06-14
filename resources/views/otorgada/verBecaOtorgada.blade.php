@@ -18,8 +18,6 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
 			<a class="btn btn-default glyphicon glyphicon-arrow-left" href="{!! URL::action('BecaOtorgadaController@listadoBecas'); !!}" class="glyphicon glyphicon-arrow-left"></a>
-			<!--a href="{{action('AlumnosController@create')}}" class="glyphicon glyphicon-plus" align="right"></a-->
-			<!--span class="glyphicon glyphicon-plus" aria-hidden="true"></span-->		
 	</div>
 <?php  
 use App\domain\PasoBeca;
@@ -572,7 +570,7 @@ use App\domain\Utils;
 					<div class="form-group"> 
 						<div class="col-md-12">
 							<button type="submit" class="btn btn-default" id="b_save_beca">Guardar</button>
-							<a href="{!! URL::action('BecaController@index'); !!}" class="btn btn-default">Cancelar</a>
+							<a href="{!! URL::action('BecaOtorgadaController@listadoBecas'); !!}" class="btn btn-default">Cancelar</a>
 							<!--button type="button" class="btn btn-default" id="b_preview_email_documentacion">Previsualizar contenido Email</button>
 							<button type="button" class="btn btn-default" id="b_enviar_email_documentacion">Enviar Email Documentaci&oacute;n</button-->
 							<!--a type="button" href="{{action('BecaController@imprimirSolicitud',$beca->beca_id)}}" class="btn btn-default" target="_target" id="b_imprimir_solicitud">Imprimir Solicitud</a-->
@@ -825,8 +823,32 @@ $('.datepicker').datepicker({
                     ,autoclose: true
                   }
                 );
-	
+		
+
+	$(function() { 
+	    // for bootstrap 3 use 'shown.bs.tab', for bootstrap 2 use 'shown' in the next line
+	    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+	        // save the latest tab; use cookies if you like 'em better:
+	        localStorage.setItem('lastTab', $(this).attr('href'));
+	    });
+
+	    // go to the latest tab, if it exists:
+	    var lastTab = localStorage.getItem('lastTab');
+	    if (lastTab) {
+	        $('[href="' + lastTab + '"]').tab('show');
+	    }
+	});
+
+
+
+
+
+
 });
+
+
+
+
 
 </script>
 @stop

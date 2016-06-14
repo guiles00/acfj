@@ -102,7 +102,7 @@
 					<div class="col-sm-offset-2 col-sm-10">
 						<button type="submit" class="btn btn-default">Agregar</button>
 						<!--a href="{!! URL::action('BecaController@verSolicitud',$beca_id); !!}" class="btn btn-default">Agregar</a-->
-						<a href="{!! URL::action('BecaController@verSolicitud',$beca_id); !!}" class="btn btn-default">Cancel</a>
+						<a href="{!! URL::action('BecaOtorgadaController@verBecaOtorgada',$beca_id); !!}" class="btn btn-default">Cancel</a>
 					</div>
 				</div>	
 

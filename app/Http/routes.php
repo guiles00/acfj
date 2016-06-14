@@ -38,101 +38,82 @@ Route::controllers([
 //    return 'Hello World';
 //});
 
-Route::resource('alumnos', 'AlumnosController');
+//Route::resource('alumnos', 'AlumnosController');
 
-Route::get('about','AlumnosController@about');
+//Route::get('about','AlumnosController@about');
 //Route::get('tasks','TasksController@list');
-Route::get('tasks','TasksController@lista');
-Route::get('accion','TasksController@accion');
-Route::get('crea','TasksController@create');
+//Route::get('tasks','TasksController@lista');
+//Route::get('accion','TasksController@accion');
+//Route::get('crea','TasksController@create');
 
-//Route::get('hobbit','HobbitController');
 
-//Ruta para tratar un objeto restFul
-//Route::resource('hobbit', 'HobbitController');
 
-//Route::controller('hobbit', 'HobbitController@index');
+Route::group(['middleware' => 'session_expired'], function () {
 
-Route::get('foo',function()
-{
-	return "bar";
+	Route::get('becas','BecaController@index');
+	Route::get('listBecas','BecaController@listBecas');
+	Route::get('becas/{id}','DwarfController@show');
+	Route::post('becas','DwarfController@store');
+
+	Route::get('d3','D3Controller@index');
 });
-Route::get('dwarfs','DwarfController@index');
-Route::get('dwarfs/create','DwarfController@create');
-Route::get('dwarfs/{id}','DwarfController@show');
 
-Route::post('dwarfs','DwarfController@store');
+Route::group(['middleware' => 'session_expired'], function () {
 
-
-//Route::get('dwarfs', 'HobbitController@index');
-Route::get('becas','BecaController@index');
-Route::get('listBecas','BecaController@listBecas');
-//Route::get('becas/create','DwarfController@create');
-Route::get('becas/{id}','DwarfController@show');
-
-Route::post('becas','DwarfController@store');
-
-Route::get('d3','D3Controller@index');
+	Route::get('tablero','TableroController@index');
+	Route::get('tablero/estadisticas','TableroController@estadisticasCurso');
+	Route::get('cargocurso/{x}/{y}','TableroController@traeCargoCurso');
+	Route::get('tablero/estadisticas/{x}','TableroController@estadisticasCurso');
+	Route::get('pendientes','AlumnosController@pendientes');
+	Route::get('curso-fecha','TableroController@cursoFecha');
+	Route::get('inscriptos-curso','TableroController@inscriptosCurso');
 
 
-
-Route::get('tablero','TableroController@index');
-Route::get('tablero/estadisticas','TableroController@estadisticasCurso');
-Route::get('cargocurso/{x}/{y}','TableroController@traeCargoCurso');
-Route::get('tablero/estadisticas/{x}','TableroController@estadisticasCurso');
-Route::get('pendientes','AlumnosController@pendientes');
-Route::get('curso-fecha','TableroController@cursoFecha');
-Route::get('inscriptos-curso','TableroController@inscriptosCurso');
+	Route::get('curso-cargo/{x}','TableroController@cursoCargo');
+	Route::get('ajaxget','AlumnosController@ajaxget');
 
 
-Route::get('curso-cargo/{x}','TableroController@cursoCargo');
-Route::get('ajaxget','AlumnosController@ajaxget');
+	Route::get('categorias','TableroController@categorias');
+	Route::get('area','TableroController@area');
+	Route::get('grupo','TableroController@grupo');
+	Route::get('resarea','TableroController@resarea');
+	Route::get('listadoCursos','TableroController@listadoCursos');
+	Route::get('listadoGrupoDosCursos','TableroController@listadoGrupoDosCursos');
+	Route::get('alumnosCurso','TableroController@alumnosCurso');
+	Route::get('listCursos','TableroController@listCursos');
+	Route::get('fichaCurso','TableroController@fichaCurso');
+	Route::get('mgrupo','TableroController@mgrupo');
+
+});
+
+/*Solicitudes*/
+
+Route::group(['middleware' => 'session_expired'], function () {
+
+	Route::resource('listSolicitudesBecas', 'BecaController@index');
+	Route::get('busquedaAvanzada', 'BecaController@busquedaAvanzada');
 
 
-Route::get('categorias','TableroController@categorias');
-Route::get('area','TableroController@area');
-Route::get('grupo','TableroController@grupo');
-Route::get('resarea','TableroController@resarea');
-Route::get('listadoCursos','TableroController@listadoCursos');
-Route::get('listadoGrupoDosCursos','TableroController@listadoGrupoDosCursos');
-Route::get('alumnosCurso','TableroController@alumnosCurso');
-Route::get('listCursos','TableroController@listCursos');
-Route::get('fichaCurso','TableroController@fichaCurso');
-Route::get('mgrupo','TableroController@mgrupo');
-//Route::get('tablero/{id}','TableroController@estadisticasCurso');
+	Route::get('verSolicitud/{id}', 'BecaController@verSolicitud');
+	Route::get('imprimirSolicitud/{id}', 'BecaController@imprimirSolicitud');
+	Route::get('verDocAdjunta/{id}', 'BecaController@verDocAdjunta');
+	Route::post('saveBeca', 'BecaController@save');
+	Route::get('exportar', 'BecaController@exportar');
+	Route::get('enviarEmailDocumentacion', 'BecaController@enviarEmailDocumentacion');
+	Route::get('previewEmailDocumentacion', 'BecaController@previewEmailDocumentacion');
 
-//Route::controller('tablero', 'TableroController');
-//Route::get('tablero','TableroController@index');
-//Route::get('esta','TableroController@getEstadisticasCurso');
+	Route::post('saveActuacion', 'BecaController@saveActuacion');
+	Route::get('addActuacion/{id}', 'BecaController@addActuacion');
+	Route::get('eliminarVinculoActuacion/{id}', 'BecaController@eliminarVinculoActuacion');
 
-//Route::get('hobbits','HobbitController@index');
+	Route::get('addPasoBeca/{id}', 'BecaController@addPasoBeca');
+	Route::post('savePasoBeca', 'BecaController@savePasoBeca');
+	Route::get('deletePasoBeca/{id}', 'BecaController@deletePasoBeca');
+	Route::get('editPasoBeca/{id}', 'BecaController@editPasoBeca');
+	Route::post('updatePasoBeca/{id}', 'BecaController@updatePasoBeca');
+	Route::get('otorgarBeca/{id}', 'BecaController@otorgarBeca');
 
-/*Rutas Para Becas*/
-//Route::group(['middleware' => ['session_expired']], function () {
-//Route::resource('listBecas', 'BecaController');
-Route::resource('listSolicitudesBecas', 'BecaController@index');
-Route::get('busquedaAvanzada', 'BecaController@busquedaAvanzada');
-
-
-Route::get('verSolicitud/{id}', 'BecaController@verSolicitud');
-Route::get('imprimirSolicitud/{id}', 'BecaController@imprimirSolicitud');
-Route::get('verDocAdjunta/{id}', 'BecaController@verDocAdjunta');
-Route::post('saveBeca', 'BecaController@save');
-Route::get('exportar', 'BecaController@exportar');
-Route::get('enviarEmailDocumentacion', 'BecaController@enviarEmailDocumentacion');
-Route::get('previewEmailDocumentacion', 'BecaController@previewEmailDocumentacion');
-
-Route::post('saveActuacion', 'BecaController@saveActuacion');
-Route::get('addActuacion/{id}', 'BecaController@addActuacion');
-Route::get('eliminarVinculoActuacion/{id}', 'BecaController@eliminarVinculoActuacion');
-
-Route::get('addPasoBeca/{id}', 'BecaController@addPasoBeca');
-Route::post('savePasoBeca', 'BecaController@savePasoBeca');
-Route::get('deletePasoBeca/{id}', 'BecaController@deletePasoBeca');
-Route::get('editPasoBeca/{id}', 'BecaController@editPasoBeca');
-Route::post('updatePasoBeca/{id}', 'BecaController@updatePasoBeca');
-Route::get('otorgarBeca/{id}', 'BecaController@otorgarBeca');
-
+});
 
 Route::group(['middleware' => 'session_expired'], function () {
 
@@ -153,7 +134,6 @@ Route::group(['middleware' => 'session_expired'], function () {
 	Route::get('editPasoBecaVencimiento/{id}', 'BecaOtorgadaController@editPasoBecaVencimiento');
 	Route::get('deletePasoBecaVencimiento/{id}', 'BecaOtorgadaController@deletePasoBecaVencimiento');
 	Route::post('updatePasoBecaVencimiento/{id}', 'BecaOtorgadaController@updatePasoBecaVencimiento');
-	
 
 
 });
@@ -163,8 +143,6 @@ Route::group(['middleware' => 'session_expired'], function () {
 /*
 Actuaciones
 */
-
-
 
 Route::group(['middleware' => ['session_expired']], function () {
 	
@@ -181,14 +159,17 @@ Route::group(['middleware' => ['session_expired']], function () {
 
 //});
 
+
 /* Archivos Remitidos */
+Route::group(['middleware' => ['session_expired']], function () {
+
 Route::get('listRemitidos','RemitidosController@listRemitidos');
 Route::get('altaRemitidos','RemitidosController@altaRemitidos');
 Route::post('storeRemitidos', 'RemitidosController@store');
 Route::get('editRemitidos/{id}','RemitidosController@edit');
 Route::post('updateRemitidos','RemitidosController@update');
 
-
+});
 
 Route::group(['middleware' => ['session_expired']], function () {
 	

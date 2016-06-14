@@ -31,7 +31,7 @@ class BecaController extends Controller {
 		//echo 'index';
 
 
-		if (  MyAuth::check() )
+/*		if (  MyAuth::check() )
 		{
 			//Aca algo voy a hacer
 			//Levanto los datos el usuario
@@ -39,7 +39,7 @@ class BecaController extends Controller {
 
 	        return Redirect::to('/');
 		}
-
+*/
 		$input = Request::all();
 		
 		$str = (isset($input['str_beca']))?$input['str_beca']:'';
@@ -52,8 +52,12 @@ class BecaController extends Controller {
 		->paginate(30);
 		*/
 		//$alumnos->setPath('alumnos');
+		
+		//Primer busqueda, uso parametro de busqueda
 		$input['estado_id'] = (isset($input['estado_id']))?$input['estado_id']:'-1';
-		if($input['estado_id'] == -1){
+		
+		//if($input['estado_id'] == -1 && empty($str)){
+		if(!isset($input['busqueda'])){
 			$data = DB::table('beca')
 	            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
 	            ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id')
@@ -70,22 +74,25 @@ class BecaController extends Controller {
 	            //->get(); 
         	
 		}else{
-		$data = DB::table('beca')
+		//Busqueda por dos parametros	
+		$query = DB::table('beca')
             ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
             ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id')
            // ->join('cargo','usuario_sitio.usi_car_id','=','cargo.car_id')
             ->select('*')
             ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
-            ->where('beca.estado_id', '=', $input['estado_id'])
-            ->where('beca.estado_id', '<>', 0)
-            ->where('beca.otorgada', '=', 0)
-            ->where(DB::raw('YEAR(beca.timestamp)'), '=', DB::raw('YEAR(now())')) //SIEMPRE TRAE LAS DEL CORRIENTE AÑO
-           // ->groupBy('cargo.car_nombre')
-            ->orderBy('beca.beca_id','DESC')
-            //->toSql();
-            ->paginate(20); // El paginate funciona como get()
-            //->get(); 
+            
+            ->where('beca.estado_id', '<>', 0);
 
+           if($input['estado_id'] > 0 ) $query->where('beca.estado_id', '=', $input['estado_id']);	
+           
+           // ->where('beca.otorgada', '=', 0)
+           // ->where(DB::raw('YEAR(beca.timestamp)'), '=', DB::raw('YEAR(now())')) //SIEMPRE TRAE LAS DEL CORRIENTE AÑO
+           // ->groupBy('cargo.car_nombre')
+            $query->orderBy('beca.beca_id','DESC');
+            //->toSql();
+            $data = $query->paginate(20); // El paginate funciona como get()
+            //->get(); 
         }
            
         
