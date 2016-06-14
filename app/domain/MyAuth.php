@@ -23,9 +23,10 @@ class MyAuth {
   $credenciales = DB::table('users')
               ->select('*')
               ->where('email', '=', $userdata['email'])
+              ->OrWhere('username', '=', $userdata['email'])
               ->get();
               
-  print_r($credenciales);
+  //print_r($credenciales);
 
     if(empty($credenciales)) return false;
 
