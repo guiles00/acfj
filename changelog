@@ -1,0 +1,47 @@
+Sistema Gestión Centro de Formación Judicial
+
+################### Versión [1.0.01] 14 - Junio - 2016 ####################################################
+
+#1 Solapa Becas Otorgadas
+BEC.06.1	Se agrega botón para agregar Paso Beca
+BEC.06.2	Ver Acciones de Becas
+BEC.06.7	Se agregó Fecha en Prórroga/Intimaciones
+BEC.06.13	Se agregó Monto Otorgado
+BEC.06.7	Agregar Fecha Inicial y Fecha Vencimiento en Prórroga/Intimaciones
+BEC.06.4	Edit Paso Beca
+BEC.06.5	Eliminar Paso Beca 
+
+Diferencia entre Solicitud de Beca y Beca Otorgada
+
+########## Archivos ###############
+commit 9e1a824f22d357cdda6dc90920ad8bc479136352
+Author: Guiles <guiles00@yahoo.com>
+Date:   Tue Jun 14 15:18:53 2016 -0300
+
+ app/domain/MyAuth.php           
+ resources/views/login.blade.php 
+ app/Http/Controllers/BecaController.php           
+ app/Http/routes.php                               
+ resources/views/beca/index.blade.php              
+ resources/views/beca/verSolicitudBeca.blade.php   
+ resources/views/otorgada/addActuacion.blade.php   
+ resources/views/otorgada/verBecaOtorgada.blade.php 
+ app/Http/Controllers/BecaController.php            
+ app/Http/Controllers/BecaOtorgadaController.php    
+ app/Http/routes.php                                
+ app/domain/PasoBeca.php                            
+ resources/views/actuacion/editActuacion.blade.php  
+ resources/views/beca/index.blade.php               
+ resources/views/beca/listBecas.blade.php           
+ resources/views/beca/verSolicitudBeca.blade.php    
+ resources/views/otorgada/addActuacion.blade.php    
+ resources/views/otorgada/addPasoBeca.blade.php       
+ resources/views/otorgada/addPasoVencimientoBeca.blade.php 
+ resources/views/otorgada/editPasoBeca.blade.php           
+ resources/views/otorgada/editPasoBecaVencimiento.blade.php
+ resources/views/otorgada/listadoBecas.blade.php           
+ resources/views/otorgada/verBecaOtorgada.blade.php        
+
+################### FIN VERSION [1.0.01] 14 - Junio - 2016 #################################################
+
+Versión [1.0.02]  - Junio - 2016

@@ -1,0 +1,685 @@
+<?php namespace App\Http\Controllers;
+
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+//use Illuminate\Http\Request;
+use Request;
+use App\PagoCheque;
+use App\ArchivoActuacion;
+use App\AreaCfj;
+use App\Agente;
+use DB;
+use App\domain\MyAuth;
+use App\domain\User;
+use App\domain\PagoCheque as DPagoCheque;
+use App\domain\Helper;
+use Redirect;
+
+
+class ChequesController extends Controller {
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function index()
+	{
+		//
+		//return "hola Actuacion";
+
+
+
+		/*if (  MyAuth::check() )
+		{
+			//Aca algo voy a hacer
+			//Levanto los datos el usuario
+		}else{
+
+	        return Redirect::to('/');
+		}*/
+	
+	}
+
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function listPagoCheques()
+	{
+		
+		$input = Request::all();
+		
+	
+		$cheques = PagoCheque::where('tipo_pago_cheque_id','=',1)->orderBy('pago_cheque_id','DESC')->paginate(20);// ->get();	
+		
+		
+		
+		if(isset($input['search'])) {
+		
+			$matchear = ['apellido' => $input['str_cheque'], 'nombre' => $input['str_cheque'],'nro_cheque' => $input['str_cheque']];	
+		
+			$cheques = DB::table('pago_cheque')
+								->join('capacitador', 'pago_cheque.docente_id', '=', 'capacitador.capacitador_id')
+								->where(function($query) use ($input){
+	                   				 return $query
+	                              			->where('capacitador.apellido','like','%'.$input['str_cheque'].'%')
+	                              			->orWhere('capacitador.nombre','like','%'.$input['str_cheque'].'%')
+	                              			->orwhere('pago_cheque.nro_cheque','like','%'.$input['str_cheque'].'%');
+	                			})
+								->where('pago_cheque.tipo_pago_cheque_id','=',1)
+								->orderBy('pago_cheque.pago_cheque_id','DESC')
+					            //->toSql();
+	            				->paginate(20);
+	            					
+        }
+
+		//print_r($cheques);
+		//exit;
+		return view('cheques.listPagoCheques')->with('cheques',$cheques);
+		
+	}
+
+
+	public function altaPagoCheque()
+	{
+
+		/*$archivo_actuacion = ArchivoActuacion::get();
+		$area_cfj = AreaCfj::get();
+		$conste_agente = Agente::get();*/
+		$entregado_por = Agente::get();
+
+		return view('cheques.altaPagoCheque')
+		->with('entregado_por',$entregado_por);/*->with('archivo_actuacion',$archivo_actuacion)
+		->with('area_cfj',$area_cfj)->with('conste_agente',$conste_agente);*/
+	}
+
+	public function traeDataCurso(){
+
+		$input = Request::all();
+		$q = $input['q'];
+		$res['items'] = '';
+		$cursos = $data = DB::table('curso')
+							->join('grupo_curso3', 'curso.cur_gcu3_id', '=', 'grupo_curso3.gcu3_id')
+							->where('gcu3_titulo','like','%'.$q.'%')
+							->orderBy('curso.cur_gcu3_id','DESC')
+            				->get();
+		
+		foreach ($cursos as $key => $value) {
+					//$res['items'][] = array("id"=>$value->cur_id, "name"=>$value->gcu3_titulo,"full_name"=>$value->gcu3_titulo.'- Fecha Inicio: '.$value->cur_fechaInicio.' Fecha Fin: '.$value->cur_fechaFin);
+			$res['items'][] = array("id"=>$value->cur_id, "name"=>$value->gcu3_titulo,"full_name"=>$value->gcu3_titulo,"fecha"=>$value->cur_fechaInicio);
+		}
+		//print_r($cursos);
+		//exit;
+
+		
+		$res['total_counts'] = sizeof($res['items']);
+		
+		//print_r($res);
+
+		echo json_encode($res);
+	}
+
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @return Response
+	 */
+	public function store()
+	{
+		//
+		$input = Request::all();
+	
+		$pago_cheque = new PagoCheque;
+		$pago_cheque->nro_cheque = $input['nro_cheque'];
+		$pago_cheque->nro_expediente = $input['nro_expediente'];
+		$pago_cheque->orden_pago = $input['orden_pago'];
+		$pago_cheque->curso_id = $input['curso_id'];
+	    $pago_cheque->importe = $input['importe']; 
+    	$pago_cheque->fecha_retiro = $input['fecha_retiro'];
+    	$pago_cheque->retirado_por = $input['retirado_por'];
+    	$pago_cheque->nro_memo_id = $input['nro_memo_id'];
+ 	   	$pago_cheque->nro_disp_otorga = $input['nro_disp_otorga'];
+    	$pago_cheque->nro_disp_aprueba = $input['nro_disp_aprueba'];
+    	$pago_cheque->disponible_id = $input['disponible_id'];
+    	    	
+		try {
+
+			$pago_cheque->save();
+
+		} catch (Exception $e) {
+			
+			echo "error";
+			exit;
+		}
+		
+		$cheques = PagoCheque::paginate(20);// ->get();	
+
+		return view('cheques.listPagoCheques')->with('cheques',$cheques);
+	}
+
+
+
+   /**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function listPagoBecaCheques()
+	{
+		
+		$input = Request::all();
+
+		//$str_cheque = (isset($input['str_actuacion']))?$input['str_actuacion']:'';
+	
+		$cheques = PagoCheque::where('tipo_pago_cheque_id','=',2)->orderBy('pago_cheque_id','DESC')->paginate(20);//->get();
+		//echo "<pre>";
+		//print_r($cheques);
+		if(isset($input['search']))
+
+		$cheques = DB::table('usuario_sitio')
+							->join('beca', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
+							->join('pago_cheque', 'pago_cheque.beca_id', '=', 'beca.beca_id')
+							->where('usuario_sitio.usi_nombre','like','%'.$input['str_cheque'].'%')
+							->orWhere('pago_cheque.nro_cheque','like','%'.$input['str_cheque'].'%')
+							->where('tipo_pago_cheque_id','=',2)
+							->orderBy('pago_cheque.pago_cheque_id','DESC')
+				            //->toSql();
+            				->paginate(20);
+            					
+		//$actuaciones->setPath('listActuacion');
+		//$actuaciones->appends(array('str_actuacion' => $str_actuacion));			
+
+		//print_r($cheques);
+		return view('cheques.listPagoBecaCheques')->with('cheques',$cheques);
+		
+	}
+
+
+	public function altaPagoBecaCheque()
+	{
+
+		/*$archivo_actuacion = ArchivoActuacion::get();
+		$area_cfj = AreaCfj::get();
+		$conste_agente = Agente::get();*/
+		$entregado_por = Agente::get();
+
+		return view('cheques.altaPagoBecaCheque')
+		->with('entregado_por',$entregado_por);/*->with('archivo_actuacion',$archivo_actuacion)
+		->with('area_cfj',$area_cfj)->with('conste_agente',$conste_agente);*/
+	}
+
+	
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @return Response
+	 */
+	public function storePagoBecaCheque()
+	{
+		//
+		$input = Request::all();
+	
+		$pago_cheque = new PagoCheque;
+		$pago_cheque->tipo_pago_cheque_id = 2;
+		$pago_cheque->nro_cheque = $input['nro_cheque'];
+		$pago_cheque->numero_reintegro = $input['numero_reintegro'];
+		$pago_cheque->nro_expediente = $input['nro_expediente'];
+		$pago_cheque->orden_pago = $input['orden_pago'];
+		$pago_cheque->beca_id = $input['beca_id'];
+	    $pago_cheque->importe = $input['importe']; 
+    	$pago_cheque->fecha_retiro = $input['fecha_retiro'];
+    	$pago_cheque->fecha_emision = $input['fecha_emision'];
+    	$pago_cheque->retirado_por = $input['retirado_por'];
+    	$pago_cheque->dni_retira = $input['dni_retira'];
+    	$pago_cheque->nro_memo_id = $input['nro_memo_id'];
+ 	   	$pago_cheque->nro_disp_otorga = $input['nro_disp_otorga'];
+    	$pago_cheque->nro_disp_aprueba = $input['nro_disp_aprueba'];
+    	$pago_cheque->observaciones = $input['observaciones'];
+    	    	
+		try {
+
+			$pago_cheque->save();
+
+		} catch (Exception $e) {
+			
+			echo "error";
+			exit;
+		}
+		
+		$cheques = PagoCheque::where('tipo_pago_cheque_id','=',2)->orderBy('pago_cheque_id','DESC')->paginate(20);// ->get();	
+
+		return view('cheques.listPagoBecaCheques')->with('cheques',$cheques);
+	}
+
+
+
+	public function traeDataBeca(){ 
+
+		$input = Request::all();
+		$q = $input['q'];
+		$res['items'] = '';
+
+//SELECT * FROM usuario_sitio us, beca b WHERE b.alumno_id = us.usi_id AND us.usi_nombre LIKE  '%monte%'
+
+		$becas = DB::table('usuario_sitio')
+							->join('beca', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
+							->where('usuario_sitio.usi_nombre','like','%'.$q.'%')
+							->orderBy('beca.beca_id','DESC')
+            				->get();
+		
+
+		foreach ($becas as $key => $value) {
+					//$res['items'][] = array("id"=>$value->cur_id, "name"=>$value->gcu3_titulo,"full_name"=>$value->gcu3_titulo.'- Fecha Inicio: '.$value->cur_fechaInicio.' Fecha Fin: '.$value->cur_fechaFin);
+			$res['items'][] = array("id"=>$value->beca_id, "name"=>$value->usi_nombre,"full_name"=>$value->usi_nombre,"fecha"=>$value->usi_id);
+		}
+		//print_r($cursos);
+		//exit;
+
+		
+		$res['total_counts'] = sizeof($res['items']);
+		
+		//print_r($res);
+
+		echo json_encode($res);
+	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function editPagoBecaCheque($id)
+	{
+
+		//
+		$pago_cheque = PagoCheque::find($id);
+		
+		//echo "<pre>";
+		//print_r($pago_cheque->beca_id);
+	//	exit;
+		$becario = DPagoCheque::getDatosBecario($pago_cheque->beca_id);
+		
+		$helper = new Helper();
+		$disponible = $helper->getHelperByDominio('disponible_id');
+		$entregado_por = Agente::get();
+		/*$archivo_actuacion = ArchivoActuacion::get();
+		$area_cfj = AreaCfj::get();
+		$conste_agente = Agente::get();
+*/
+		return view('cheques.editPagoBecaCheque')->with('pago_cheque',$pago_cheque)
+		->with('becario',$becario)
+		->with('disponible',$disponible)
+		->with('entregado_por',$entregado_por);/*
+		->with('archivo_actuacion',$archivo_actuacion)->with('area_cfj',$area_cfj)
+		->with('conste_agente',$conste_agente);*/
+	}
+
+		/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @return Response
+	 */
+	public function updatePagoBecaCheque()
+	{
+		//
+		$input = Request::all();
+		//echo "<pre>";
+		//print_r($input);
+		//exit;
+		$pago_cheque = PagoCheque::find($input['_id']);
+		//$pago_cheque->tipo_pago_cheque_id = 2;
+		$pago_cheque->nro_cheque = $input['nro_cheque'];
+		$pago_cheque->numero_reintegro = $input['numero_reintegro'];
+		$pago_cheque->nro_expediente = $input['nro_expediente'];
+		$pago_cheque->orden_pago = $input['orden_pago'];
+		$pago_cheque->beca_id = $input['beca_id'];
+	    $pago_cheque->importe = $input['importe']; 
+    	$pago_cheque->fecha_retiro = $input['fecha_retiro'];
+    	$pago_cheque->fecha_emision = $input['fecha_emision'];
+    	$pago_cheque->retirado_por = $input['retirado_por'];
+    	$pago_cheque->dni_retira = $input['dni_retira'];
+    	$pago_cheque->nro_memo_id = $input['nro_memo_id'];
+ 	   	$pago_cheque->nro_disp_otorga = $input['nro_disp_otorga'];
+    	$pago_cheque->nro_disp_aprueba = $input['nro_disp_aprueba'];
+    	$pago_cheque->disponible_id = $input['disponible_id'];
+    	$pago_cheque->entregado_por_id = $input['entregado_por_id'];
+    	$pago_cheque->observaciones = $input['observaciones'];
+    	    	
+		try {
+
+			$pago_cheque->save();
+
+		} catch (Exception $e) {
+			
+			echo "error";
+			exit;
+		}
+		
+		$cheques = PagoCheque::where('tipo_pago_cheque_id','=',2)->orderBy('pago_cheque_id','DESC')->paginate(20);// ->get();	
+
+		return view('cheques.listPagoBecaCheques')->with('cheques',$cheques);
+	}
+
+
+	public function traeDataDocente(){ 
+
+		$input = Request::all();
+		$q = $input['q'];
+		$res['items'] = '';
+
+//SELECT * FROM usuario_sitio us, beca b WHERE b.alumno_id = us.usi_id AND us.usi_nombre LIKE  '%monte%'
+
+		$docentes = DB::table('capacitador')
+							->where('nombre','like','%'.$q.'%')
+							->orWhere('apellido','like','%'.$q.'%')
+							->orderBy('apellido','DESC')
+            				->get();
+		
+
+		foreach ($docentes as $key => $value) {
+					
+			$res['items'][] = array("id"=>$value->capacitador_id, "name"=>$value->apellido.' '.$value->nombre,"full_name"=>$value->apellido.' '.$value->nombre,"fecha"=>'');
+		}
+
+		
+		$res['total_counts'] = sizeof($res['items']);
+
+		echo json_encode($res);
+	}
+
+
+
+
+	public function traeDataMemo(){
+
+		$input = Request::all();
+		$q = $input['q'];
+		$res['items'] = '';
+
+
+
+		$becas = DB::table('remitidos')
+							->join('helper', 'remitidos.tipo_remitido_id', '=', 'helper.dominio_id')
+							->where('helper.dominio','=','tipo_memo')
+							->where('numero_memo','like','%'.$q.'%')
+							->orderBy('remitidos.remitidos_id','DESC')
+            				->get();
+		
+
+		foreach ($becas as $key => $value) {
+					//$res['items'][] = array("id"=>$value->cur_id, "name"=>$value->gcu3_titulo,"full_name"=>$value->gcu3_titulo.'- Fecha Inicio: '.$value->cur_fechaInicio.' Fecha Fin: '.$value->cur_fechaFin);
+			$res['items'][] = array("id"=>$value->remitidos_id, "name"=>$value->numero_memo,"full_name"=>$value->nombre.'-'.$value->numero_memo,"fecha"=>$value->fecha_remitidos);
+		}
+		//print_r($cursos);
+		//exit;
+
+		
+		$res['total_counts'] = sizeof($res['items']);
+		
+		//print_r($res);
+
+		echo json_encode($res);
+	}
+
+
+
+
+
+
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Response
+	 */
+	public function create()
+	{
+		//
+	}
+
+
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function show($id)
+	{
+		//
+	}
+
+
+	public function saveCursoPagoCheque()
+	{
+		//
+		$input = Request::all();
+		//echo "<pre>";
+		//print_r($input);
+		//exit;
+		$pago_cheque = new PagoCheque;
+		$pago_cheque->tipo_pago_cheque_id = 1;
+		$pago_cheque->nro_cheque = $input['nro_cheque'];
+		$pago_cheque->nro_expediente = $input['nro_expediente'];
+		$pago_cheque->orden_pago = $input['orden_pago'];
+		$pago_cheque->docente_id = $input['docente_id'];
+		$pago_cheque->curso_id = $input['curso_id'];
+	    $pago_cheque->importe = $input['importe']; 
+    	$pago_cheque->fecha_retiro = $input['fecha_retiro'];
+    	$pago_cheque->fecha_emision = $input['fecha_emision'];
+    	$pago_cheque->retirado_por = $input['retirado_por'];
+    	$pago_cheque->dni_retira = $input['dni_retira'];
+    	$pago_cheque->nro_memo_id = $input['nro_memo_id'];
+ 	   	$pago_cheque->nro_disp_otorga = $input['nro_disp_otorga'];
+    	$pago_cheque->nro_disp_aprueba = $input['nro_disp_aprueba'];
+    	$pago_cheque->disponible_id = $input['disponible_id'];
+    	$pago_cheque->entregado_por_id = $input['entregado_por_id'];
+    	$pago_cheque->observaciones = $input['observaciones'];
+    	    	
+		try {
+
+			$pago_cheque->save();
+
+		} catch (Exception $e) {
+			
+			echo "error";
+			exit;
+		}
+		
+		$cheques = PagoCheque::where('tipo_pago_cheque_id','=',1)->orderBy('pago_cheque_id','DESC')->paginate(20);// ->get();	
+
+		return view('cheques.listPagoCheques')->with('cheques',$cheques);
+	}
+
+
+	
+
+	public function editCursoPagoCheque($id)
+	{
+
+		//
+		$pago_cheque = PagoCheque::find($id);
+		
+		$docente = DPagoCheque::getDatosDocenteById($pago_cheque->docente_id);
+		$curso = DPagoCheque::getDatosCursoById($pago_cheque->curso_id);
+
+		//print_r($id);
+		//exit;
+		//Traer Docente y Actividad
+
+		$helper = new Helper();
+		$disponible = $helper->getHelperByDominio('disponible_id');
+		$entregado_por = Agente::get();
+		
+		return view('cheques.editCursoPagoCheque')->with('pago_cheque',$pago_cheque)
+		->with('docente',$docente)
+		->with('curso',$curso)
+		->with('disponible',$disponible)
+		->with('entregado_por',$entregado_por);
+	}
+
+
+	public function updateCursoPagoCheque()
+	{
+		//
+		$input = Request::all();
+		//echo "<pre>";
+		//print_r($input);
+		//exit;
+		$pago_cheque = PagoCheque::find($input['_id']);
+		//$pago_cheque->tipo_pago_cheque_id = 2;
+		$pago_cheque->nro_cheque = $input['nro_cheque'];
+		$pago_cheque->nro_expediente = $input['nro_expediente'];
+		$pago_cheque->orden_pago = $input['orden_pago'];
+		$pago_cheque->docente_id = $input['docente_id'];
+		$pago_cheque->curso_id = $input['curso_id'];
+	    $pago_cheque->importe = $input['importe']; 
+    	$pago_cheque->fecha_retiro = $input['fecha_retiro'];
+    	$pago_cheque->fecha_emision = $input['fecha_emision'];
+    	$pago_cheque->retirado_por = $input['retirado_por'];
+    	$pago_cheque->dni_retira = $input['dni_retira'];
+    	$pago_cheque->nro_memo_id = $input['nro_memo_id'];
+ 	   	$pago_cheque->nro_disp_otorga = $input['nro_disp_otorga'];
+    	$pago_cheque->nro_disp_aprueba = $input['nro_disp_aprueba'];
+    	$pago_cheque->disponible_id = $input['disponible_id'];
+    	$pago_cheque->entregado_por_id = $input['entregado_por_id'];
+    	$pago_cheque->observaciones = $input['observaciones'];
+    	    	
+		try {
+
+			$pago_cheque->save();
+
+		} catch (Exception $e) {
+			
+			echo "error";
+			exit;
+		}
+		
+		$cheques = PagoCheque::where('tipo_pago_cheque_id','=',1)->orderBy('pago_cheque_id','DESC')->paginate(20);// ->get();	
+
+		return view('cheques.listPagoCheques')->with('cheques',$cheques);
+	}
+
+
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function destroy($id)
+	{
+		//
+	}
+
+
+
+
+	private function comunicarPase($area_id,$actuacion){
+		$area = AreaCfj::where('area_cfj_id', '=',$area_id)->get();
+		
+		$notificacion_cfj = DB::table('notificacion_area_cfj')
+  				                ->leftJoin('agente','notificacion_area_cfj.agente_id','=','agente.agente_id')
+								->where('notificacion_area_cfj.area_cfj_id','=',$area_id)->get();
+
+		$agentes = array();
+		foreach ($notificacion_cfj as $agente) {
+			$agentes[] = $agente->agente_email;
+		}
+
+		$notificacion_agentes = implode(',',$agentes);
+		
+
+		$html = '<html>
+					<body>
+						<p><b><u>Alta </u></b>
+						</p>
+						<table>
+							<tr>
+								<td><b>Fecha: </b></td><td>'.$actuacion->actuacion_fecha.'</td>
+							</tr>
+							<tr>
+								<td><b>Asunto: </b></td><td>'.htmlentities($actuacion->asunto, ENT_QUOTES, "UTF-8").'</td>
+							</tr>
+							<tr>
+								<td><b>Actuaci&oacute;n: </b></td><td>'.$actuacion->prefijo.'-'.$actuacion->numero_actuacion.'</td>
+							</tr>
+							<tr>
+								<td><b>Causante: </b></td><td>'.htmlentities($actuacion->remite, ENT_QUOTES, "UTF-8").'</td>
+							</tr>
+							<tr>
+								<td><b>Observaciones: </b></td><td>'.htmlentities($actuacion->observaciones, ENT_QUOTES, "UTF-8").'</td>
+							</tr>
+						</table>
+						<br>
+						<p style="font-size:10">Mesa de Entradas Interna - Centro de Formaci&oacute;n Judicial</p>
+					</body>
+					</html>';
+
+		$subject = 'CFJ-MEI - Alta ACTUACION: '.$actuacion->prefijo.'-'.$actuacion->numero_actuacion;
+		$this->enviaEmail($notificacion_agentes,$html,$subject);
+	}
+
+	private function enviaEmail($notificacion_agentes,$html,$subject){
+
+		//echo $notificacion_agentes;
+		//echo $html;
+
+		$to      = $notificacion_agentes;
+		$subject = $subject;
+		$message = $html;
+		$headers = 'From: no-reply@jusbaires.gov.ar' . "\r\n" .
+   			   'Reply-To: no-reply@jusbaires.gov.ar' . "\r\n" .
+			   'Bcc: gcaserotto@jusbaires.gov.ar' . "\r\n" .
+			   'Return-Path: return@jusbaires.gov.ar' . "\r\n" .
+			   'MIME-Version: 1.0' . "\r\n" .
+			   'Content-Type: text/html; charset=UTF-8' . "\r\n" .
+			   'Content-Transfer-Encoding: 7bit'.
+			   'X-Mailer: PHP/' . phpversion();
+
+		$res = mail($to, $subject, $message, $headers);
+
+		//ver error 
+		if(!$res) echo 'hubo un error al notificar';
+
+		return $res;
+	}
+
+
+
+	
+
+
+
+	public function getDatosActuacion(){
+
+		$input = Request::all();
+		
+		$datos_actuacion = Actuacion::where('numero_actuacion','=',$input['numero_actuacion'])->get();	
+		//print_r($datos_actuacion);
+		if(empty($datos_actuacion[0])) return "false";
+		
+//		$datos_actuacion = ['fecha'=>'01-01-2016','observaciones'=>'esto es una observacion'];
+		return $datos_actuacion[0];
+	}
+
+		public function getNumeroActuacion(){
+
+		$input = Request::all();
+		
+		$datos_actuacion = Actuacion::where('numero_actuacion','=',$input['numero_actuacion'])->get();	
+		//print_r($datos_actuacion);
+		if(empty($datos_actuacion[0])) return "false";
+		
+//		$datos_actuacion = ['fecha'=>'01-01-2016','observaciones'=>'esto es una observacion'];
+		return $datos_actuacion[0];
+	}
+	
+
+}

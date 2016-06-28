@@ -158,6 +158,8 @@ class BecaOtorgadaController extends Controller {
 		$tipo_actividad = $helper->getHelperByDominio('tipo_actividad');
 		$s_horaria = $helper->getHelperByDominio('s_horaria');
 		$estado_beca = $helper->getHelperByDominio('estado_beca');
+		$corresponde_si_no = $helper->getHelperByDominio('corresponde_si_no');
+		$certificado = $helper->getHelperByDominio('certificado');
 
 //echo "<pre>";
 //print_r($estado_beca);
@@ -187,6 +189,8 @@ class BecaOtorgadaController extends Controller {
 			$helpers['tipo_actividad'] = $tipo_actividad;
 			$helpers['s_horaria'] = $s_horaria;
 			$helpers['estado_beca'] = $estado_beca;
+			$helpers['corresponde_si_no'] = $corresponde_si_no;
+			$helpers['certificado'] = $certificado;
 			
 			$documentacion = Documentacion::traeDocumentacion($id);
 			//echo $id;
@@ -278,7 +282,6 @@ public function imprimirSolicitud($id){
 
 		$input = Request::all();
 		
-		//echo "muestro la solicitud";		
 		//guardo datos de beca, los de usuario_sitio hay que confirmar que datos se pueden modificar.
 		$beca = Beca::find($input['_id']);
 		$beca->titulo_id = $input['titulo_id'];
@@ -293,15 +296,12 @@ public function imprimirSolicitud($id){
 		$beca->titulo_otro = $input['titulo_otro'];
 		$beca->otorgado = $input['monto_otorgado'];
 		$beca->legajo_beca = $input['legajo_beca'];
-		//$beca->tipo_actividad_id = $input['tipo_actividad_id'];
 		$beca->institucion_propuesta = $input['inst_prop_id'];
-		//$beca->costo = $input['costo'];
-		//$beca->monto = $input['monto'];
-		//$beca->fecha_inicio = $input['fecha_inicio'];
-		//$beca->fecha_fin = $input['fecha_fin'];
+		$beca->presenta_ddjj = $input['presenta_ddjj'];
+		$beca->informe_final = $input['informe_final'];
+		$beca->copia_titulo = $input['copia_titulo'];
+		$beca->certificado = $input['certificado'];
 		$beca->actividad_nombre = $input['actividad_nombre'];
-		//$beca->duracion = $input['duracion'];
-		//$beca->sup_horaria = $input['s_horaria'];
 		$beca->f_ingreso_caba = $input['f_ingreso_caba'];
 		$beca->dependencia_id = $input['dependencia_id'];
 		$beca->dependencia_otro = $input['dependencia_otro'];
@@ -309,91 +309,18 @@ public function imprimirSolicitud($id){
 		$beca->telefono_particular = $input['tel_particular'];
 		//$beca->dictamen_por = $input['dictamen_por'];
 		//$beca->renovacion_id = $input['renovacion_id'];
+		//$beca->tipo_actividad_id = $input['tipo_actividad_id'];
+		//$beca->duracion = $input['duracion'];
+		//$beca->sup_horaria = $input['s_horaria'];
 
 		$beca->estado_id = $input['estado_id'];
 
 		$beca->save();
 
-/*
-		$documentacion = \App\Documentacion::where('beca_id',$input['_id'])->first();
-		
-		
-        $documentacion->formulario_solicitud = ( empty($input['doc_formulario_solicitud']) )? 0 : 1;
-        $documentacion->curriculum_vitae = ( empty($input['doc_curriculum_vitae']) )? 0 : 1;
-        $documentacion->informacion_actividad = ( empty($input['doc_informacion_actividad']) )? 0 : 1;
-        $documentacion->certificado_laboral = ( empty($input['doc_certificado_laboral']) )? 0 : 1;;
-        $documentacion->copia_titulo = ( empty($input['doc_copia_titulo']) )? 0 : 1;
-        $documentacion->dictamen_evaluativo = ( empty($input['doc_dictamen_evaluativo']) )? 0 : 1;
-        $documentacion->autorizacion_superposicion = ( empty($input['doc_autorizacion_superposicion']) )? 0 : 1;
 
-        $documentacion->save();
-*/
-		//echo "<pre>";
-		//echo $input['_id'];
-		//print_r($input);
-		//exit;
-		/*		echo "<pre>";
 
-		$helper = new Helper();
-		$t_becas = $helper->getHelperByDominio('tipo_beca');
-		print_r($t_becas);
-		exit;
-*/
+		return redirect()->back()->with('edited',true);
 
-return redirect()->back()->with('edited',true);
-
-/*		$helper = new Helper();
-		$tipo_becas = $helper->getHelperByDominio('tipo_beca');
-		$renovacion = $helper->getHelperByDominio('renovacion');
-		$tipo_actividad = $helper->getHelperByDominio('tipo_actividad');
-		$s_horaria = $helper->getHelperByDominio('s_horaria');
-		$estado_beca = $helper->getHelperByDominio('estado_beca');
-
-		$solicitud_beca = DB::table('beca')
-            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
-            ->select('*')
-            ->where('beca.beca_id', '=', $input['_id'])
-            ->get(); 
-            
-            
-            $cargos = DB::table('cargo')->get();
-            $universidades = DB::table('universidad')->get();
-            $fuero = DB::table('fuero')->get();
-			$titulos = DB::table('titulo')->get();
-			$facultades = DB::table('facultad')->get();
-
-			$helpers['cargos']=$cargos;
-			$helpers['universidades']=$universidades;
-			$helpers['fuero']=$fuero;
-			$helpers['titulos']=$titulos;
-			$helpers['facultades']=$facultades;
-			$helpers['tipo_becas'] = $tipo_becas;
-			$helpers['renovacion'] = $renovacion;
-			$helpers['tipo_actividad'] = $tipo_actividad;
-			$helpers['s_horaria'] = $s_horaria;
-			$helpers['estado_beca'] = $estado_beca;
-			
-			
-		return view('beca.verSolicitudBeca')->with('beca',$solicitud_beca[0])->with('helpers',$helpers);
-
-*/		
-/*
-		$data = DB::table('beca')
-            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
-            ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id')
-           // ->join('cargo','usuario_sitio.usi_car_id','=','cargo.car_id')
-            ->select('*')
-           // ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
-           // ->groupBy('cargo.car_nombre')
-            ->orderBy('beca.beca_id','DESC')
-            //->toSql();
-            ->paginate(20); // El paginate funciona como get()
-            //->get(); 
-            
-            $becas = $data;
-
-		return view('beca.index')->with('becas',$becas);
-*/
 	}
 
 public function addActuacion($id){
@@ -617,9 +544,9 @@ public function exportar(){
 		$paso_beca->fecha = $input['paso_beca_fecha'];
 		$paso_beca->observaciones = $input['paso_beca_observaciones'];
 		$paso_beca->fecha_vencimiento = (isset($input['paso_beca_fecha_vencimiento']))?$input['paso_beca_fecha_vencimiento']:'';
+		$paso_beca->texto_email = $input['paso_texto_email'];
 		$paso_beca->save();
 
-		//return view('beca.verSolicitudBeca')->with('beca_id',$id);
 		$url = 'verBecaOtorgada/'.$input['beca_id'];
 		return Redirect::to($url);
 	}
@@ -678,6 +605,7 @@ public function exportar(){
 		$paso_beca->observaciones = $input['paso_beca_observaciones'];
 		$paso_beca->fecha = $input['paso_beca_fecha'];
 		$paso_beca->fecha_vencimiento = (isset($input['paso_beca_fecha_vencimiento']))?$input['paso_beca_fecha_vencimiento']:'';
+		$paso_beca->texto_email = $input['paso_texto_email'];
 
 		$paso_beca->save();
 
@@ -882,6 +810,17 @@ public function exportar(){
 		$actuacion->save();
 
 		return redirect()->back();
+	}
+
+
+	public function traeTextoPaso(){
+		$input = Request::all();
+
+		$pasos_beca = DB::table('t_paso_beca')->where('t_paso_beca_id','=',$input['id'])->first();
+		
+		//Trae el texto
+
+		echo $pasos_beca->email_texto;
 	}
 
 	/**

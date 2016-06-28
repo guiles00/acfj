@@ -13,7 +13,11 @@
 
 
 Route::get('/', 'WelcomeController@index');
+
+Route::group(['middleware' => 'session_expired'], function () {
 Route::get('bienvenido', 'WelcomeController@welcome');
+});
+
 Route::post('login', 'WelcomeController@doLogin');
 Route::get('logout', 'WelcomeController@doLogout');
 
@@ -135,6 +139,8 @@ Route::group(['middleware' => 'session_expired'], function () {
 	Route::get('deletePasoBecaVencimiento/{id}', 'BecaOtorgadaController@deletePasoBecaVencimiento');
 	Route::post('updatePasoBecaVencimiento/{id}', 'BecaOtorgadaController@updatePasoBecaVencimiento');
 
+	Route::get('traeTextoPaso', 'BecaOtorgadaController@traeTextoPaso');
+
 
 });
 
@@ -209,4 +215,33 @@ Route::group(['middleware' => ['session_expired']], function () {
 	Route::get('getNumeroActuacion','ActuacionController@getNumeroActuacion');*/
 });
 
+
+
+
+Route::group(['middleware' => ['session_expired']], function () {
+	
+	//Route::resource('actuacion','ActuacionController');
+    Route::get('listPagoCheques','ChequesController@listPagoCheques');
+    Route::get('altaPagoCheque','ChequesController@altaPagoCheque');
+    Route::post('saveCursoPagoCheque','ChequesController@saveCursoPagoCheque');
+    
+    Route::get('editCursoPagoCheque/{id}','ChequesController@editCursoPagoCheque');
+    Route::post('updateCursoPagoCheque','ChequesController@updateCursoPagoCheque');
+
+    
+    
+    Route::get('listPagoBecaCheques','ChequesController@listPagoBecaCheques');
+    Route::get('altaPagoBecaCheque','ChequesController@altaPagoBecaCheque');
+    Route::get('editPagoBecaCheque/{id}','ChequesController@editPagoBecaCheque');
+    Route::post('updatePagoBecaCheque','ChequesController@updatePagoBecaCheque');
+    Route::post('storePagoBecaCheque','ChequesController@storePagoBecaCheque');
+    
+
+    Route::get('traeDataCurso','ChequesController@traeDataCurso');
+    Route::get('traeDataBeca','ChequesController@traeDataBeca');
+    Route::get('traeDataDocente','ChequesController@traeDataDocente');
+
+    Route::get('traeDataMemo','ChequesController@traeDataMemo');
+    
+});
 	

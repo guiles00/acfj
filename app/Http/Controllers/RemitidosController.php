@@ -29,7 +29,7 @@ class RemitidosController extends Controller {
 
 
 
-		if (  MyAuth::check() )
+	/*	if (  MyAuth::check() )
 		{
 			//Aca algo voy a hacer
 			//Levanto los datos el usuario
@@ -37,7 +37,7 @@ class RemitidosController extends Controller {
 
 	        return Redirect::to('/');
 		}
-	
+	*/
 	}
 
 	/**
@@ -198,7 +198,7 @@ class RemitidosController extends Controller {
 	public function listRemitidos()
 	{
 
-		if (  MyAuth::check() )
+	/*	if (  MyAuth::check() )
 		{
 			//Aca algo voy a hacer
 			//Levanto los datos el usuario
@@ -206,7 +206,7 @@ class RemitidosController extends Controller {
 
 	        return Redirect::to('/');
 		}
-
+	*/
 		$input = Request::all();
 		//print_r($input);
 

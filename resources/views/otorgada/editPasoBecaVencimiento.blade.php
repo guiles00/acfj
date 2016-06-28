@@ -67,6 +67,12 @@
 					        <textarea type="text" class="form-control"  name="paso_beca_observaciones" value='' id='b_paso_beca_observaciones' >{{ $paso_beca->observaciones}}</textarea>
 					      </div>
 					</div>
+					<div class="form-group">
+					      <label class="control-label col-sm-2">Texto</label>
+					      <div class="col-sm-8">          
+					        <textarea type="text" rows="10" class="form-control"  name="paso_texto_email" value='' id='b_paso_texto_email' >{{ $paso_beca->texto_email}}</textarea>
+					      </div>
+					</div>
 					    			
 			</div>	
 						
@@ -82,4 +88,33 @@
 	</div>
 </div>
 
+
+<script>
+$(document).ready(function() {
+
+$('#b_tipo_paso_beca_id').change(function(data){
+
+	var t_paso_id = data.target.value;
+
+				$.ajax({
+		                url : "../traeTextoPaso"
+		                ,data: {'id':t_paso_id}
+		                ,success : function(result) {
+		                	$('#b_paso_texto_email').html(result);
+		                	//console.debug(result);
+		                }
+     			});   
+
+});
+
+$('.datepicker').datepicker({
+                    format: 'yyyy-mm-dd'
+                    ,language:'es'
+                    ,autoclose: true
+                    ,orientation: 'auto bottom'
+                  }
+                );
+	
+});
+</script>
 @stop

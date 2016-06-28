@@ -369,12 +369,15 @@ use App\domain\Utils;
 					<div class="form-group">
 						<label class="control-label col-md-2">Certificado</label>
 						<div class="col-md-8">
-							<!--input class="form-control input-sm" name="beca_art_20_id" value=''-->
-								<select class="form-control" name="beca_art_20_id">
-												<option value="">CUMPLE</option>
-												<option value="">CUMPLE PARC.</option>
-												<option value="">NO CUMPLE</option>
-												<option value="">N/C</option>
+								<select class="form-control" name="certificado">
+
+												@foreach($helpers['certificado'] as $key=>$certificado)
+												<?php if( $certificado->dominio_id == $beca->certificado ){?>
+												<option value="{{$certificado->dominio_id}}" selected>{{$certificado->nombre}}</option>
+												<?php }else{?>
+												<option value="{{$certificado->dominio_id}}">{{$certificado->nombre}}</option>
+												<?php }?>
+											@endforeach
 								</select>
 						</div>
 					</div>
@@ -383,15 +386,52 @@ use App\domain\Utils;
 					<div class="form-group">
 						<label class="control-label col-md-2">DDJJ</label>
 						<div class="col-md-8">
-							<!--input class="form-control input-sm" name="beca_ddjj_id" value=''-->
-							<select class="form-control" name="beca_ddjj_id">
-												<option value="">SI</option>
-												<option value="">NO</option>
-												<option value="">N/C</option>
+							<select class="form-control" name="presenta_ddjj">
+											@foreach($helpers['corresponde_si_no'] as $key=>$corresponde_si_no)
+												<?php if( $corresponde_si_no->dominio_id == $beca->presenta_ddjj ){?>
+												<option value="{{$corresponde_si_no->dominio_id}}" selected>{{$corresponde_si_no->nombre}}</option>
+												<?php }else{?>
+												<option value="{{$corresponde_si_no->dominio_id}}">{{$corresponde_si_no->nombre}}</option>
+												<?php }?>
+											@endforeach
 							</select>
 						</div>
 					</div>
 				</div>
+				<div class="row">	
+					<div class="form-group">
+						<label class="control-label col-md-2">Informe final</label>
+						<div class="col-md-8">
+							<select class="form-control" name="informe_final">
+											@foreach($helpers['corresponde_si_no'] as $key=>$corresponde_si_no)
+												<?php if( $corresponde_si_no->dominio_id == $beca->informe_final ){?>
+												<option value="{{$corresponde_si_no->dominio_id}}" selected>{{$corresponde_si_no->nombre}}</option>
+												<?php }else{?>
+												<option value="{{$corresponde_si_no->dominio_id}}">{{$corresponde_si_no->nombre}}</option>
+												<?php }?>
+											@endforeach
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">	
+					<div class="form-group">
+						<label class="control-label col-md-2">Copia T&iacute;tulo</label>
+						<div class="col-md-8">
+							<select class="form-control" name="copia_titulo">
+											@foreach($helpers['corresponde_si_no'] as $key=>$corresponde_si_no)
+												<?php if( $corresponde_si_no->dominio_id == $beca->copia_titulo ){?>
+												<option value="{{$corresponde_si_no->dominio_id}}" selected>{{$corresponde_si_no->nombre}}</option>
+												<?php }else{?>
+												<option value="{{$corresponde_si_no->dominio_id}}">{{$corresponde_si_no->nombre}}</option>
+												<?php }?>
+											@endforeach
+							</select>
+						</div>
+					</div>
+				</div>
+				
+				
 		</div>
 
 

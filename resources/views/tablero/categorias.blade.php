@@ -37,7 +37,7 @@ $('document').ready(function(){
 
               $.ajax({
                           //url: 'http://localhost/content/cfj-cfj/admin_cfj/public/grupo',
-                          url: '/content/cfj-cfj/admin_cfj/public/grupo',
+                          url: './grupo',
                           data: {'data':e.target.value},
                           success: function(data){
                             $('#res-grupo').html(data);
