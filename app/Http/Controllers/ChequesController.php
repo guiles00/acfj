@@ -78,6 +78,7 @@ class ChequesController extends Controller {
 	            					
         }
 
+        $cheques->setPath('listPagoCheques');
 		//print_r($cheques);
 		//exit;
 		return view('cheques.listPagoCheques')->with('cheques',$cheques);
@@ -191,7 +192,8 @@ class ChequesController extends Controller {
 				            //->toSql();
             				->paginate(20);
             					
-		//$actuaciones->setPath('listActuacion');
+        $cheques->setPath('listPagoBecaCheques');
+
 		//$actuaciones->appends(array('str_actuacion' => $str_actuacion));			
 
 		//print_r($cheques);
