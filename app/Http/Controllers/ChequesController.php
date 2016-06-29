@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 //use Illuminate\Http\Request;
 use Request;
 use App\PagoCheque;
+use App\Remitidos;
 use App\ArchivoActuacion;
 use App\AreaCfj;
 use App\Agente;
@@ -238,6 +239,7 @@ class ChequesController extends Controller {
     	$pago_cheque->nro_memo_id = $input['nro_memo_id'];
  	   	$pago_cheque->nro_disp_otorga = $input['nro_disp_otorga'];
     	$pago_cheque->nro_disp_aprueba = $input['nro_disp_aprueba'];
+    	$pago_cheque->disponible_id = $input['disponible_id'];
     	$pago_cheque->observaciones = $input['observaciones'];
     	    	
 		try {
@@ -307,14 +309,18 @@ class ChequesController extends Controller {
 		$helper = new Helper();
 		$disponible = $helper->getHelperByDominio('disponible_id');
 		$entregado_por = Agente::get();
-		/*$archivo_actuacion = ArchivoActuacion::get();
-		$area_cfj = AreaCfj::get();
+		$nro_memo = Remitidos::where('remitidos_id','=',$pago_cheque->nro_memo_id)->first();
+		//echo "<pre>";
+		//print_r($nro_memo);
+		//exit;
+		/*$area_cfj = AreaCfj::get();
 		$conste_agente = Agente::get();
 */
 		return view('cheques.editPagoBecaCheque')->with('pago_cheque',$pago_cheque)
 		->with('becario',$becario)
 		->with('disponible',$disponible)
-		->with('entregado_por',$entregado_por);/*
+		->with('entregado_por',$entregado_por)
+		->with('nro_memo',$nro_memo);/*
 		->with('archivo_actuacion',$archivo_actuacion)->with('area_cfj',$area_cfj)
 		->with('conste_agente',$conste_agente);*/
 	}
@@ -515,12 +521,15 @@ class ChequesController extends Controller {
 		$helper = new Helper();
 		$disponible = $helper->getHelperByDominio('disponible_id');
 		$entregado_por = Agente::get();
+		$nro_memo = Remitidos::where('remitidos_id','=',$pago_cheque->nro_memo_id)->first();
+
 		
 		return view('cheques.editCursoPagoCheque')->with('pago_cheque',$pago_cheque)
 		->with('docente',$docente)
 		->with('curso',$curso)
 		->with('disponible',$disponible)
-		->with('entregado_por',$entregado_por);
+		->with('entregado_por',$entregado_por)
+		->with('nro_memo',$nro_memo);
 	}
 
 

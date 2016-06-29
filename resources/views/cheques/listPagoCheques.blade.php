@@ -30,7 +30,7 @@ use App\domain\PagoCheque;
         <div class="row">
               <div class="form-group">
                 
-                <a href="#" class="btn glyphicon glyphicon-search" data-toggle="modal" data-target="#basicModal"></a>
+                <a href="#" class="btn glyphicon glyphicon-search" data-toggle="modal" onClick=" alert('filtro avanzado, NO LO HICE TODAVIA')" data-target="#basicModal"></a>
 
                 <form method="GET" action="{{action('ChequesController@listPagoCheques')}}" class="navbar-form navbar-left pull-right" role="search">
                             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />

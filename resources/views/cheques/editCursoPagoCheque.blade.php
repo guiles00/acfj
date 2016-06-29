@@ -1,7 +1,9 @@
 @extends('app')
 
 @section('content')
-
+<?php
+use App\domain\PagoCheque;
+?>
 <style>
 .btn span.glyphicon {    			
 	opacity: 0;				
@@ -77,11 +79,14 @@
     </div>
 
 
-     <div class="form-group">
+        <div class="form-group">
       <label class="control-label col-md-2">Nro. Memo</label>
         <div class="col-md-6">
+          <? if(!empty($pago_cheque->nro_memo_id))
+          $nro_memo = PagoCheque::getMemoById($pago_cheque->nro_memo_id) 
+          ?>
           <select class="form-control remote_select2 js-data-example-ajax" name="nro_memo_id" id="b_nro_memo_id">
-            <option value="1" selected>MEMO 2</option>
+            <option value="$pago_cheque->nro_memo_id" selected>{{ $nro_memo }}</option>
             </select>
         </div>
      </div>

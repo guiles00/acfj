@@ -136,5 +136,21 @@ class PagoCheque {
 		return  $res[0]->gcu3_titulo;
 	}
 
+	public static function getMemoById($remitidos_id){
+
+	
+	$res = DB::table('remitidos')
+							->join('helper', 'remitidos.tipo_remitido_id', '=', 'helper.dominio_id')
+							->where('helper.dominio','=','tipo_memo')
+							->where('remitidos_id','=',$remitidos_id)
+							->get();
+      
+
+		if(empty($res)) return '';							
+
+		return  $res[0]->nombre.' '.$res[0]->numero_memo;
+	}
+
+
 }
 ?>
