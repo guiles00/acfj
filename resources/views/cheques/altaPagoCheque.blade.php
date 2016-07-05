@@ -53,14 +53,14 @@
     </div>
 
     <div class="form-group">
-      <label class="control-label col-sm-2">Nro Disposici&oacute;n Otorga</label>
+      <label class="control-label col-sm-2">Nro Disposici&oacute;n Beca</label>
       <div class="col-sm-8">          
         <input type="text" class="form-control" id="" name="nro_disp_otorga" value=""></input>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="control-label  col-sm-2">Nro Disposici&oacute;n Aprueba</label>
+      <label class="control-label  col-sm-2">Nro Disposici&oacute;n Pago</label>
       <div class="col-sm-8">          
         <input type="text" class="form-control" id="" name="nro_disp_aprueba" value=""></input>
       </div>

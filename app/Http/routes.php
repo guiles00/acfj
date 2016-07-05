@@ -235,6 +235,7 @@ Route::group(['middleware' => ['session_expired']], function () {
     Route::get('editPagoBecaCheque/{id}','ChequesController@editPagoBecaCheque');
     Route::post('updatePagoBecaCheque','ChequesController@updatePagoBecaCheque');
     Route::post('storePagoBecaCheque','ChequesController@storePagoBecaCheque');
+    Route::get('busquedaAvanzadaBecaPagoCheque','ChequesController@busquedaAvanzadaBecaPagoCheque');
     
 
     Route::get('traeDataCurso','ChequesController@traeDataCurso');

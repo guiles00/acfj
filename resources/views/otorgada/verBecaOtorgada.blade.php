@@ -22,7 +22,7 @@
 <?php  
 use App\domain\PasoBeca;
 use App\domain\Utils;
-
+use App\domain\PagoCheque;
 ?>
 
 <?php if(Session::get('edited') == true){?>
@@ -322,7 +322,7 @@ use App\domain\Utils;
 		    <div class="form-group">
 		      <label class="control-label col-sm-2">Observaciones</label>
 		      <div class="col-sm-10">          
-		        <textarea type="text" class="form-control" id="" name="beca_observaciones" ></textarea>
+		        <textarea type="text" class="form-control" id="" name="beca_observaciones" >{{$beca->observaciones}}</textarea>
 		      </div>
 		    </div>
 
@@ -455,7 +455,7 @@ use App\domain\Utils;
   <li class="active"><a data-toggle="tab" href="#menu2">Actuaciones</a></li>
    <li><a data-toggle="tab" href="#b_paso_beca">Acciones</a></li>
    <li><a data-toggle="tab" href="#b_paso_vencimiento">Pr&oacute;rroga/Intimaciones</a></li>
-
+   <li><a data-toggle="tab" href="#b_pago_cheque">Pagos</a></li>
 </ul>
 
 <div class="tab-content">
@@ -592,6 +592,54 @@ use App\domain\Utils;
 			</div>
 
 	</div>
+
+	<div id="b_pago_cheque" class="tab-pane fade">
+	    	 <table class="table table-condensed table-bordered table-striped volumes">
+	        <thead>
+	          <tr>
+
+	            <th>Nro Disposición Pago</th>
+	            <th>Nro. Memo</th>
+	            <th>Reintegro</th>
+	            <th>Monto</th>
+	            <th>Disponible</th>
+	            <th>Entregado</th>
+                <th width="10%"></th>
+                <th width="10%"></th>
+	          </tr>
+	        </thead>
+	        <tbody>
+
+       	 <!-- FOREACH -->
+       	  @foreach ($cheques as $cheque)
+            <tr>
+                <td> {{ $cheque->nro_disp_aprueba }} </td>
+                <td> {{ PagoCheque::getNroMemoById($cheque->nro_memo_id) }} </td>
+                <td> {{ $cheque->numero_reintegro}} </td>
+                <td> {{ $cheque->importe}} </td>
+                <td> {{ PagoCheque::getDisponibleChequeById($cheque->disponible_id) }}</td>
+                <td> {{ PagoCheque::getEntregadoChequeById($cheque->entregado_por_id) }}</td>
+                <td> VER</td>
+
+            </tr>
+            <!-- ENDFOREACH -->
+         @endforeach    
+
+	        </tbody>
+	      </table>
+
+	    	<div class="col-sm-12">
+				<div class="row">
+					<div class="form-group"> 
+						<div class="col-md-10">
+							<a href="{!! URL::action('BecaOtorgadaController@addPasoVencimientoBeca',$beca->beca_id); !!}" class="btn btn-default">Agregar</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+	</div>
+
 
 </div>	
 

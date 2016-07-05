@@ -161,8 +161,6 @@ class BecaOtorgadaController extends Controller {
 		$corresponde_si_no = $helper->getHelperByDominio('corresponde_si_no');
 		$certificado = $helper->getHelperByDominio('certificado');
 
-//echo "<pre>";
-//print_r($estado_beca);
 
 		$solicitud_beca = DB::table('beca')
             ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
@@ -209,16 +207,25 @@ class BecaOtorgadaController extends Controller {
 			->orderBy('paso_beca.paso_beca_id','DESC')
 			->get();
 			
+			//Trae pagos para esta beca
+
+			$cheques = DB::table('beca')
+						->join('pago_cheque', 'pago_cheque.beca_id', '=', 'beca.beca_id')
+						->where('beca.beca_id','=',$id)
+						//->orderBy('pago_cheque.reintegro','DESC')
+			            //->toSql();
+        				->get();
 
 			//echo "<pre>";
-			//print_r($actuaciones);
+			//print_r($cheques);
 			//exit;
 
 		return view('otorgada.verBecaOtorgada')->with('beca',$solicitud_beca[0])->with('helpers',$helpers)
 		->with('documentacion',$documentacion)
 		->with('actuaciones',$actuaciones)
 		->with('pasos_beca',$pasos_beca)
-		->with('pasos_vencimiento_beca',$pasos_vencimiento_beca);
+		->with('pasos_vencimiento_beca',$pasos_vencimiento_beca)
+		->with('cheques',$cheques);
 
 	}
 
@@ -307,7 +314,7 @@ public function imprimirSolicitud($id){
 		$beca->dependencia_otro = $input['dependencia_otro'];
 		$beca->telefono_laboral = $input['tel_laboral'];
 		$beca->telefono_particular = $input['tel_particular'];
-		//$beca->dictamen_por = $input['dictamen_por'];
+		$beca->observaciones = $input['beca_observaciones'];
 		//$beca->renovacion_id = $input['renovacion_id'];
 		//$beca->tipo_actividad_id = $input['tipo_actividad_id'];
 		//$beca->duracion = $input['duracion'];

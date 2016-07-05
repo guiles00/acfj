@@ -13,6 +13,7 @@ use Auth;
 use App\domain\MyAuth;
 use App\domain\Helper;
 use App\domain\Documentacion;
+use App\domain\EstadoBeca;
 use Redirect;
 use App\domain\User;
 use App\PasoBeca;
@@ -905,7 +906,10 @@ public function exportar(){
 	public function otorgarBeca($id){
 
 		$solicitud_beca = Beca::find($id);
-		$solicitud_beca->estado_id = 7; //ESTADO EN TRAMITE   ----> SACAR EL HARDCODEO
+		
+		$estado_id = EstadoBeca::getEstadoIdByNombre('EN TRAMITE');
+
+		$solicitud_beca->estado_id = $estado_id; 
 		$solicitud_beca->otorgada = 1; //ESTADO EN TRAMITE
 		$solicitud_beca->save();
 

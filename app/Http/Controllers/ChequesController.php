@@ -201,6 +201,46 @@ class ChequesController extends Controller {
 		
 	}
 
+		public function busquedaAvanzadaBecaPagoCheque()
+	{
+		$input = Request::all();
+		
+		//print_r($input);
+		//echo 'busquedaAvanzada';
+		//exit;
+		
+		//$helpers = self::traeHelpers();
+		
+		$query = DB::table('usuario_sitio')
+							->join('beca', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
+							->join('pago_cheque', 'pago_cheque.beca_id', '=', 'beca.beca_id')
+							->where('tipo_pago_cheque_id','=',2);
+							//->orderBy('pago_cheque.pago_cheque_id','DESC')
+				            //->toSql();
+            				//->paginate(20);
+
+
+		$query->select('*');
+       
+        if( $input['disponible_id'] !='') $query->where('pago_cheque.disponible_id', '=', $input['disponible_id']);	
+        if( $input['entregado'] == 0 ) $query->where('pago_cheque.entregado_por_id', '=', 0);		
+        if( $input['entregado'] == 1 ) $query->where('pago_cheque.entregado_por_id', '<>', 0);		
+        //if( $input['entregado'] == 1 ) $query->where('pago_cheque.disponible_id', '=', $input['disponible_id']);		
+        //if(!empty($input['tipo_beca_id'])) $query->where('beca.tipo_beca_id', '=', $input['tipo_beca_id']);	
+		//if(!empty($input['anio'])) $query->where(DB::raw('YEAR(beca.timestamp)'), '=', $input['anio']);	
+		            
+
+        
+        $cheques = $query->orderBy('pago_cheque.pago_cheque_id','DESC')->paginate(200);
+           
+        
+       // $cheques->setPath('listSolicitudesBecas');
+        // $becas->appends(array('estado_id' => $input['estado_id'],'str_beca' => $str));
+            
+		return view('cheques.listPagoBecaCheques')->with('cheques',$cheques);
+	}
+
+
 
 	public function altaPagoBecaCheque()
 	{
@@ -368,7 +408,10 @@ class ChequesController extends Controller {
 			exit;
 		}
 		
+		
 		$cheques = PagoCheque::where('tipo_pago_cheque_id','=',2)->orderBy('pago_cheque_id','DESC')->paginate(20);// ->get();	
+		
+		$cheques->setPath('listPagoBecaCheques');
 
 		return view('cheques.listPagoBecaCheques')->with('cheques',$cheques);
 	}

@@ -3,6 +3,7 @@
 @section('content')
 <?php 
 use App\domain\Utils;
+use App\domain\Helper;
 $helper = new App\Domain\Helper();
 ?>
 
@@ -103,10 +104,10 @@ $helper = new App\Domain\Helper();
             <thead>
                 <tr>
                    <th><a href="#" class="btn glyphicon glyphicon-search" data-toggle="modal" data-target="#basicModal"></a></th>
-                   <th>Fecha</th>
                    <th>Legajo</th>
-                   <th>Tipo</th>
                    <th>Nombre</th>
+                   <th>Universidad</th>
+                   <th>Carrera</th>
                    <th>Otorgado</th>
                    <th>Renovaci&oacute;n</th>
                    <th>estado</th>
@@ -120,16 +121,14 @@ $helper = new App\Domain\Helper();
             
             <tr>
                 <td></td>
-                <!--td> {{ $total-- }} </td-->
-                <td> {{ Utils::formatDate($beca->timestamp) }} </td>
                 <td> {{ $beca->legajo_beca}} </td>
-                <td> {{ $helper->getHelperByDominioAndId('tipo_beca',$beca->tipo_beca_id)  }} </td>
                 <td> {{ $beca->usi_nombre}} </td>
+                <td> {{ Helper::getInstitucionPropuestaId($beca->institucion_propuesta)}} </td>
+                <td> {{ $beca->actividad_nombre}} </td>
                 <td> {{ $beca->otorgado}} </td>
                 <td> {{ $helper->getHelperByDominioAndId('renovacion',$beca->renovacion_id)  }} </td>
                 <td> {{ $beca->estado_beca}} </td>
                 <td> <a href="{{action('BecaOtorgadaController@verBecaOtorgada',$beca->beca_id)}}">Ver</a></td>
-                <!--td> <a href="{{action('BecaController@verDocAdjunta',$beca->beca_id)}}">...</a></td-->
             </tr>
             @endforeach    
         </tbody>

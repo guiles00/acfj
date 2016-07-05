@@ -44,31 +44,43 @@ use App\domain\PagoCheque;
     </div>
 </div>
 <!-- Modal Busqueda -->
-<!--div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
             <h4 class="modal-title" id="myModalLabel">B&uacute;squeda de Actuaciones</h4>
             </div>
-            <form method="GET" action="{{action('ChequesController@listPagoCheques')}}" role="search">
+            <form method="GET" action="{{action('ChequesController@busquedaAvanzadaBecaPagoCheque')}}" role="search">
                 <div class="modal-body">
         
-
+<!-- Nro Disposición Aprueba  Nro. Memo Reintegro Monto Beneficiario  Disponible  Nro. Cheque Entregado-->
         <div class="row">
           <div class="col-lg-12 col-md-12">
             
             <div class="row"> 
               <div class="form-group">
-                <label class="control-label col-md-2">Asignaci&oacute;n Inicial</label>
-                <div class="col-md-8"><input class="form-control input-sm" name="str_destino" value=''></div>
+                <label class="control-label col-md-2">Disponible</label>
+                <div class="col-md-8">
+                  <select class="form-control" name="disponible_id" id="b_disponible_id">
+                      <option value="" selected>-</option>
+                      <option value="0">NO</option>
+                      <option value="1">SI</option>
+                  </select>
+                </div>
               </div>
             </div>  
             <br>
             <div class="row"> 
               <div class="form-group">
-                <label class="control-label col-md-2">Recibi&oacute;</label>
-                <div class="col-md-8"><input class="form-control input-sm" name="str_cheque" value=''></div>
+                <label class="control-label col-md-2">Entregado</label>
+                <div class="col-md-8">
+                  <select class="form-control" name="entregado" id="entregado">
+                      <option value="" selected>-</option>
+                      <option value="0">NO</option>
+                      <option value="1">SI</option>
+                  </select>
+                </div>
               </div>
             </div> 
         </div>
@@ -86,7 +98,7 @@ use App\domain\PagoCheque;
          </form>
     </div>
   </div>
-</div-->
+</div>
 
 <!-- -->
 <!--
@@ -112,7 +124,7 @@ use App\domain\PagoCheque;
             <thead>
                 <tr>                   
                    <!--th>Nro Disposición Otorga</th-->
-                   <th>Nro Disposición Aprueba</th>
+                   <th>Nro Disposición Pago</th>
                    <th>Nro. Memo</th>
                    <th>Reintegro</th>
                    <th>Monto</th>
