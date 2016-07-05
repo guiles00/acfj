@@ -85,8 +85,8 @@ use App\domain\PagoCheque;
           <? if(!empty($pago_cheque->nro_memo_id))
           $nro_memo = PagoCheque::getMemoById($pago_cheque->nro_memo_id) 
           ?>
-          <select class="form-control remote_select2 js-data-example-ajax" name="nro_memo_id" id="b_nro_memo_id">
-            <option value="$pago_cheque->nro_memo_id" selected>{{ $nro_memo }}</option>
+          <select class="form-control " name="nro_memo_id" id="b_nro_memo_id">
+            <option value="{{$pago_cheque->nro_memo_id}}" selected>{{ $nro_memo }}</option>
             </select>
         </div>
      </div>
