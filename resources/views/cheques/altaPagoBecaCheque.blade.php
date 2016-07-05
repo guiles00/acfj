@@ -78,14 +78,14 @@ Entregado Por
   
 
 	  <div class="form-group">
-      <label class="control-label col-sm-2">Nro Disposici&oacute;n Otorga</label>
+      <label class="control-label col-sm-2">Nro Disposici&oacute;n Beca</label>
       <div class="col-sm-8">          
-        <input type="text" class="form-control" id="" name="nro_disp_otorga"></input>
+        <input type="text" class="form-control" id="b_nro_disp_otorga" name="nro_disp_otorga" value=""></input>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="control-label  col-sm-2">Nro Disposici&oacute;n Aprueba</label>
+      <label class="control-label  col-sm-2">Nro Disposici&oacute;n Pago</label>
       <div class="col-sm-8">          
         <input type="text" class="form-control" id="" name="nro_disp_aprueba"></input>
       </div>
@@ -215,7 +215,10 @@ Entregado Por
 <script>
 
  function formatRepo (repo) {
-  console.debug(repo);
+//  console.debug(repo);
+
+
+
       if (repo.loading) return repo.text;
 
       var markup = "<div class='select2-result-repository clearfix'>" +
@@ -235,6 +238,11 @@ Entregado Por
     }
 
     function formatRepoSelection (repo) {
+
+      //Actualizo nro de disposicion 
+
+      $('#b_nro_disp_otorga').val(repo.nro_disposicion);
+
       return repo.full_name || repo.text;
     }
 
@@ -258,6 +266,7 @@ $(document).ready(function() {
                                         dataType: 'json',
                                         delay: 250,
                                         data: function (params) {
+
                                           return {
                                             q: params.term, // search term
                                             page: params.page
@@ -268,6 +277,7 @@ $(document).ready(function() {
                                           // since we are using custom formatting functions we do not need to
                                           // alter the remote JSON data, except to indicate that infinite
                                           // scrolling can be used
+                                
                                           params.page = params.page || 1;
 
                                           return {

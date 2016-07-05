@@ -64,7 +64,8 @@ use App\domain\PagoCheque;
 						<div class="col-md-8"><input class="form-control input-sm" name="apynom" value='<?=$nombre_email?>' disabled></div>
 					</div>
 				</div>
-				
+
+
 				<div class="row">	
 					<div class="form-group">
 						<label class="control-label col-md-2">Legajo</label>
@@ -279,7 +280,13 @@ use App\domain\PagoCheque;
 					</div>
 				</div>
 				
-
+				<div class="row">	
+					<div class="form-group">
+						<label class="control-label col-md-2">Nro. Disp. Otorga</label>
+						
+						<div class="col-md-8"><input class="form-control input-sm" name="nro_disposicion" value='<?=$beca->nro_disposicion?>'></div>
+					</div>
+				</div>
 				<div class="row">	
 					<div class="form-group">
 						<label class="control-label col-md-2">Carrera</label>
@@ -300,7 +307,12 @@ use App\domain\PagoCheque;
 						<div class="col-md-8"><input class="form-control input-sm" name="monto_otorgado" value='<?=$beca->otorgado?>'></div>
 					</div>
 				</div>
-
+				<div class="row">	
+					<div class="form-group">
+						<label class="control-label col-md-2">Saldo</label>
+						<div class="col-md-8"><input class="form-control input-sm" name="monto_otorgado" value='<?=$saldo?>'></div>
+					</div>
+				</div>
 				
 				<div class="row">
 		        	<div class="form-group">
@@ -604,8 +616,7 @@ use App\domain\PagoCheque;
 	            <th>Monto</th>
 	            <th>Disponible</th>
 	            <th>Entregado</th>
-                <th width="10%"></th>
-                <th width="10%"></th>
+                <!--th width="10%"></th-->
 	          </tr>
 	        </thead>
 	        <tbody>
@@ -619,7 +630,7 @@ use App\domain\PagoCheque;
                 <td> {{ $cheque->importe}} </td>
                 <td> {{ PagoCheque::getDisponibleChequeById($cheque->disponible_id) }}</td>
                 <td> {{ PagoCheque::getEntregadoChequeById($cheque->entregado_por_id) }}</td>
-                <td> VER</td>
+                <!--td> <a href="{!! URL::action('ChequesController@editPagoBecaCheque',$cheque->pago_cheque_id); !!}">Ver</a></td-->
 
             </tr>
             <!-- ENDFOREACH -->
@@ -628,7 +639,7 @@ use App\domain\PagoCheque;
 	        </tbody>
 	      </table>
 
-	    	<div class="col-sm-12">
+	    	<!--div class="col-sm-12">
 				<div class="row">
 					<div class="form-group"> 
 						<div class="col-md-10">
@@ -636,7 +647,7 @@ use App\domain\PagoCheque;
 						</div>
 					</div>
 				</div>
-			</div>
+			</div-->
 
 	</div>
 

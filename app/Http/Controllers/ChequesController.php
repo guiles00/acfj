@@ -318,7 +318,7 @@ class ChequesController extends Controller {
 
 		foreach ($becas as $key => $value) {
 					//$res['items'][] = array("id"=>$value->cur_id, "name"=>$value->gcu3_titulo,"full_name"=>$value->gcu3_titulo.'- Fecha Inicio: '.$value->cur_fechaInicio.' Fecha Fin: '.$value->cur_fechaFin);
-			$res['items'][] = array("id"=>$value->beca_id, "name"=>$value->usi_nombre,"full_name"=>$value->usi_nombre,"fecha"=>$value->usi_id);
+			$res['items'][] = array("id"=>$value->beca_id, "name"=>$value->usi_nombre,"full_name"=>$value->usi_nombre,"fecha"=>$value->usi_id,"nro_disposicion"=>$value->nro_disposicion);
 		}
 		//print_r($cursos);
 		//exit;

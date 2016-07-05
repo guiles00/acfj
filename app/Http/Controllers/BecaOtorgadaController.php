@@ -216,8 +216,10 @@ class BecaOtorgadaController extends Controller {
 			            //->toSql();
         				->get();
 
+        	$importe_pago = self::getPAgoCheques($cheques);			
+			$saldo = ($solicitud_beca[0]->otorgado) - $importe_pago;
 			//echo "<pre>";
-			//print_r($cheques);
+			//print_r($saldo);
 			//exit;
 
 		return view('otorgada.verBecaOtorgada')->with('beca',$solicitud_beca[0])->with('helpers',$helpers)
@@ -225,10 +227,21 @@ class BecaOtorgadaController extends Controller {
 		->with('actuaciones',$actuaciones)
 		->with('pasos_beca',$pasos_beca)
 		->with('pasos_vencimiento_beca',$pasos_vencimiento_beca)
-		->with('cheques',$cheques);
+		->with('cheques',$cheques)
+		->with('saldo',$saldo);
 
 	}
 
+private function getPAgoCheques($cheques){
+	if( empty($cheques) ) return 0;
+	$total = 0;
+	
+	foreach ($cheques as $cheque) {
+		$total += $cheque->importe;
+	}
+
+	return $total;
+}
 public function imprimirSolicitud($id){
 
 		$helper = new Helper();
@@ -315,11 +328,8 @@ public function imprimirSolicitud($id){
 		$beca->telefono_laboral = $input['tel_laboral'];
 		$beca->telefono_particular = $input['tel_particular'];
 		$beca->observaciones = $input['beca_observaciones'];
-		//$beca->renovacion_id = $input['renovacion_id'];
-		//$beca->tipo_actividad_id = $input['tipo_actividad_id'];
-		//$beca->duracion = $input['duracion'];
-		//$beca->sup_horaria = $input['s_horaria'];
-
+		$beca->nro_disposicion = $input['nro_disposicion'];
+		
 		$beca->estado_id = $input['estado_id'];
 
 		$beca->save();
@@ -330,115 +340,119 @@ public function imprimirSolicitud($id){
 
 	}
 
-public function addActuacion($id){
-	$input = Request::all();
-	//echo "<pre>";
-	//print_r($input);
 
-	return view('otorgada.addActuacion')->with('beca_id',$id);
+	public function addActuacion($id){
+		$input = Request::all();
+		//echo "<pre>";
+		//print_r($input);
 
-}
+		return view('otorgada.addActuacion')->with('beca_id',$id);
 
-public function saveActuacion(){
-	$input = Request::all();
-	$actuacion = Actuacion::find($input['actuacion_id']);
-	$actuacion->beca_id = $input['beca_id'];
-	$actuacion->save();
-	//return view('beca.verSolicitudBeca')->with('beca_id',$id);
-	$url = 'verBecaOtorgada/'.$input['beca_id'];
-	return Redirect::to($url);
+	}
 
-}
-public function exportar(){
-	/*$datos = array(
-		array("First Name" => "Nitya", "Last Name" => "Maity", "Email" => "nityamaity87@gmail.com", "Message" => "Test message by Nitya"),
-		array("First Name" => "Codex", "Last Name" => "World", "Email" => "info@codexworld.com", "Message" => "Test message by CodexWorld"),
-		array("First Name" => "John", "Last Name" => "Thomas", "Email" => "john@gmail.com", "Message" => "Test message by John"),
-		array("First Name" => "Michael", "Last Name" => "Vicktor", "Email" => "michael@gmail.com", "Message" => "Test message by Michael"),
-		array("First Name" => "Sarah", "Last Name" => "David", "Email" => "sarah@gmail.com", "Message" => "Test message by Sarah")
-	);*/
+	public function saveActuacion(){
+		$input = Request::all();
+		$actuacion = Actuacion::find($input['actuacion_id']);
+		$actuacion->beca_id = $input['beca_id'];
+		$actuacion->save();
+		//return view('beca.verSolicitudBeca')->with('beca_id',$id);
+		$url = 'verBecaOtorgada/'.$input['beca_id'];
+		return Redirect::to($url);
 
-		$data = DB::table('beca')
-            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
-            ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id')
-            ->leftJoin('dependencia','beca.dependencia_id','=','dependencia.dep_id')
-            ->leftJoin('titulo','beca.titulo_id','=','titulo.titulo_id')
-            ->leftJoin('universidad_sigla','beca.universidad_id','=','universidad_sigla.universidad_id')
-            ->leftJoin('cargo','usuario_sitio.usi_car_id','=','cargo.car_id')
+	}
 
-            ->select('*')
-            //->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
-            //->where('beca.estado_id', '=', $input['estado_id'])
-           // ->groupBy('cargo.car_nombre')
-            ->orderBy('beca.beca_id','DESC')
-            ->get();
-     
-     $excel = array();
-     $row = array();
-	 //echo "<pre>";
-     foreach($data as $registro){
-     	
+	public function exportar(){
+	
+		/*$datos = array(
+			array("First Name" => "Nitya", "Last Name" => "Maity", "Email" => "nityamaity87@gmail.com", "Message" => "Test message by Nitya"),
+			array("First Name" => "Codex", "Last Name" => "World", "Email" => "info@codexworld.com", "Message" => "Test message by CodexWorld"),
+			array("First Name" => "John", "Last Name" => "Thomas", "Email" => "john@gmail.com", "Message" => "Test message by John"),
+			array("First Name" => "Michael", "Last Name" => "Vicktor", "Email" => "michael@gmail.com", "Message" => "Test message by Michael"),
+			array("First Name" => "Sarah", "Last Name" => "David", "Email" => "sarah@gmail.com", "Message" => "Test message by Sarah")
+		);*/
 
-     	//print_r($registro);
-     	$row['nombre y apellido'] = $registro->usi_nombre;
-     	$row['Nro de Actuacion'] = '';
-		$row['Identificador de Legajo'] = '';
-		$row['DNI'] = $registro->usi_dni;
-		$row['Domicilio'] = $registro->domicilio_constituido;
-		$row['Telefono'] = $registro->telefono_laboral;
-		$row['Correo electronico'] = $registro->usi_email;
-		$row['Antiguedad'] = '';
-		$row['Titulo de grado'] = $registro->titulo;
-		$row['Dictamen evaluativo del superior jerarquico'] = $registro->dictamen_por;
-		$row['Curriculum Vitae'] = '';
-		$row['Superposicion horaria: si/no'] = ($registro->sup_horaria == 1)?'SI':'NO';
-		$row['Autorizacion de presidencia, etc.: si/no'] = '';
-		$row['Estudio a realizar a mas de 50 km CABA'] = '';
-		$row['Renovacion'] = ($registro->renovacion_id == 2)?'SI':'NO';
-		$row['Segunda carrera en adelante'] = '';
-		$row['Cargo'] = $registro->car_nombre;
-		$row['Dependencia'] = $registro->dep_nombre;
-		$row['Origen'] = '';
-		$row['Remuneracion'] = '';
-		$row['Carrera'] = $registro->actividad_nombre;
-		$row['Universidad'] = Helper::getInstitucionPropuestaId($registro->institucion_propuesta);
-		$row['Duracion'] = $registro->duracion;
-		$row['Convenio: si/no'] = '';
-		$row['Beca: si/no'] = '';
-		$row['Valor de la carrera'] = $registro->costo;
-		$row['Valor con convenio o beca'] = '';
-		$row['Monto solicitado'] = $registro->monto;
-		$row['Maximo por Art. 7 - Reg. Becas'] = '';
-		$row['Monto otorgada'] = '';
-		$row['Monto final'] = '';
-		$row['Monto adicional'] = '';
-		$row['Monto desafectado'] = '';
-		$row['Normativa que otorga o deniega la beca'] = '';
-		$row['Renuncia Total/Parcial'] = '';
-		$row['Caducidad'] = '';
-		$row['Reintegro/s.'] = '';
-		$row['Estado'] = Helper::getHelperByDominioAndId('estado_beca',$registro->estado_id);
+			$data = DB::table('beca')
+	            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
+	            ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id')
+	            ->leftJoin('dependencia','beca.dependencia_id','=','dependencia.dep_id')
+	            ->leftJoin('titulo','beca.titulo_id','=','titulo.titulo_id')
+	            ->leftJoin('universidad_sigla','beca.universidad_id','=','universidad_sigla.universidad_id')
+	            ->leftJoin('cargo','usuario_sitio.usi_car_id','=','cargo.car_id')
+
+	            ->select('*')
+	            //->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
+	            //->where('beca.estado_id', '=', $input['estado_id'])
+	           // ->groupBy('cargo.car_nombre')
+	            ->orderBy('beca.beca_id','DESC')
+	            ->get();
+	     
+	     $excel = array();
+	     $row = array();
+	
+		 //echo "<pre>";
+	     foreach($data as $registro){
+	     	
+
+	     	//print_r($registro);
+	     	$row['nombre y apellido'] = $registro->usi_nombre;
+	     	$row['Nro de Actuacion'] = '';
+			$row['Identificador de Legajo'] = '';
+			$row['DNI'] = $registro->usi_dni;
+			$row['Domicilio'] = $registro->domicilio_constituido;
+			$row['Telefono'] = $registro->telefono_laboral;
+			$row['Correo electronico'] = $registro->usi_email;
+			$row['Antiguedad'] = '';
+			$row['Titulo de grado'] = $registro->titulo;
+			$row['Dictamen evaluativo del superior jerarquico'] = $registro->dictamen_por;
+			$row['Curriculum Vitae'] = '';
+			$row['Superposicion horaria: si/no'] = ($registro->sup_horaria == 1)?'SI':'NO';
+			$row['Autorizacion de presidencia, etc.: si/no'] = '';
+			$row['Estudio a realizar a mas de 50 km CABA'] = '';
+			$row['Renovacion'] = ($registro->renovacion_id == 2)?'SI':'NO';
+			$row['Segunda carrera en adelante'] = '';
+			$row['Cargo'] = $registro->car_nombre;
+			$row['Dependencia'] = $registro->dep_nombre;
+			$row['Origen'] = '';
+			$row['Remuneracion'] = '';
+			$row['Carrera'] = $registro->actividad_nombre;
+			$row['Universidad'] = Helper::getInstitucionPropuestaId($registro->institucion_propuesta);
+			$row['Duracion'] = $registro->duracion;
+			$row['Convenio: si/no'] = '';
+			$row['Beca: si/no'] = '';
+			$row['Valor de la carrera'] = $registro->costo;
+			$row['Valor con convenio o beca'] = '';
+			$row['Monto solicitado'] = $registro->monto;
+			$row['Maximo por Art. 7 - Reg. Becas'] = '';
+			$row['Monto otorgada'] = '';
+			$row['Monto final'] = '';
+			$row['Monto adicional'] = '';
+			$row['Monto desafectado'] = '';
+			$row['Normativa que otorga o deniega la beca'] = '';
+			$row['Renuncia Total/Parcial'] = '';
+			$row['Caducidad'] = '';
+			$row['Reintegro/s.'] = '';
+			$row['Estado'] = Helper::getHelperByDominioAndId('estado_beca',$registro->estado_id);
 
 
-     	$excel[] = $row;
-     }
-     
-     	//print_r($dat);
-     	//foreach ($registro as $key =>$valor) {
+	     	$excel[] = $row;
+	     }
+	     
+	     	//print_r($dat);
+	     	//foreach ($registro as $key =>$valor) {
+				
 			
-		
 
-     	
-     	//}
-     		//$excel[] = $row;
-    $data = $excel;
-    
-	//echo "<pre>";
-	//print_r($excel);
-	//exit;
-	return view('beca.exportar')->with('data',$data);
+	     	
+	     	//}
+	     		//$excel[] = $row;
+	    $data = $excel;
+	    
+		//echo "<pre>";
+		//print_r($excel);
+		//exit;
+		return view('beca.exportar')->with('data',$data);
 
-}
+	}
 
 
 
