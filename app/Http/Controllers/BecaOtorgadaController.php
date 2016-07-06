@@ -816,7 +816,7 @@ public function imprimirSolicitud($id){
         }
             $becas = $data;
 
-            $becas->setPath('listBecas');
+            $becas->setPath('listadoBecas');
             $becas->appends(array('estado_id' => $input['estado_id'],'str_beca' => $str));
             
 		return view('otorgada.listadoBecas')->with('becas',$becas);
