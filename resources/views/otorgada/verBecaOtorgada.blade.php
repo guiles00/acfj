@@ -310,7 +310,7 @@ use App\domain\PagoCheque;
 				<div class="row">	
 					<div class="form-group">
 						<label class="control-label col-md-2">Saldo</label>
-						<div class="col-md-8"><input class="form-control input-sm" name="monto_otorgado" value='<?=$saldo?>'></div>
+						<div class="col-md-8"><input class="form-control input-sm" name="saldo" value='<?=$saldo?>'></div>
 					</div>
 				</div>
 				

@@ -237,6 +237,7 @@ private function getPAgoCheques($cheques){
 	$total = 0;
 	
 	foreach ($cheques as $cheque) {
+		if($cheque->entregado_por_id !=0)
 		$total += $cheque->importe;
 	}
 

@@ -36,7 +36,7 @@
       </div>
   <hr>
     <div class="form-group">
-      <label class="control-label  col-sm-2" >Beneficiario</label>    
+      <label class="control-label  col-sm-2" >Capacitador</label>    
       <div class="col-sm-6">
          <select class="form-control remote_select2 js-data-example-ajax" name="docente_id" id="b_docente_id" required>
              <option value="" selected></option>
@@ -53,14 +53,14 @@
     </div>
 
     <div class="form-group">
-      <label class="control-label col-sm-2">Nro Disposici&oacute;n Beca</label>
+      <label class="control-label col-sm-2">Nro Disposici&oacute;n Fija Fecha</label>
       <div class="col-sm-8">          
         <input type="text" class="form-control" id="" name="nro_disp_otorga" value=""></input>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="control-label  col-sm-2">Nro Disposici&oacute;n Pago</label>
+      <label class="control-label  col-sm-2">Nro Disposici&oacute;n Certificaci&oacute;Pago</label>
       <div class="col-sm-8">          
         <input type="text" class="form-control" id="" name="nro_disp_aprueba" value=""></input>
       </div>
@@ -194,7 +194,9 @@
       }*/
 
       markup += "<div class='select2-result-repository__statistics'>" +
-      "<div class='select2-result-repository__forks'>" + repo.fecha + "</div>" +
+      "<div class='select2-result-repository__forks'><b>Fecha Inicio:</b> " + repo.fecha + "</div>" +
+      "<div class='select2-result-repository__forks'><b>Subgrupo:</b> " + repo.subgrupo + "</div>" +
+      "<div class='select2-result-repository__forks'><b>Destinatarios:</b> " + repo.destinatarios + "</div>" +
       "</div>" +
       "</div></div>";
 
