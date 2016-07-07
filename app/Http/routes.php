@@ -197,7 +197,6 @@ Route::group(['middleware' => ['session_expired']], function () {
 	Route::get('altaMenu','MenuController@altaMenu');
 	Route::post('addMenu','MenuController@add');
 	
-	
 });
 
 
@@ -246,3 +245,14 @@ Route::group(['middleware' => ['session_expired']], function () {
     
 });
 	
+/* ABM Docentes */
+Route::group(['middleware' => ['session_expired']], function () {
+
+Route::get('listDocentes','DocenteController@listDocentes');
+Route::get('editRemitidos/{id}','DocenteController@editDocente');
+Route::post('updateDocente','DocenteController@update');
+/*Route::get('altaRemitidos','RemitidosController@altaRemitidos');
+Route::post('storeRemitidos', 'RemitidosController@store');
+*/
+});
+

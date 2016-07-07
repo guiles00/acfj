@@ -110,8 +110,9 @@ use App\domain\PagoCheque;
     <div class="table-responsive">
         <table class="table table-responsive table-striped table-bordered table-hover" id="cheque">
             <thead>
-                <tr>                   
-                   <th>Nro Disposición Aprueba</th>
+                <tr>
+                   <th>Nro Disposici&oacute;n Fija Fecha</th>                   
+                   <th>Nro Disposici&oacute;n Pago</th>
                    <th>Nro. Memo</th>
                    <th>Monto</th>
                    <th>Actividad</th> 
@@ -125,6 +126,7 @@ use App\domain\PagoCheque;
            <tbody>
             @foreach ($cheques as $cheque)
             <tr>
+                <td> {{ $cheque->nro_disp_otorga }} </td>
                 <td> {{ $cheque->nro_disp_aprueba }} </td>
                 <td> {{ PagoCheque::getNroMemoById($cheque->nro_memo_id) }} </td>
                 <td> {{ $cheque->importe}} </td>

@@ -1,5 +1,21 @@
 Sistema Gestión Centro de Formación Judicial
 
+################### Versión [1.0.04] 07 - Julio - 2016 ####################################################
+
+	new file:   app/Docente.php
+	new file:   app/Http/Controllers/DocenteController.php
+	modified:   app/Http/routes.php
+	modified:   resources/views/actuacion/editActuacion.blade.php
+	modified:   resources/views/cheques/listPagoCheques.blade.php
+	new file:   resources/views/docente/editDocente.blade.php
+	new file:   resources/views/docente/listDocentes.blade.php
+
+
+	1. ABM Docentes ( Capacitadores )
+	2. Modificación listado de cheques curso
+
+################### FIN Versión [1.0.04] 07 - Julio - 2016 ####################################################
+
 ################### Versión [1.0.01] 14 - Junio - 2016 ####################################################
 
 #1 Solapa Becas Otorgadas
