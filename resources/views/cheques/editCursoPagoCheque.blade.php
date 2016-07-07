@@ -39,10 +39,10 @@ use App\domain\PagoCheque;
       </div>
   <hr>
     <div class="form-group">
-      <label class="control-label  col-sm-2" >Beneficiario</label>    
+      <label class="control-label  col-sm-2" >Capacitador</label>    
       <div class="col-sm-6">
          <select class="form-control remote_select2 js-data-example-ajax" name="docente_id" id="b_docente_id">
-             <option value="{{$docente->capacitador_id}}" selected>{{$docente->apellido.', '.$docente->nombre}}</option> 
+             <option value="{{$docente->doc_id}}" selected>{{$docente->doc_nombre}}</option> 
          </select>
       </div>
     </div>
@@ -208,7 +208,7 @@ use App\domain\PagoCheque;
 
       var markup = "<div class='select2-result-repository clearfix'>" +
         "<div class='select2-result-repository__meta'>" +
-          "<div class='select2-result-repository__title'>" + repo.full_name + "</div>";
+          "<div class='select2-result-repository__title'>" + repo.name + "</div>";
 
       /*if (repo.description) {
         markup += "<div class='select2-result-repository__description'>" + repo.description + "</div>";
@@ -223,7 +223,7 @@ use App\domain\PagoCheque;
     }
 
     function formatRepoSelection (repo) {
-      return repo.full_name || repo.text;
+      return repo.name || repo.text;
     }
 
 $(document).ready(function() {

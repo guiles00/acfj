@@ -80,14 +80,14 @@ class PagoCheque {
 
 	
 
-      $res = DB::table('capacitador')
-							->where('capacitador.capacitador_id','=',$capacitador_id)
+      $res = DB::table('docente')
+							->where('docente.doc_id','=',$capacitador_id)
 							//->toSql();
 							->get();
 
 		if(empty($res)) return '';							
 
-		return  $res[0]->apellido.', '.$res[0]->nombre ;
+		return  $res[0]->doc_nombre ;
 	}
 	
 	
@@ -95,8 +95,8 @@ class PagoCheque {
 
 	
 
-      $res = DB::table('capacitador')
-							->where('capacitador.capacitador_id','=',$capacitador_id)
+      $res = DB::table('docente')
+							->where('docente.doc_id','=',$capacitador_id)
 							//->toSql();
 							->get();
 

@@ -231,7 +231,7 @@
 
       var markup = "<div class='select2-result-repository clearfix'>" +
         "<div class='select2-result-repository__meta'>" +
-          "<div class='select2-result-repository__title'>" + repo.full_name + "</div>";
+          "<div class='select2-result-repository__title'>" + repo.name + "</div>";
 
       /*if (repo.description) {
         markup += "<div class='select2-result-repository__description'>" + repo.description + "</div>";
@@ -246,7 +246,7 @@
 
 
     function formatRepoSelection (repo) {
-      return repo.full_name || repo.text;
+      return repo.name || repo.text;
     }
 
 $(document).ready(function() {

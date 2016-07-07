@@ -428,16 +428,16 @@ class ChequesController extends Controller {
 
 //SELECT * FROM usuario_sitio us, beca b WHERE b.alumno_id = us.usi_id AND us.usi_nombre LIKE  '%monte%'
 
-		$docentes = DB::table('capacitador')
-							->where('nombre','like','%'.$q.'%')
-							->orWhere('apellido','like','%'.$q.'%')
-							->orderBy('apellido','DESC')
+		$docentes = DB::table('docente')
+							->where('doc_nombre','like','%'.$q.'%')
+							//->orWhere('apellido','like','%'.$q.'%')
+							//->orderBy('apellido','DESC')
             				->get();
-		
+		//print_r($docentes);
 
 		foreach ($docentes as $key => $value) {
-					
-			$res['items'][] = array("id"=>$value->capacitador_id, "name"=>$value->apellido.' '.$value->nombre,"full_name"=>$value->apellido.' '.$value->nombre,"fecha"=>'');
+					//,"full_name"=>$value->apellido.' '.$value->nombre,"fecha"=>''
+			$res['items'][] = array("id"=>$value->doc_id, "name"=>$value->doc_nombre);
 		}
 
 		

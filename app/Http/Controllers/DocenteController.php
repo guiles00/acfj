@@ -69,18 +69,22 @@ class DocenteController extends Controller {
 	{
 
 		$input = Request::all();
-
+		$str_docente = (isset($input['str_docente']))? $input['str_docente'] : '';
+		
 		if( empty($input) ){
-			$docentes = Docente::orderBy( 'doc_id' ,'desc')->paginate(30);	
+			$docentes = Docente::orderBy('doc_nombre','ASC')
+			->paginate(30);	
 		}else{
-			$docentes = Docente::where('doc_nombre', 'LIKE', '%'.$input['str_docente'].'%')
+			$docentes = Docente::where('doc_nombre', 'LIKE', '%'.$str_docente.'%')
+			->orderBy('doc_nombre','ASC')
 			->paginate(30);
 		
 		}
 
 		$docentes->setPath('listDocentes');
-		if(isset($input['str_docente']))
-		$docentes->appends(array('str_docente' => $input['str_docente']));
+		
+		
+		$docentes->appends(array('str_docente' => $str_docente));
 		
 		
 		return view('docente.listDocentes')->with('docentes',$docentes);
