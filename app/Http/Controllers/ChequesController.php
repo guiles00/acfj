@@ -107,11 +107,13 @@ class ChequesController extends Controller {
 		$cursos = $data = DB::table('curso')
 							->join('grupo_curso3', 'curso.cur_gcu3_id', '=', 'grupo_curso3.gcu3_id')
 							->join('grupo_curso2', 'grupo_curso3.gcu3_gcu2_id', '=', 'grupo_curso2.gcu2_id')
+							->join('grupo_curso', 'grupo_curso2.gcu2_gcu_id', '=', 'grupo_curso.gcu_id')
 							->where('gcu3_titulo','like','%'.$q.'%')
 							->orderBy('curso.cur_gcu3_id','DESC')
 							//->toSql();
             				->get();
 		//print_r($cursos);
+		
 		foreach ($cursos as $key => $value) {
 					//$res['items'][] = array("id"=>$value->cur_id, "name"=>$value->gcu3_titulo,"full_name"=>$value->gcu3_titulo.'- Fecha Inicio: '.$value->cur_fechaInicio.' Fecha Fin: '.$value->cur_fechaFin);
 			$res['items'][] = array("id"=>$value->cur_id, "name"=>$value->gcu3_titulo,"full_name"=>$value->gcu3_titulo,"fecha"=>$value->cur_fechaInicio,"destinatarios"=>$value->cur_destinatario,"subgrupo"=>htmlentities($value->gcu2_nombre));
