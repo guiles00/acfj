@@ -1,5 +1,12 @@
 Sistema Gestión Centro de Formación Judicial
 
+################### Versión [1.0.05] 11 - Julio - 2016 ####################################################
+CUR.07.06	Listado Docentes
+CUR.07.08	Modificacion Docente
+Corrección panel Editar pago cheque curso, Cancelar iba a listado pago cheque beca, ahora va a pago cheque curso.
+
+################### FIN Versión [1.0.05] 11 - Julio - 2016 ####################################################
+
 ################### Versión [1.0.04] 07 - Julio - 2016 ####################################################
 
 	new file:   app/Docente.php

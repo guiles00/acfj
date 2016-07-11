@@ -39,13 +39,13 @@
     <div class="form-group">
       <label class="control-label  col-sm-2">APELLIDO</label>
       <div class="col-sm-2">          
-        <input type="text" class="form-control" id="" name="docente_apellido" value="{{$docente->doc_apellido}}">
+        <input type="text" class="form-control" id="" name="docente_apellido" value="{{ strtoupper($docente->doc_apellido)}}">
     </div>
     </div>            
     <div class="form-group">
       <label class="control-label  col-sm-2">NOMBRE</label>
       <div class="col-sm-2">          
-        <input type="text" class="form-control" id="" name="docente_nombre" value="{{$docente->doc_nombre}}">
+        <input type="text" class="form-control" id="" name="docente_nombre" value="{{ strtoupper($docente->doc_nombre)}}">
       </div>
     </div>
 
@@ -84,6 +84,64 @@
       </div>
     </div>
 
+    <div class="form-group">
+      <label class="control-label  col-sm-2">DNI</label>
+      <div class="col-sm-6">          
+        <input type="text" class="form-control" id="" name="docente_cp" value="{{$docente->doc_dni}}">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label  col-sm-2">CUIT</label>
+      <div class="col-sm-6">          
+        <input type="text" class="form-control" id="" name="docente_cp" value="{{$docente->doc_cuit}}">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label  col-sm-2">TIPO FACTURA</label>
+      <div class="col-sm-6">          
+        <input type="text" class="form-control" id="" name="docente_cp" value="{{$docente->doc_tipo_factura}}">
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label class="control-label  col-sm-2">ESPECIALIDAD</label>
+      <div class="col-sm-6">          
+        <input type="text" class="form-control" id="" name="docente_cp" value="{{$docente->doc_especialidad}}">
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label class="control-label  col-sm-2">CLAVE</label>
+      <div class="col-sm-6">          
+        <input type="text" class="form-control" id="" name="docente_cp" value="{{$docente->doc_clave}}">
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label class="control-label  col-sm-2">CV RESUMIDO</label>
+      <div class="col-sm-6">          
+        <input type="text" class="form-control" id="" name="docente_cp" value="{{$docente->doc_cv_resumido}}">
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label class="control-label  col-sm-2">CV</label>
+      <div class="col-sm-6">          
+        <input type="text" class="form-control" id="" name="docente_cp" value="{{$docente->doc_cv}}">
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label class="control-label  col-sm-2">TITULO</label>
+      <div class="col-sm-6">          
+        <input type="text" class="form-control" id="" name="docente_cp" value="{{$docente->doc_titulo}}">
+      </div>
+    </div>
     <div class="form-group"> 
 						<div class="col-md-12 col-md-offset-2">
 							<button type="submit" class="btn btn-default" id="r_alta_docentes">Guardar</button>

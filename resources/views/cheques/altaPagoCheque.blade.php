@@ -70,7 +70,7 @@
      <div class="form-group">
       <label class="control-label  col-sm-2">Monto</label>
       <div class="col-sm-6">          
-        <input type="text" class="form-control" id="" name="importe" value=""></input>
+        <input type="number" min="1" step="any" class="form-control" id="" name="importe" value=""></input>
       </div>
     </div>
 

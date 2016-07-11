@@ -72,11 +72,12 @@ class DocenteController extends Controller {
 		$str_docente = (isset($input['str_docente']))? $input['str_docente'] : '';
 		
 		if( empty($input) ){
-			$docentes = Docente::orderBy('doc_nombre','ASC')
+			$docentes = Docente::orderBy('doc_apellido','ASC')//->orderBy('doc_nombre','ASC')
 			->paginate(30);	
 		}else{
 			$docentes = Docente::where('doc_nombre', 'LIKE', '%'.$str_docente.'%')
-			->orderBy('doc_nombre','ASC')
+			->orderBy('doc_apellido','ASC')
+			//->orderBy('doc_nombre','ASC')
 			->paginate(30);
 		
 		}
