@@ -334,7 +334,7 @@ use App\domain\PagoCheque;
 		    <div class="form-group">
 		      <label class="control-label col-sm-2">Observaciones</label>
 		      <div class="col-sm-10">          
-		        <textarea type="text" class="form-control" id="" name="beca_observaciones" >{{$beca->observaciones}}</textarea>
+		        <textarea type="text" class="form-control" id="" name="beca_observaciones_otorgada" >{{$beca->observaciones_otorgada}}</textarea>
 		      </div>
 		    </div>
 

@@ -30,7 +30,7 @@ class BecaOtorgadaController extends Controller {
 		
 
 
-		if (  MyAuth::check() )
+		/*if (  MyAuth::check() )
 		{
 			//Aca algo voy a hacer
 			//Levanto los datos el usuario
@@ -38,7 +38,7 @@ class BecaOtorgadaController extends Controller {
 
 	        return Redirect::to('/');
 		}
-
+		*/
 		$input = Request::all();
 		
 		$str = (isset($input['str_beca']))?$input['str_beca']:'';
@@ -328,7 +328,7 @@ public function imprimirSolicitud($id){
 		$beca->dependencia_otro = $input['dependencia_otro'];
 		$beca->telefono_laboral = $input['tel_laboral'];
 		$beca->telefono_particular = $input['tel_particular'];
-		$beca->observaciones = $input['beca_observaciones'];
+		$beca->observaciones_otorgada = $input['beca_observaciones_otorgada'];
 		$beca->nro_disposicion = $input['nro_disposicion'];
 		
 		$beca->estado_id = $input['estado_id'];
