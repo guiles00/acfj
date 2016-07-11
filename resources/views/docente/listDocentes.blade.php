@@ -32,7 +32,7 @@
                   <thead>
                       <tr>                   
                          <th>ID</th>
-                         <!--th>APELLIDO</th-->
+                         <th>APELLIDO</th>
                          <th>NOMBRE</th>
                          <th>TELEFONO</th>
                          <th>CELULAR</th>
@@ -47,6 +47,7 @@
                  @foreach ($docentes as $docente)
                   <tr>
                     <td>{{$docente->doc_id}}</td>
+                    <td>{{$docente->doc_apellido}}</td>
                     <td>{{$docente->doc_nombre}}</td>
                     <td>{{$docente->doc_telefono}}</td>
                     <td>{{$docente->doc_celular}}</td>

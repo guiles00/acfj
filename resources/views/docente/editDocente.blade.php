@@ -39,7 +39,7 @@
     <div class="form-group">
       <label class="control-label  col-sm-2">APELLIDO</label>
       <div class="col-sm-2">          
-        <input type="text" class="form-control" id="" name="docente_apellido" value="">
+        <input type="text" class="form-control" id="" name="docente_apellido" value="{{$docente->doc_apellido}}">
     </div>
     </div>            
     <div class="form-group">

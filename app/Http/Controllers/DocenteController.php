@@ -142,6 +142,7 @@ class DocenteController extends Controller {
 		
 		
         $docente->doc_nombre = $input['docente_nombre'];
+        $docente->doc_apellido = $input['docente_apellido'];
         $docente->doc_telefono = $input['docente_telefono'];
         $docente->doc_celular = $input['docente_celular'];
         $docente->doc_email = $input['docente_email'];
