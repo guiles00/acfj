@@ -432,14 +432,14 @@ class ChequesController extends Controller {
 
 		$docentes = DB::table('docente')
 							->where('doc_nombre','like','%'.$q.'%')
-							//->orWhere('apellido','like','%'.$q.'%')
+							->orWhere('doc_apellido','like','%'.$q.'%')
 							//->orderBy('apellido','DESC')
             				->get();
 		//print_r($docentes);
 
 		foreach ($docentes as $key => $value) {
 					//,"full_name"=>$value->apellido.' '.$value->nombre,"fecha"=>''
-			$res['items'][] = array("id"=>$value->doc_id, "name"=>$value->doc_nombre);
+			$res['items'][] = array("id"=>$value->doc_id, "name"=>$value->doc_apellido.' '.$value->doc_nombre);
 		}
 
 		

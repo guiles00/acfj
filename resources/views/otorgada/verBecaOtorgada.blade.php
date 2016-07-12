@@ -326,7 +326,7 @@ use App\domain\PagoCheque;
 														<option value="{{$estado_beca->dominio_id}}">{{$estado_beca->nombre}}</option>
 														<?php }?>
 														@endforeach
-										</select>
+								</select>
 								</div>
 							</div>
 		        </div>
