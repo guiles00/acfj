@@ -76,6 +76,7 @@ class DocenteController extends Controller {
 			->paginate(30);	
 		}else{
 			$docentes = Docente::where('doc_nombre', 'LIKE', '%'.$str_docente.'%')
+			->orWhere('doc_apellido', 'LIKE', '%'.$str_docente.'%')
 			->orderBy('doc_apellido','ASC')
 			//->orderBy('doc_nombre','ASC')
 			->paginate(30);

@@ -60,7 +60,7 @@
     </div>
 
     <div class="form-group">
-      <label class="control-label  col-sm-2">Nro Disposici&oacute;n Certificaci&oacute;Pago</label>
+      <label class="control-label  col-sm-2">Nro Disposici&oacute;n Certificaci&oacute;n Pago</label>
       <div class="col-sm-8">          
         <input type="text" class="form-control" id="" name="nro_disp_aprueba" value=""></input>
       </div>
@@ -68,7 +68,7 @@
         
 
      <div class="form-group">
-      <label class="control-label  col-sm-2">Monto</label>
+      <label class="control-label  col-sm-2">Monto Solicitado</label>
       <div class="col-sm-6">          
         <input type="number" min="1" step="any" class="form-control" id="" name="importe" value=""></input>
       </div>
@@ -120,16 +120,31 @@
         <input type="text" class="form-control" id="" name="nro_cheque" value=""></input>
       </div>
     </div>
-
+    <div class="form-group">
+      <label class="control-label  col-sm-2">Importe</label>
+      <div class="col-sm-6">          
+        <input type="text" class="form-control" id="" name="importe_cheque"></input>
+      </div>
+    </div>
     <div class="form-group">
       <label class="control-label  col-sm-2">Fecha Emisi&oacute;n</label>
       <div class="col-sm-2">          
         <input type="text" class="form-control datepicker" id="" name="fecha_emision"  value="">
       </div>
     </div>
-
+    <div class="form-group">
+      <label class="control-label col-md-2">Observaciones</label>
+        <div class="col-md-8">
+          <textarea type="text" class="form-control" name="observaciones_cheque"></textarea>
+        </div>
+     </div> 
     <hr>
-    
+    <div class="form-group">
+      <label class="control-label  col-sm-2">Nro de Recibo</label>
+      <div class="col-sm-2">          
+        <input type="text" class="form-control" id="" name="nro_recibo" value="">
+      </div>
+    </div>
     <div class="form-group">
       <label class="control-label  col-sm-2">Fecha Entrega</label>
       <div class="col-sm-2">          
@@ -226,12 +241,12 @@
     }
 
  function formatRepoDocente (repo) {
-  console.debug(repo);
+  //console.debug(repo);
       if (repo.loading) return repo.text;
 
       var markup = "<div class='select2-result-repository clearfix'>" +
         "<div class='select2-result-repository__meta'>" +
-          "<div class='select2-result-repository__title'>" + repo.name + "</div>";
+          "<div class='select2-result-repository__title'>" +repo.name + "</div>";
 
       /*if (repo.description) {
         markup += "<div class='select2-result-repository__description'>" + repo.description + "</div>";

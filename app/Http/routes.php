@@ -226,7 +226,7 @@ Route::group(['middleware' => ['session_expired']], function () {
     
     Route::get('editCursoPagoCheque/{id}','ChequesController@editCursoPagoCheque');
     Route::post('updateCursoPagoCheque','ChequesController@updateCursoPagoCheque');
-
+    Route::get('busquedaAvanzadaCursoPagoCheque','ChequesController@busquedaAvanzadaCursoPagoCheque');
     
     
     Route::get('listPagoBecaCheques','ChequesController@listPagoBecaCheques');
@@ -235,6 +235,7 @@ Route::group(['middleware' => ['session_expired']], function () {
     Route::post('updatePagoBecaCheque','ChequesController@updatePagoBecaCheque');
     Route::post('storePagoBecaCheque','ChequesController@storePagoBecaCheque');
     Route::get('busquedaAvanzadaBecaPagoCheque','ChequesController@busquedaAvanzadaBecaPagoCheque');
+
     
 
     Route::get('traeDataCurso','ChequesController@traeDataCurso');
@@ -242,6 +243,8 @@ Route::group(['middleware' => ['session_expired']], function () {
     Route::get('traeDataDocente','ChequesController@traeDataDocente');
 
     Route::get('traeDataMemo','ChequesController@traeDataMemo');
+
+	Route::get('imprimirComprobanteCurso/{id}','ChequesController@imprimirComprobanteCurso');    
     
 });
 	
@@ -249,7 +252,7 @@ Route::group(['middleware' => ['session_expired']], function () {
 Route::group(['middleware' => ['session_expired']], function () {
 
 Route::get('listDocentes','DocenteController@listDocentes');
-Route::get('editRemitidos/{id}','DocenteController@editDocente');
+Route::get('editDocente/{id}','DocenteController@editDocente');
 Route::post('updateDocente','DocenteController@update');
 /*Route::get('altaRemitidos','RemitidosController@altaRemitidos');
 Route::post('storeRemitidos', 'RemitidosController@store');

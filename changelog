@@ -1,5 +1,18 @@
 Sistema Gestión Centro de Formación Judicial
 
+################### Versión [1.0.06] 13 - Julio - 2016 ####################################################
+
+CUR.07.09	Agregar Campos Nro de Recibo, Subgrupo, monto cheque, observaciones_cheque
+CUR.07.10	Listar Campos Nro de Recibo, Subgrupo, monto cheque, observaciones_cheque
+/*CUR.07.12	Busqueda avanzada*/
+CUR.07.13	Modificacion para que traiga todos los cursos, cambiaron la estructura de la base
+
+BEC.07.08	Agregrar Observaciones en BECAS
+
+
+################### FIN Versión [1.0.06] 13 - Julio - 2016 ####################################################
+
+
 ################### Versión [1.0.05] 11 - Julio - 2016 ####################################################
 CUR.07.06	Listado Docentes
 CUR.07.08	Modificacion Docente

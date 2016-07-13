@@ -44,31 +44,43 @@ use App\domain\PagoCheque;
     </div>
 </div>
 <!-- Modal Busqueda -->
-<!--div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-            <h4 class="modal-title" id="myModalLabel">B&uacute;squeda de Actuaciones</h4>
+            <h4 class="modal-title" id="myModalLabel">B&uacute;squeda</h4>
             </div>
-            <form method="GET" action="{{action('ChequesController@listPagoCheques')}}" role="search">
+            <form method="GET" action="{{action('ChequesController@busquedaAvanzadaCursoPagoCheque')}}" role="search">
                 <div class="modal-body">
         
-
+<!-- Nro Disposición Aprueba  Nro. Memo Reintegro Monto Beneficiario  Disponible  Nro. Cheque Entregado-->
         <div class="row">
           <div class="col-lg-12 col-md-12">
             
             <div class="row"> 
               <div class="form-group">
-                <label class="control-label col-md-2">Asignaci&oacute;n Inicial</label>
-                <div class="col-md-8"><input class="form-control input-sm" name="str_destino" value=''></div>
+                <label class="control-label col-md-2">Disponible</label>
+                <div class="col-md-8">
+                  <select class="form-control" name="disponible_id" id="b_disponible_id">
+                      <option value="" selected>-</option>
+                      <option value="0">NO</option>
+                      <option value="1">SI</option>
+                  </select>
+                </div>
               </div>
             </div>  
             <br>
             <div class="row"> 
               <div class="form-group">
-                <label class="control-label col-md-2">Recibi&oacute;</label>
-                <div class="col-md-8"><input class="form-control input-sm" name="str_cheque" value=''></div>
+                <label class="control-label col-md-2">Entregado</label>
+                <div class="col-md-8">
+                  <select class="form-control" name="entregado" id="entregado">
+                      <option value="" selected>-</option>
+                      <option value="0">NO</option>
+                      <option value="1">SI</option>
+                  </select>
+                </div>
               </div>
             </div> 
         </div>
@@ -86,7 +98,7 @@ use App\domain\PagoCheque;
          </form>
     </div>
   </div>
-</div-->
+</div>
 
 <!-- -->
 <!--
@@ -111,14 +123,16 @@ use App\domain\PagoCheque;
         <table class="table table-responsive table-striped table-bordered table-hover" id="cheque">
             <thead>
                 <tr>
+                   <th>Nro Recibo</th>                   
                    <th>Nro Disposici&oacute;n Fija Fecha</th>                   
                    <th>Nro Disposici&oacute;n Pago</th>
                    <th>Nro. Memo</th>
-                   <th>Monto</th>
+                   <th>Monto Solicitado</th>
                    <th>Actividad</th> 
+                   <th>Subgrupo</th>
                    <th>Beneficiario</th> 
                    <th>Disponible</th> 
-                   <th>Nro. Cheque</th>
+                   <th>Importe Cheque</th>
                    <th>Entregado</th>
                    <th></th>
                </tr>
@@ -126,14 +140,16 @@ use App\domain\PagoCheque;
            <tbody>
             @foreach ($cheques as $cheque)
             <tr>
+                <td> {{ $cheque->nro_recibo }} </td>
                 <td> {{ $cheque->nro_disp_otorga }} </td>
                 <td> {{ $cheque->nro_disp_aprueba }} </td>
                 <td> {{ PagoCheque::getNroMemoById($cheque->nro_memo_id) }} </td>
-                <td> {{ $cheque->importe}} </td>
+                <td> $ {{ $cheque->importe}} </td>
                 <td> {{ PagoCheque::getNombreCursoById($cheque->curso_id)}}</td>
+                <td> {{ PagoCheque::getNombreSubgrupoById($cheque->curso_id)}}</td>
                 <td> {{ PagoCheque::getNombreDocenteById($cheque->docente_id)}}</td>
                 <td> {{ PagoCheque::getDisponibleChequeById($cheque->disponible_id) }}</td>
-                <td> {{ $cheque->nro_cheque }} </td>
+                <td> $  {{ $cheque->importe_cheque}} </td>
                 <td> {{ PagoCheque::getEntregadoChequeById($cheque->entregado_por_id) }}</td>
                 <td> <a href="{!! URL::action('ChequesController@editCursoPagoCheque',$cheque->pago_cheque_id); !!}">Ver</a></td>
             </tr>
@@ -184,7 +200,7 @@ $(document).ready(function() {
                 });
               */
               $('#a_buscar_cheque').on('click', function(d) {
-                alert('buscala');
+                //alert('buscala');
                });  
             });
 </script>

@@ -42,7 +42,7 @@ use App\domain\PagoCheque;
       <label class="control-label  col-sm-2" >Capacitador</label>    
       <div class="col-sm-6">
          <select class="form-control remote_select2 js-data-example-ajax" name="docente_id" id="b_docente_id">
-             <option value="{{$docente->doc_id}}" selected>{{$docente->doc_nombre}}</option> 
+             <option value="{{$docente->doc_id}}" selected>{{$docente->doc_apellido}}  {{$docente->doc_nombre}}</option> 
          </select>
       </div>
     </div>
@@ -57,14 +57,14 @@ use App\domain\PagoCheque;
 
 
 	  <div class="form-group">
-      <label class="control-label col-sm-2">Nro Disposici&oacute;n Beca</label>
+      <label class="control-label col-sm-2">Nro Disposici&oacute;n Fija Fecha</label>
       <div class="col-sm-8">          
         <input type="text" class="form-control" id="" name="nro_disp_otorga" value="{{$pago_cheque->nro_disp_otorga}}"></input>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="control-label  col-sm-2">Nro Disposici&oacute;n Pago</label>
+      <label class="control-label  col-sm-2">Nro Disposici&oacute;n Certificaci&oacute;n Pago</label>
       <div class="col-sm-8">          
         <input type="text" class="form-control" id="" name="nro_disp_aprueba" value="{{$pago_cheque->nro_disp_aprueba}}"></input>
       </div>
@@ -72,7 +72,7 @@ use App\domain\PagoCheque;
         
 
      <div class="form-group">
-      <label class="control-label  col-sm-2">Monto</label>
+      <label class="control-label  col-sm-2">Monto Solicitiado</label>
       <div class="col-sm-6">          
         <input type="text" class="form-control" id="" name="importe" value="{{$pago_cheque->importe}}"></input>
       </div>
@@ -134,19 +134,34 @@ use App\domain\PagoCheque;
         <input type="text" class="form-control" id="" name="nro_cheque" value="{{$pago_cheque->nro_cheque}}"></input>
       </div>
     </div>
-
+   <div class="form-group">
+      <label class="control-label  col-sm-2">Importe</label>
+      <div class="col-sm-6">          
+        <input type="text" class="form-control" id="" name="importe_cheque" value="{{$pago_cheque->importe_cheque}}"></input>
+      </div>
+    </div>
     <div class="form-group">
       <label class="control-label  col-sm-2">Fecha Emisi&oacute;n</label>
       <div class="col-sm-2">          
         <input type="text" class="form-control datepicker" id="" name="fecha_emision"  value="{{$pago_cheque->fecha_emision}}">
       </div>
     </div>
-
+    <div class="form-group">
+      <label class="control-label col-md-2">Observaciones</label>
+        <div class="col-md-8">
+          <textarea type="text" class="form-control" name="observaciones_cheque">{{$pago_cheque->observaciones_cheque}}</textarea>
+        </div>
+     </div>
     <!--div class="form-group">
       <label class=" col-sm-8 pull-left">Mas Datos ...</label>
     </div-->
     <hr>
-    
+    <div class="form-group">
+      <label class="control-label  col-sm-2">Nro de Recibo</label>
+      <div class="col-sm-2">          
+        <input type="text" class="form-control" id="" name="nro_recibo" value="{{$pago_cheque->nro_recibo}}">
+      </div>
+    </div>
     <div class="form-group">
       <label class="control-label  col-sm-2">Fecha Entrega</label>
       <div class="col-sm-2">          
@@ -193,7 +208,7 @@ use App\domain\PagoCheque;
 						<div class="col-md-12 col-md-offset-2">
 							<button type="submit" class="btn btn-default" id="c_alta_pago_cheque">Guardar</button>
 							<a href="{{action('ChequesController@listPagoCheques')}}" class="btn btn-default">Cancelar</a>
-              <a target="_target" href="#" class="btn btn-default">Imprimir Comprobante</a>
+              <a target="_target" href="{{action('ChequesController@imprimirComprobanteCurso',$pago_cheque->pago_cheque_id)}}" class="btn btn-default">Imprimir Comprobante</a>
 						</div>
 		</div>
 	</div>
@@ -221,6 +236,68 @@ use App\domain\PagoCheque;
 
       return markup;
     }
+
+     function formatRepoMemo (repo) {
+  console.debug(repo);
+      if (repo.loading) return repo.text;
+
+      var markup = "<div class='select2-result-repository clearfix'>" +
+        "<div class='select2-result-repository__meta'>" +
+          "<div class='select2-result-repository__title'>" + repo.full_name + "</div>";
+
+      /*if (repo.description) {
+        markup += "<div class='select2-result-repository__description'>" + repo.description + "</div>";
+      }*/
+
+      markup += "<div class='select2-result-repository__statistics'>" +
+      "<div class='select2-result-repository__forks'><b>Fecha:</b> " + repo.fecha + "</div>" +
+      "</div>" +
+      "</div></div>";
+
+      return markup;
+    }
+
+     function formatRepoDocente (repo) {
+  //console.debug(repo);
+      if (repo.loading) return repo.text;
+
+      var markup = "<div class='select2-result-repository clearfix'>" +
+        "<div class='select2-result-repository__meta'>" +
+          "<div class='select2-result-repository__title'>" +repo.name + "</div>";
+
+      /*if (repo.description) {
+        markup += "<div class='select2-result-repository__description'>" + repo.description + "</div>";
+      }*/
+
+      markup += "<div class='select2-result-repository__statistics'>" +
+      "</div>" +
+      "</div></div>";
+
+      return markup;
+    }
+
+     function formatRepoActividad (repo) {
+  console.debug(repo);
+      if (repo.loading) return repo.text;
+
+      var markup = "<div class='select2-result-repository clearfix'>" +
+        "<div class='select2-result-repository__meta'>" +
+          "<div class='select2-result-repository__title'>" + repo.full_name + "</div>";
+
+      /*if (repo.description) {
+        markup += "<div class='select2-result-repository__description'>" + repo.description + "</div>";
+      }*/
+
+      markup += "<div class='select2-result-repository__statistics'>" +
+      "<div class='select2-result-repository__forks'><b>Fecha Inicio:</b> " + repo.fecha + "</div>" +
+      "<div class='select2-result-repository__forks'><b>Subgrupo:</b> " + repo.subgrupo + "</div>" +
+      "<div class='select2-result-repository__forks'><b>Destinatarios:</b> " + repo.destinatarios + "</div>" +
+      "</div>" +
+      "</div></div>";
+
+      return markup;
+    }
+
 
     function formatRepoSelection (repo) {
       return repo.name || repo.text;
@@ -270,7 +347,7 @@ $(document).ready(function() {
                                       },
                                       escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
                                       minimumInputLength: 3,
-                                      templateResult: formatRepo, // omitted for brevity, see the source of this page
+                                      templateResult: formatRepoDocente, // omitted for brevity, see the source of this page
                                       templateSelection: formatRepoSelection
                 });
                 
@@ -304,7 +381,7 @@ $(document).ready(function() {
                                       },
                                       escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
                                       minimumInputLength: 1,
-                                      templateResult: formatRepo, // omitted for brevity, see the source of this page
+                                      templateResult: formatRepoMemo, // omitted for brevity, see the source of this page
                                       templateSelection: formatRepoSelection
                 });  
 
@@ -338,7 +415,7 @@ $(document).ready(function() {
                                       },
                                       escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
                                       minimumInputLength: 3,
-                                      templateResult: formatRepo, // omitted for brevity, see the source of this page
+                                      templateResult: formatRepoActividad, // omitted for brevity, see the source of this page
                                       templateSelection: formatRepoSelection
                 });
 

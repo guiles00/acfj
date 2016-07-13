@@ -1,0 +1,171 @@
+<?php
+
+?>
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title></title>
+	<style type="text/css">
+	<!--
+		@page { margin: 0.79in }
+		p { margin-bottom: 0.1in; line-height: 120% }
+		a:link { so-language: zxx }
+	-->
+	</style>
+	<script type="text/javascript">
+		window.print();
+		function imprimir(){
+		window.print();
+		}
+	</script>
+</head>
+<body>
+<div id="para_cfj_container">
+<p align="center"><img src=" ../img/print-logo.jpg" align="bottom" width="197" height="80" border="0">
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p align="center" style="margin-bottom: 0in; line-height: 100%">RECIBO</p>
+<p align="center" style="margin-bottom: 0in; line-height: 100%">DEPARTAMENTO
+DE FORMACI&Oacute;N JUDICIAL</p>
+<p align="center" style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p align="center" style="margin-bottom: 0in; line-height: 100%">	</p>
+<p><b>PARA CFJ</b>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+N°:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Fecha:
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%">ACTIVIDAD:</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+
+<p style="margin-bottom: 0in; line-height: 100%"><font size="3" style="font-size: 12pt">PAGO APROBADO</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+N° ORDEN DE PAGO</p>
+<p><font size="1" style="font-size: 8pt">POR DISP. SE-CFJ N°:<font size="1" style="font-size: 12pt"> {{$cheque->nro_disp_otorga}}<font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="1" style="font-size: 8pt">POR MEMO SE-CFJ N°:</font><font size="1" style="font-size: 12pt">{{$cheque->nro_disp_aprueba}}</font>:</font></p>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><font size="3" style="font-size: 12pt">N° DE EXPEDIENTE
+	<font size="1" style="font-size: 8pt">(TSJ)</font>: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+N° ORDEN DE PAGO<font size="1" style="font-size: 8pt">(TSJ)</font>:</font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><font size="3" style="font-size: 12pt">N°
+DE CHEQUE:</font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><font size="3" style="font-size: 12pt">FECHA DE EMISIÓN:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+IMPORTE:</font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><font size="3" style="font-size: 12pt">BENEFICIARIO:</font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><font size="1" style="font-size: 8pt">(APELLIDO Y NOMBRE)</font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><font size="3" style="font-size: 12pt">ENTREGADO
+POR:</font></p>{{$cheque->entregado_por}}
+
+</div>
+<div class="page-break"></div>
+<div id="para_tsj_container">
+
+<p align="center"><img src=" ../img/print-logo.jpg" align="bottom" width="197" height="80" border="0">
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p align="center" style="margin-bottom: 0in; line-height: 100%">	RECIBO		</p>
+<p align="center" style="margin-bottom: 0in; line-height: 100%">DEPARTAMENTO
+DE FORMACIÓN JUDICIAL</p>
+<p align="center" style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p align="center" style="margin-bottom: 0in; line-height: 100%">	</p>
+<p><b>PARA TSJ</b>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+N°:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Fecha:
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%">ACTIVIDAD:</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+
+<p style="margin-bottom: 0in; line-height: 100%"><font size="3" style="font-size: 12pt">PAGO APROBADO</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+N° ORDEN DE PAGO</p>
+<p><font size="1" style="font-size: 8pt">POR DISP. SE-CFJ N°:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+POR MEMO SE-CFJ N°:</font>:</font></p>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><font size="3" style="font-size: 12pt">N° DE EXPEDIENTE
+	<font size="1" style="font-size: 8pt">(TSJ)</font>: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+N° ORDEN DE PAGO<font size="1" style="font-size: 8pt">(TSJ)</font>:</font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><font size="3" style="font-size: 12pt">N°
+DE CHEQUE:</font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><font size="3" style="font-size: 12pt">FECHA DE EMISIÓN:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+IMPORTE:</font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><font size="3" style="font-size: 12pt">BENEFICIARIO:</font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><font size="1" style="font-size: 8pt">(APELLIDO Y NOMBRE)</font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><font size="3" style="font-size: 12pt">ENTREGADO
+POR:</font></p>
+
+</div>
+</body>
+</html>

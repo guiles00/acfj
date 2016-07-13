@@ -57,19 +57,24 @@ class ChequesController extends Controller {
 	
 		$cheques = PagoCheque::where('tipo_pago_cheque_id','=',1)->orderBy('pago_cheque_id','DESC')->paginate(20);// ->get();	
 		
-		
-		
+		//echo "<pre>";
+		//print_r($input);
+
 		if(isset($input['search'])) {
 		
 			$matchear = ['apellido' => $input['str_cheque'], 'nombre' => $input['str_cheque'],'nro_cheque' => $input['str_cheque']];	
 		
 			$cheques = DB::table('pago_cheque')
-								->join('capacitador', 'pago_cheque.docente_id', '=', 'capacitador.capacitador_id')
+								->join('docente', 'pago_cheque.docente_id', '=', 'docente.doc_id')
 								->where(function($query) use ($input){
 	                   				 return $query
-	                              			->where('capacitador.apellido','like','%'.$input['str_cheque'].'%')
-	                              			->orWhere('capacitador.nombre','like','%'.$input['str_cheque'].'%')
-	                              			->orwhere('pago_cheque.nro_cheque','like','%'.$input['str_cheque'].'%');
+	                              			->where('docente.doc_apellido','like','%'.$input['str_cheque'].'%')
+	                              			->orWhere('docente.doc_nombre','like','%'.$input['str_cheque'].'%')
+	                              			->orwhere('pago_cheque.nro_cheque','like','%'.$input['str_cheque'].'%')
+	                              			->orwhere('pago_cheque.nro_disp_otorga','like','%'.$input['str_cheque'].'%')
+	                              			->orwhere('pago_cheque.nro_disp_aprueba','like','%'.$input['str_cheque'].'%');
+	                              			//->orwhere('pago_cheque.nro_cheque','like','%'.$input['str_cheque'].'%');
+	                              			//->orwhere('pago_cheque.nro_cheque','like','%'.$input['str_cheque'].'%');
 	                			})
 								->where('pago_cheque.tipo_pago_cheque_id','=',1)
 								->orderBy('pago_cheque.pago_cheque_id','DESC')
@@ -104,15 +109,30 @@ class ChequesController extends Controller {
 		$input = Request::all();
 		$q = $input['q'];
 		$res['items'] = '';
-		$cursos = $data = DB::table('curso')
-							->join('grupo_curso3', 'curso.cur_gcu3_id', '=', 'grupo_curso3.gcu3_id')
-							->join('grupo_curso2', 'grupo_curso3.gcu3_gcu2_id', '=', 'grupo_curso2.gcu2_id')
-							->join('grupo_curso', 'grupo_curso2.gcu2_gcu_id', '=', 'grupo_curso.gcu_id')
+		//Hubo una modificacion en la estructura de la base
+
+		/*$cursos = $data = DB::table('curso')
+							->leftJoin('grupo_curso3', 'curso.cur_gcu3_id', '=', 'grupo_curso3.gcu3_id')
+							->leftJoin('grupo_curso2', 'grupo_curso3.gcu3_gcu2_id', '=', 'grupo_curso2.gcu2_id')
+							->leftJoin('grupo_curso', 'grupo_curso2.gcu2_gcu_id', '=', 'grupo_curso.gcu_id')
 							->where('gcu3_titulo','like','%'.$q.'%')
 							->orderBy('curso.cur_gcu3_id','DESC')
 							//->toSql();
             				->get();
-		//print_r($cursos);
+        */
+
+		//SELECT * FROM curso INNER JOIN grupo_curso3_grupo_curso2 c32 ON c32.gcu32_id = curso.cur_gcu32_id INNER JOIN grupo_curso3 ON grupo_curso3.gcu3_id = c32.gc32_gcu3_id
+
+        				$cursos = $data = DB::table('curso')
+							->leftJoin('grupo_curso3_grupo_curso2', 'grupo_curso3_grupo_curso2.gcu32_id', '=', 'curso.cur_gcu32_id')
+							->leftJoin('grupo_curso3', 'grupo_curso3.gcu3_id', '=', 'grupo_curso3_grupo_curso2.gc32_gcu3_id')
+							->leftJoin('grupo_curso2', 'grupo_curso2.gcu2_id', '=', 'grupo_curso3.gcu3_gcu2_id')
+							->where('gcu3_titulo','like','%'.$q.'%')
+							->orderBy('curso.cur_gcu3_id','DESC')
+							//->toSql();
+            				->get();
+        
+//		print_r($cursos);
 		
 		foreach ($cursos as $key => $value) {
 					//$res['items'][] = array("id"=>$value->cur_id, "name"=>$value->gcu3_titulo,"full_name"=>$value->gcu3_titulo.'- Fecha Inicio: '.$value->cur_fechaInicio.' Fecha Fin: '.$value->cur_fechaFin);
@@ -122,7 +142,6 @@ class ChequesController extends Controller {
 	//	print_r($res['items']);
 	//	exit;
 
-		
 		$res['total_counts'] = sizeof($res['items']);
 		
 		//print_r($res);
@@ -141,6 +160,8 @@ class ChequesController extends Controller {
 		$input = Request::all();
 	
 		$pago_cheque = new PagoCheque;
+		
+	
 		$pago_cheque->nro_cheque = $input['nro_cheque'];
 		$pago_cheque->nro_expediente = $input['nro_expediente'];
 		$pago_cheque->orden_pago = $input['orden_pago'];
@@ -206,7 +227,7 @@ class ChequesController extends Controller {
 		
 	}
 
-		public function busquedaAvanzadaBecaPagoCheque()
+	public function busquedaAvanzadaBecaPagoCheque()
 	{
 		$input = Request::all();
 		
@@ -246,6 +267,45 @@ class ChequesController extends Controller {
 	}
 
 
+	public function busquedaAvanzadaCursoPagoCheque()
+	{
+		$input = Request::all();
+		
+		/*print_r($input);
+		echo 'busquedaAvanzada';
+		exit;
+		*/
+		//$helpers = self::traeHelpers();
+		
+		$query = DB::table('pago_cheque')
+							//->join('beca', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
+							//->join('pago_cheque', 'pago_cheque.beca_id', '=', 'beca.beca_id')
+							->where('tipo_pago_cheque_id','=',1);
+							//->orderBy('pago_cheque.pago_cheque_id','DESC')
+				            //->toSql();
+            				//->paginate(20);
+
+
+		$query->select('*');
+       
+        if( $input['disponible_id'] !='') $query->where('pago_cheque.disponible_id', '=', $input['disponible_id']);	
+     //   if( $input['entregado'] == 0 ) $query->where('pago_cheque.entregado_por_id', '=', 0);		
+     //   if( $input['entregado'] == 1 ) $query->where('pago_cheque.entregado_por_id', '<>', 0);		
+        //if( $input['entregado'] == 1 ) $query->where('pago_cheque.disponible_id', '=', $input['disponible_id']);		
+        //if(!empty($input['tipo_beca_id'])) $query->where('beca.tipo_beca_id', '=', $input['tipo_beca_id']);	
+		//if(!empty($input['anio'])) $query->where(DB::raw('YEAR(beca.timestamp)'), '=', $input['anio']);	
+		            
+
+        
+        $cheques = $query->orderBy('pago_cheque.pago_cheque_id','DESC')->paginate(200);
+           
+       // print_r($cheques);
+       // exit;
+       // $cheques->setPath('listSolicitudesBecas');
+        // $becas->appends(array('estado_id' => $input['estado_id'],'str_beca' => $str));
+            
+		return view('cheques.listPagoCheques')->with('cheques',$cheques);
+	}
 
 	public function altaPagoBecaCheque()
 	{
@@ -402,6 +462,8 @@ class ChequesController extends Controller {
     	$pago_cheque->disponible_id = $input['disponible_id'];
     	$pago_cheque->entregado_por_id = $input['entregado_por_id'];
     	$pago_cheque->observaciones = $input['observaciones'];
+
+
     	    	
 		try {
 
@@ -482,7 +544,25 @@ class ChequesController extends Controller {
 		echo json_encode($res);
 	}
 
+	public function imprimirComprobanteCurso($id){
 
+		$cheque = PagoCheque::find($id);
+	
+		$docente = DPagoCheque::getDatosDocenteById($cheque->docente_id);
+		$curso = DPagoCheque::getDatosCursoById($cheque->curso_id);
+
+		$entregado_por = Agente::find($cheque->entregado_por_id);
+		
+		$nro_memo = Remitidos::where('remitidos_id','=',$cheque->nro_memo_id)->first();
+		
+	return view('cheques.comprobanteCurso')->with('cheque',$cheque)
+		->with('nro_memo',$nro_memo->numero_memo)
+		->with('docente',$docente->doc_apellido.', '.$docente->doc_nombre)
+		->with('curso',$curso->gcu3_titulo)
+		->with('entregado_por',$entregado_por->agente_nombre)
+		;
+
+	}
 
 
 
@@ -536,7 +616,11 @@ class ChequesController extends Controller {
     	$pago_cheque->disponible_id = $input['disponible_id'];
     	$pago_cheque->entregado_por_id = $input['entregado_por_id'];
     	$pago_cheque->observaciones = $input['observaciones'];
-    	    	
+
+		$pago_cheque->observaciones_cheque = $input['observaciones_cheque'];
+		$pago_cheque->nro_recibo = $input['nro_recibo'];
+		$pago_cheque->importe_cheque = $input['importe_cheque'];
+		    	    	
 		try {
 
 			$pago_cheque->save();
@@ -608,6 +692,10 @@ class ChequesController extends Controller {
     	$pago_cheque->disponible_id = $input['disponible_id'];
     	$pago_cheque->entregado_por_id = $input['entregado_por_id'];
     	$pago_cheque->observaciones = $input['observaciones'];
+
+    	$pago_cheque->observaciones_cheque = $input['observaciones_cheque'];
+		$pago_cheque->nro_recibo = $input['nro_recibo'];
+		$pago_cheque->importe_cheque = $input['importe_cheque'];
     	    	
 		try {
 

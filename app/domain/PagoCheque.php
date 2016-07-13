@@ -87,7 +87,7 @@ class PagoCheque {
 
 		if(empty($res)) return '';							
 
-		return  $res[0]->doc_nombre ;
+		return  $res[0]->doc_apellido.' '.$res[0]->doc_nombre ;
 	}
 	
 	
@@ -134,6 +134,21 @@ class PagoCheque {
 		if(empty($res)) return '';							
 
 		return  $res[0]->gcu3_titulo;
+	}
+
+	public static function getNombreSubgrupoById($curso_id){
+
+			$res = $data = DB::table('curso')
+							->join('grupo_curso3', 'curso.cur_gcu3_id', '=', 'grupo_curso3.gcu3_id')
+							->join('grupo_curso2', 'grupo_curso3.gcu3_gcu2_id', '=', 'grupo_curso2.gcu2_id')
+							->join('grupo_curso', 'grupo_curso2.gcu2_gcu_id', '=', 'grupo_curso.gcu_id')
+							->where('curso.cur_id','=',$curso_id)
+							//->toSql();
+            				->get();
+            				
+		if(empty($res)) return '';							
+
+		return  htmlentities($res[0]->gcu2_nombre);
 	}
 
 	public static function getMemoById($remitidos_id){
