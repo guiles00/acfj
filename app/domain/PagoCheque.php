@@ -108,13 +108,25 @@ class PagoCheque {
 
 	public static function getDatosCursoById($curso_id){
 
-	$res = DB::table('curso')
+/*	$res = DB::table('curso')
 							->join('grupo_curso3', 'curso.cur_gcu3_id', '=', 'grupo_curso3.gcu3_id')
 							//->where('gcu3_titulo','like','%'.$q.'%')
 							->where('curso.cur_id','=',$curso_id)
 							->orderBy('curso.cur_gcu3_id','DESC')
 							//->toSql();
             				->get();
+
+*/
+	$res = $data = DB::table('curso')
+							->leftJoin('grupo_curso3_grupo_curso2', 'grupo_curso3_grupo_curso2.gcu32_id', '=', 'curso.cur_gcu32_id')
+							->leftJoin('grupo_curso3', 'grupo_curso3.gcu3_id', '=', 'grupo_curso3_grupo_curso2.gc32_gcu3_id')
+							->leftJoin('grupo_curso2', 'grupo_curso2.gcu2_id', '=', 'grupo_curso3.gcu3_gcu2_id')
+							->where('curso.cur_id','=',$curso_id)
+							->orderBy('curso.cur_gcu3_id','DESC')
+							//->toSql();
+            				->get();
+
+
 
 		if(empty($res)) return '';							
 
@@ -123,13 +135,22 @@ class PagoCheque {
 
 	public static function getNombreCursoById($curso_id){
 
-	$res = DB::table('curso')
+/*	$res = DB::table('curso')
 							->join('grupo_curso3', 'curso.cur_gcu3_id', '=', 'grupo_curso3.gcu3_id')
 							//->where('gcu3_titulo','like','%'.$q.'%')
 							->where('curso.cur_id','=',$curso_id)
 							->orderBy('curso.cur_gcu3_id','DESC')
 							//->toSql();
             				->get();
+*/
+	$res = $data = DB::table('curso')
+				->leftJoin('grupo_curso3_grupo_curso2', 'grupo_curso3_grupo_curso2.gcu32_id', '=', 'curso.cur_gcu32_id')
+				->leftJoin('grupo_curso3', 'grupo_curso3.gcu3_id', '=', 'grupo_curso3_grupo_curso2.gc32_gcu3_id')
+				->leftJoin('grupo_curso2', 'grupo_curso2.gcu2_id', '=', 'grupo_curso3.gcu3_gcu2_id')
+				->where('curso.cur_id','=',$curso_id)
+				->orderBy('curso.cur_gcu3_id','DESC')
+				//->toSql();
+				->get();            				
             				
 		if(empty($res)) return '';							
 

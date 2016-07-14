@@ -54,7 +54,7 @@ DE FORMACI&Oacute;N JUDICIAL Y ADMINISTRATIVO</p>
     <td class="tg-yw4l"></td>
     <td class="tg-yw4l"></td>
     <td class="tg-yw4l">Fecha:</td>
-    <td class="tg-yw4l">{{Utils::formatDate(date("Y-d-m"))}}</td>
+    <td class="tg-yw4l">{{Utils::formatDate(date("Y-m-d H:i:s"))}}</td>
   </tr>
   <tr>
     <td class="tg-yw4l"><b>ACTIVIDAD</b></td>
@@ -88,7 +88,7 @@ DE FORMACI&Oacute;N JUDICIAL Y ADMINISTRATIVO</p>
   </tr>
   <tr>
     <td class="tg-yw4l"><b>FECHA DE EMISI&Oacute;N:</b></td>
-    <td class="tg-yw4l">{{Utils::formatDate($cheque->fecha_emision)}}</td>
+    <td class="tg-yw4l">{{Utils::formatDateBis($cheque->fecha_emision)}}</td>
     <td class="tg-yw4l"><b>IMPORTE:</b></td>
     <td class="tg-yw4l">{{$cheque->importe}}</td>
   </tr>
@@ -135,7 +135,7 @@ DE FORMACI&Oacute;N JUDICIAL Y ADMINISTRATIVO</p>
     <td class="tg-yw4l"></td>
     <td class="tg-yw4l"></td>
     <td class="tg-yw4l">Fecha:</td>
-    <td class="tg-yw4l">{{Utils::formatDate(date("Y-d-m"))}}</td>
+    <td class="tg-yw4l">{{Utils::formatDate(date("Y-m-d H:i:s"))}}</td>
   </tr>
   <tr>
     <td class="tg-yw4l"><b>ACTIVIDAD</b></td>
@@ -169,7 +169,7 @@ DE FORMACI&Oacute;N JUDICIAL Y ADMINISTRATIVO</p>
   </tr>
   <tr>
     <td class="tg-yw4l"><b>FECHA DE EMISI&Oacute;N:</b></td>
-    <td class="tg-yw4l">{{Utils::formatDate($cheque->fecha_emision)}}</td>
+    <td class="tg-yw4l">{{Utils::formatDateBis($cheque->fecha_emision)}}</td>
     <td class="tg-yw4l"><b>IMPORTE:</b></td>
     <td class="tg-yw4l">{{$cheque->importe}}</td>
   </tr>
