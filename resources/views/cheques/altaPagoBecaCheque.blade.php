@@ -248,6 +248,15 @@ Entregado Por
 
 $(document).ready(function() {
 
+
+
+            $('#a_form_alta').submit(function(){
+              
+              $('#c_alta_pago_cheque').attr('disabled',true);
+
+            });
+            
+
               $('.datepicker').datepicker({
                     format: 'yyyy-mm-dd'
                     ,language:'es'

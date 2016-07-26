@@ -241,6 +241,7 @@ Route::group(['middleware' => ['session_expired']], function () {
     Route::get('traeDataCurso','ChequesController@traeDataCurso');
     Route::get('traeDataBeca','ChequesController@traeDataBeca');
     Route::get('traeDataDocente','ChequesController@traeDataDocente');
+    Route::get('traeUltimoNroRecibo','ChequesController@traeUltimoNroRecibo');
 
     Route::get('traeDataMemo','ChequesController@traeDataMemo');
 

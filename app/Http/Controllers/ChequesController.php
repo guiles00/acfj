@@ -84,9 +84,11 @@ class ChequesController extends Controller {
         }
 
         $cheques->setPath('listPagoCheques');
-		//print_r($cheques);
-		//exit;
-		return view('cheques.listPagoCheques')->with('cheques',$cheques);
+		
+        $nro_recibo = $this->traeUltimoNroRecibo();
+
+		return view('cheques.listPagoCheques')->with('cheques',$cheques)
+		->with('nro_recibo',$nro_recibo);
 		
 	}
 
@@ -102,6 +104,13 @@ class ChequesController extends Controller {
 		return view('cheques.altaPagoCheque')
 		->with('entregado_por',$entregado_por);/*->with('archivo_actuacion',$archivo_actuacion)
 		->with('area_cfj',$area_cfj)->with('conste_agente',$conste_agente);*/
+	}
+
+	public function traeUltimoNroRecibo(){
+
+		$res_nro_recibo = DB::table('pago_cheque')->orderBy('nro_recibo','DESC')->first();
+		
+		return intval($res_nro_recibo->nro_recibo);
 	}
 
 	public function traeDataCurso(){
@@ -656,14 +665,15 @@ class ChequesController extends Controller {
 		$disponible = $helper->getHelperByDominio('disponible_id');
 		$entregado_por = Agente::get();
 		$nro_memo = Remitidos::where('remitidos_id','=',$pago_cheque->nro_memo_id)->first();
-
+		$nro_recibo = $this->traeUltimoNroRecibo();
 		
 		return view('cheques.editCursoPagoCheque')->with('pago_cheque',$pago_cheque)
 		->with('docente',$docente)
 		->with('curso',$curso)
 		->with('disponible',$disponible)
 		->with('entregado_por',$entregado_por)
-		->with('nro_memo',$nro_memo);
+		->with('nro_memo',$nro_memo)
+		->with('nro_recibo',$nro_recibo);
 	}
 
 

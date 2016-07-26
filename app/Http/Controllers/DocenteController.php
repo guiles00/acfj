@@ -150,6 +150,8 @@ class DocenteController extends Controller {
         $docente->doc_email = $input['docente_email'];
         $docente->doc_domicilio = $input['docente_domicilio'];
         $docente->doc_cp = $input['docente_cp'];
+        $docente->doc_dni = $input['docente_dni'];
+        $docente->doc_cuit = $input['docente_cuit'];
 
 		
 		$docente->save();

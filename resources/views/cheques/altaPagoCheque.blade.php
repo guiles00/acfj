@@ -148,7 +148,7 @@
     <div class="form-group">
       <label class="control-label  col-sm-2">Fecha Entrega</label>
       <div class="col-sm-2">          
-        <input type="text" class="form-control datepicker" id="" name="fecha_retiro" value="">
+        <input type="text" class="form-control datepicker" id="pc_fecha_retiro" name="fecha_retiro" value="">
       </div>
     </div>
 
@@ -266,6 +266,14 @@
 
 $(document).ready(function() {
 
+
+
+            $('#a_form_alta').submit(function(){
+              
+              $('#c_alta_pago_cheque').attr('disabled',true);
+
+            });
+
               $('.datepicker').datepicker({
                     format: 'yyyy-mm-dd'
                     ,language:'es'
@@ -377,6 +385,8 @@ $(document).ready(function() {
                                       templateSelection: formatRepoSelection
                 });
 
+
+             
 });
 </script>
 

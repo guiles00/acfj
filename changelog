@@ -1,5 +1,15 @@
 Sistema Gestión Centro de Formación Judicial
 
+################### Versión [1.0.07] 26 - Julio - 2016 ####################################################
+
+CUR.07.14	Deshabilitar boton de submit cuando se carga el pago
+CUR.07.15	Autocompletar Nro de Recibo 
+CUR.07.16	Notificacion de ultimo nro de recibo
+
+
+
+################### FIN Versión [1.0.07] 26 - Julio - 2016 ####################################################
+
 ################### Versión [1.0.06] 13 - Julio - 2016 ####################################################
 
 CUR.07.09	Agregar Campos Nro de Recibo, Subgrupo, monto cheque, observaciones_cheque

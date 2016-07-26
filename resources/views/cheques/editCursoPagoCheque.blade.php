@@ -19,7 +19,8 @@ use App\domain\PagoCheque;
 <div class="panel panel-default">
 	<div class="panel-heading">
 			<a class="btn btn-default glyphicon glyphicon-arrow-left" href="{{action('ChequesController@listPagoCheques')}}"></a>
-		</div>
+      <span style="color:red">Atenci&oacute;n, el &uacute;timo n&uacute;mero de recibo registrado en el sistema es: {{$nro_recibo}}</span>
+	</div>
 
     <div class="alert alert-success alert-dismissable" style="display:none" id="a_alert_esta">
                     <i class="fa fa-check"></i>
@@ -159,13 +160,13 @@ use App\domain\PagoCheque;
     <div class="form-group">
       <label class="control-label  col-sm-2">Nro de Recibo</label>
       <div class="col-sm-2">          
-        <input type="text" class="form-control" id="" name="nro_recibo" value="{{$pago_cheque->nro_recibo}}">
+        <input type="text" class="form-control" id="pc_nro_recibo" name="nro_recibo" value="{{$pago_cheque->nro_recibo}}">
       </div>
     </div>
     <div class="form-group">
       <label class="control-label  col-sm-2">Fecha Entrega</label>
       <div class="col-sm-2">          
-        <input type="text" class="form-control datepicker" id="" name="fecha_retiro" value="{{$pago_cheque->fecha_retiro}}">
+        <input type="text" class="form-control datepicker" id="pc_fecha_retiro" name="fecha_retiro" value="{{$pago_cheque->fecha_retiro}}">
       </div>
     </div>
 
@@ -418,6 +419,24 @@ $(document).ready(function() {
                                       templateResult: formatRepoActividad, // omitted for brevity, see the source of this page
                                       templateSelection: formatRepoSelection
                 });
+
+    
+            $('#pc_fecha_retiro').change(function(){
+                 
+
+                $.ajax({
+                    url : "../traeUltimoNroRecibo"
+                    ,method: 'GET'
+                    ,success : function(result) {
+                      var nro_recibo = parseInt(result) + 1;
+                      $('#pc_nro_recibo').val(nro_recibo);
+                    }
+                  });
+
+
+                 
+
+            });
 
 
 });

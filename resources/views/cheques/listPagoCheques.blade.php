@@ -18,13 +18,13 @@ use App\domain\PagoCheque;
     <li>Pago Cheques</li>
     <li class="active">Listado Pago Cursos</li>
 </ul>
-
+<span style="color:red; font-size: medium;">&Uacute;timo n&uacute;mero de recibo registrado en el sistema: {{$nro_recibo}}</span>
 <div class="panel panel-default">
- 
  <div class="panel-heading">
       <div class="form-group pull-left">
-                <a  class="btn btn-default pull-left" href="{!! URL::action('ChequesController@altaPagoCheque'); !!}" aria-label="Left Align">Alta Pago Cheque</a><!--/button-->
-              </div>
+        <a  class="btn btn-default pull-left" href="{!! URL::action('ChequesController@altaPagoCheque'); !!}" aria-label="Left Align">Alta Pago Cheque</a><!--/button-->
+       
+      </div>
      <div class="row">      
       
         <div class="row">
