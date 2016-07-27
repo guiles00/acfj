@@ -642,7 +642,11 @@ class ChequesController extends Controller {
 		
 		$cheques = PagoCheque::where('tipo_pago_cheque_id','=',1)->orderBy('pago_cheque_id','DESC')->paginate(20);// ->get();	
 
-		return view('cheques.listPagoCheques')->with('cheques',$cheques);
+		$nro_recibo = $this->traeUltimoNroRecibo();
+
+		return view('cheques.listPagoCheques')
+		->with('cheques',$cheques)
+		->with('nro_recibo',$nro_recibo);
 	}
 
 
@@ -719,7 +723,11 @@ class ChequesController extends Controller {
 		
 		$cheques = PagoCheque::where('tipo_pago_cheque_id','=',1)->orderBy('pago_cheque_id','DESC')->paginate(20);// ->get();	
 
-		return view('cheques.listPagoCheques')->with('cheques',$cheques);
+		$nro_recibo = $this->traeUltimoNroRecibo();
+
+		return view('cheques.listPagoCheques')
+		->with('cheques',$cheques)
+		->with('nro_recibo',$nro_recibo);
 	}
 
 
