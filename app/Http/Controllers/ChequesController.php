@@ -312,8 +312,11 @@ class ChequesController extends Controller {
        // exit;
        // $cheques->setPath('listSolicitudesBecas');
         // $becas->appends(array('estado_id' => $input['estado_id'],'str_beca' => $str));
-            
-		return view('cheques.listPagoCheques')->with('cheques',$cheques);
+   		$nro_recibo = $this->traeUltimoNroRecibo();
+
+		return view('cheques.listPagoCheques')
+		->with('cheques',$cheques)
+		->with('nro_recibo',$nro_recibo);
 	}
 
 	public function altaPagoBecaCheque()
