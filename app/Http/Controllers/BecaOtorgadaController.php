@@ -748,7 +748,8 @@ public function imprimirSolicitud($id){
 	}
 	private function enviaEmail($datos_destinatario,$html){
 
-		$to      = $datos_destinatario[0]->usi_email;
+		//$to      = $datos_destinatario[0]->usi_email;
+		$to = $datos_destinatario; //ESTO NO SE COMO LO VOY A IMPLEMENTAR
 		$subject = 'Departamento de Becas';
 		$message = $html;
 		$headers = 'From: becas@jusbaires.gov.ar' . "\r\n" .
@@ -765,6 +766,24 @@ public function imprimirSolicitud($id){
 
 		return $res;
 	}
+
+
+	public function enviarEmailIntimacion(){
+
+		$input = Request::all();
+		$data = DB::table('paso_beca')->where('paso_beca_id',$input['paso_beca_id'])->first();
+
+		$datos_destinatario = 'gcaserotto@jusbaires.gov.ar';
+		$html = $data->texto_email;
+
+		//print_r($html);
+		$res = $this->enviaEmail($datos_destinatario,$html);
+		//echo $res;
+		return 'res';
+	}
+
+
+
 
 
 	public function listadoBecas(){

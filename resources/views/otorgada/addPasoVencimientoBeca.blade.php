@@ -90,8 +90,9 @@ var t_paso_id = $('#b_tipo_paso_beca_id').val();
 		                url : "../traeTextoPaso"
 		                ,data: {'id':t_paso_id}
 		                ,success : function(result) {
-		                	$('#b_paso_texto_email').html(result);
+		                	//$('#b_paso_texto_email').html(result);
 		                	//console.debug(result);
+		                	CKEDITOR.instances.b_paso_texto_email.setData(result);
 		                }
      				});   
 
@@ -103,8 +104,10 @@ $('#b_tipo_paso_beca_id').change(function(data){
 		                url : "../traeTextoPaso"
 		                ,data: {'id':t_paso_id}
 		                ,success : function(result) {
-		                	$('#b_paso_texto_email').html(result);
+		                	//$('#b_paso_texto_email').html(result);
 		                	//console.debug(result);
+		                	CKEDITOR.instances.b_paso_texto_email.setData(result);
+
 		                }
      			});   
 
@@ -118,6 +121,14 @@ $('.datepicker').datepicker({
                   }
                 );
 	
+
+
+            CKEDITOR.replace('b_paso_texto_email', {
+                     language: 'es',
+            });
+
+
+
 });
 </script>
 @stop

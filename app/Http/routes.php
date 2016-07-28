@@ -117,6 +117,7 @@ Route::group(['middleware' => 'session_expired'], function () {
 	Route::post('updatePasoBeca/{id}', 'BecaController@updatePasoBeca');
 	Route::get('otorgarBeca/{id}', 'BecaController@otorgarBeca');
 
+
 });
 
 Route::group(['middleware' => 'session_expired'], function () {
@@ -140,6 +141,8 @@ Route::group(['middleware' => 'session_expired'], function () {
 	Route::post('updatePasoBecaVencimiento/{id}', 'BecaOtorgadaController@updatePasoBecaVencimiento');
 
 	Route::get('traeTextoPaso', 'BecaOtorgadaController@traeTextoPaso');
+
+	Route::get('enviarEmailIntimacion', 'BecaOtorgadaController@enviarEmailIntimacion');
 
 
 });

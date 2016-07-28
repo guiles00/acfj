@@ -25,7 +25,7 @@
 						<div class="row">
 						<div class="col-sm-12">
 							<div class="form-group">
-								<h3 >Agregar Acci&oacute;n</h3> 
+								<h3>&nbsp;&nbsp;Agregar Acci&oacute;n  {{$paso_beca->paso_beca_id}}</h3> 
 							</div>
 						</div>
 						</div>
@@ -69,8 +69,8 @@
 					</div>
 					<div class="form-group">
 					      <label class="control-label col-sm-2">Texto</label>
-					      <div class="col-sm-8">          
-					        <textarea type="text" rows="10" class="form-control"  name="paso_texto_email" value='' id='b_paso_texto_email' >{{ $paso_beca->texto_email}}</textarea>
+					      <div class="col-sm-8">          <!-- id='b_paso_texto_email' -->
+					        <textarea id="b_paso_texto_email" type="text" rows="10" class="form-control"  name="paso_texto_email" value=''  >{{ $paso_beca->texto_email}}</textarea>
 					      </div>
 					</div>
 					    			
@@ -80,6 +80,8 @@
 					<div class="col-sm-offset-2 col-sm-10">
 						<button type="submit" class="btn btn-default">Guardar</button>
 						<a href="{!! URL::action('BecaOtorgadaController@verBecaOtorgada',$paso_beca->beca_id); !!}" class="btn btn-default">Cancel</a>
+
+						<button type="button" class="btn btn-default" id="b_enviar_email">Enviar Email Documentaci&oacute;n</button>
 					</div>
 				</div>	
 
@@ -100,10 +102,14 @@ $('#b_tipo_paso_beca_id').change(function(data){
 		                url : "../traeTextoPaso"
 		                ,data: {'id':t_paso_id}
 		                ,success : function(result) {
-		                	$('#b_paso_texto_email').html(result);
+		                	//$('#b_paso_texto_email').html(result);
 		                	//console.debug(result);
+
+		                	CKEDITOR.instances.b_paso_texto_email.setData(result);
 		                }
      			});   
+
+
 
 });
 
@@ -114,7 +120,32 @@ $('.datepicker').datepicker({
                     ,orientation: 'auto bottom'
                   }
                 );
+
 	
+
+CKEDITOR.replace('b_paso_texto_email', {
+                  language: 'es',
+});
+
+
+
+	$('#b_enviar_email').click(function(){
+		
+		var paso_beca_id = $('#b_paso_beca_id').val();
+
+			$.ajax({
+		                url : "../enviarEmailIntimacion"
+		                ,data: {'paso_beca_id':paso_beca_id}
+		                ,success : function(result) {
+		                	$('#res').html(result);
+		                	console.debug(result);
+		                }
+		              });   
+
+	});
+	
+            
+
 });
 </script>
 @stop
