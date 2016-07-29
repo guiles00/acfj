@@ -16,7 +16,7 @@
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-lg-6">
-				<form method="POST" action="{{action('BecaOtorgadaController@updatePasoBecaVencimiento')}}" accept-charset="UTF-8" class="form-horizontal" role="form">
+				<form method="POST" action="{{action('BecaOtorgadaController@updatePasoBecaVencimiento')}}" accept-charset="UTF-8" class="form-horizontal" role="form" id="ps_form_edit">
 					<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
 					<input type="hidden" name="beca_id" value='{{$paso_beca->beca_id}}' id="b_beca_id" />
 					<input type="hidden" name="paso_beca_id" value='{{$paso_beca->paso_beca_id}}' id="b_paso_beca_id" />
@@ -25,7 +25,7 @@
 						<div class="row">
 						<div class="col-sm-12">
 							<div class="form-group">
-								<h3>&nbsp;&nbsp;Agregar Acci&oacute;n  {{$paso_beca->paso_beca_id}}</h3> 
+								<h3>&nbsp;&nbsp;Acci&oacute;n  {{$paso_beca->paso_beca_id}}</h3> 
 							</div>
 						</div>
 						</div>
@@ -69,22 +69,24 @@
 					</div>
 					<div class="form-group">
 					      <label class="control-label col-sm-2">Texto</label>
-					      <div class="col-sm-8">          <!-- id='b_paso_texto_email' -->
-					        <textarea id="b_paso_texto_email" type="text" rows="10" class="form-control"  name="paso_texto_email" value=''  >{{ $paso_beca->texto_email}}</textarea>
+					      <div class="col-sm-10">          <!-- id='b_paso_texto_email' -->
+					        <textarea id="b_paso_texto_email" type="text" rows="15" class="form-control"  name="paso_texto_email" value=''  >{{ $paso_beca->texto_email}}</textarea>
 					      </div>
 					</div>
 					    			
 			</div>	
-						
-				<div class="form-group"> 
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-default">Guardar</button>
-						<a href="{!! URL::action('BecaOtorgadaController@verBecaOtorgada',$paso_beca->beca_id); !!}" class="btn btn-default">Cancel</a>
 
+				<div class="form-group"> 
+					<div class="col-sm-offset-1 col-sm-10">
+						<button type="button" class="btn btn-default" id="pv_submit">Guardar</button>
+						<a href="{!! URL::action('BecaOtorgadaController@verBecaOtorgada',$paso_beca->beca_id); !!}" class="btn btn-default">Volver</a>
 						<button type="button" class="btn btn-default" id="b_enviar_email">Enviar Email Documentaci&oacute;n</button>
 					</div>
-				</div>	
-
+					<div id="pv_add_res" class="col-sm-offset-1 col-sm-10">
+						
+					</div>
+				</div>
+				
 			</form>
 		</div>
 	</div>
@@ -93,6 +95,31 @@
 
 <script>
 $(document).ready(function() {
+
+
+$('#pv_submit').click(function(){
+
+	//alert('guardo');
+
+var data = $('#ps_form_edit').serializeArray();
+//Traigo la data del editor y reemplazo el contenido para que este el actual
+var editorData = CKEDITOR.instances.b_paso_texto_email.getData();
+data[7].value = editorData;
+
+	$.ajax({
+		                url : "../updatePasoBecaVencimiento"
+		                ,data: data
+		                ,type:'POST'
+		                ,success : function(result) {
+		                	
+		                	var msg = (result == true)?'modificado con exito':'ocurrio un error intente mas tarde'; 
+		                	
+ 		                	$('#pv_add_res').html(msg);
+		                	
+		                }
+     			});  
+	
+})
 
 $('#b_tipo_paso_beca_id').change(function(data){
 
@@ -137,8 +164,9 @@ CKEDITOR.replace('b_paso_texto_email', {
 		                url : "../enviarEmailIntimacion"
 		                ,data: {'paso_beca_id':paso_beca_id}
 		                ,success : function(result) {
-		                	$('#res').html(result);
-		                	console.debug(result);
+		                	
+		                	$('#pv_add_res').html(result);
+
 		                }
 		              });   
 

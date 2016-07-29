@@ -138,7 +138,7 @@ Route::group(['middleware' => 'session_expired'], function () {
 	
 	Route::get('editPasoBecaVencimiento/{id}', 'BecaOtorgadaController@editPasoBecaVencimiento');
 	Route::get('deletePasoBecaVencimiento/{id}', 'BecaOtorgadaController@deletePasoBecaVencimiento');
-	Route::post('updatePasoBecaVencimiento/{id}', 'BecaOtorgadaController@updatePasoBecaVencimiento');
+	Route::post('updatePasoBecaVencimiento', 'BecaOtorgadaController@updatePasoBecaVencimiento');
 
 	Route::get('traeTextoPaso', 'BecaOtorgadaController@traeTextoPaso');
 

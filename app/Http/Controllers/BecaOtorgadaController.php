@@ -569,7 +569,8 @@ public function imprimirSolicitud($id){
 		$paso_beca->texto_email = $input['paso_texto_email'];
 		$paso_beca->save();
 
-		$url = 'verBecaOtorgada/'.$input['beca_id'];
+
+		$url = 'editPasoBecaVencimiento/'.$paso_beca->paso_beca_id;
 		return Redirect::to($url);
 	}
 
@@ -621,7 +622,9 @@ public function imprimirSolicitud($id){
 		
 		$input = Request::all();
 
+		
 		$paso_beca = PasoBeca::find($input['paso_beca_id']);
+		
 		//$paso_beca->beca_id = $input['beca_id'];
 		$paso_beca->tipo_paso_beca_id = $input['tipo_paso_beca_id'];
 		$paso_beca->observaciones = $input['paso_beca_observaciones'];
@@ -632,8 +635,9 @@ public function imprimirSolicitud($id){
 		$paso_beca->save();
 
 		//return view('beca.verSolicitudBeca')->with('beca_id',$id);
-		$url = 'verBecaOtorgada/'.$input['beca_id'];
-		return Redirect::to($url);
+		//$url = 'verBecaOtorgada/'.$input['beca_id'];
+		//return Redirect::to($url);
+		return 1;
 	}
 
 	public function previewEmailDocumentacion(){
@@ -750,7 +754,7 @@ public function imprimirSolicitud($id){
 
 		//$to      = $datos_destinatario[0]->usi_email;
 		$to = $datos_destinatario; //ESTO NO SE COMO LO VOY A IMPLEMENTAR
-		$subject = 'Departamento de Becas';
+		$subject = 'NOTIFICACION BECA 2016';
 		$message = $html;
 		$headers = 'From: becas@jusbaires.gov.ar' . "\r\n" .
    			   'Reply-To: becas@jusbaires.gov.ar' . "\r\n" .
@@ -772,14 +776,27 @@ public function imprimirSolicitud($id){
 
 		$input = Request::all();
 		$data = DB::table('paso_beca')->where('paso_beca_id',$input['paso_beca_id'])->first();
+		$data_beca = DB::table('beca')->where('beca_id',$data->beca_id)->first();
 
-		$datos_destinatario = 'gcaserotto@jusbaires.gov.ar';
+	//	print_r($data_beca->alumno_id);
+		$alumno_id = $data_beca->alumno_id;
+
+		$data_destinatario = DB::table('usuario_sitio')
+            ->select('*')
+            ->where('usuario_sitio.usi_id', '=', $alumno_id)
+            ->first();
+	
+		$datos_destinatario = $data_destinatario->usi_email;
+		
+		if(empty($datos_destinatario)) return 'false';
+		
 		$html = $data->texto_email;
 
-		//print_r($html);
 		$res = $this->enviaEmail($datos_destinatario,$html);
-		//echo $res;
-		return 'res';
+		
+		$res_html = ($res)?'<b>Email enviado con &eacute;xito</b>':'<br><br><b>Oh no, ocurrí&oacute; un error, comun&iacute;quese con el administrador</b>';
+
+		return $res_html;
 	}
 
 

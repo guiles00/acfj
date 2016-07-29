@@ -633,7 +633,7 @@ public function exportar(){
 			
 			$res_html = ($res)?'<b>Email enviado con &eacute;xito</b>':'<br><br><b>Oh no, ocurrí&oacute; un error, comun&iacute;quese con el administrador</b>';
 
-			
+			echo $res;
 
 			return $res_html;
 

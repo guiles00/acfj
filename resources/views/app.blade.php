@@ -50,34 +50,13 @@ $menu = Menu::getMenuByPerfil(User::getInstance()->getPerfilId());
     
     <!--link rel="stylesheet" href="{{ asset('//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css') }}"-->
     <link rel="stylesheet" href="{{ asset('/js/datepicker/css/bootstrap-datepicker3.css') }}">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
-        <script src="{!! URL::asset('/bower_components/jquery/dist/jquery.min.js'); !!}"></script>
-        <script src="{!! URL::asset('/bower_components/bootstrap/dist/js/bootstrap.min.js'); !!}"></script>
-        <!--script src="{!! URL::asset('//code.jquery.com/ui/1.11.4/jquery-ui.js'); !!}"></script-->
-        
+    
+    <link href="{{ asset('/js/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+    
+    <script src="{!! URL::asset('/bower_components/jquery/dist/jquery.min.js'); !!}"></script>
+    <script src="{!! URL::asset('/bower_components/bootstrap/dist/js/bootstrap.min.js'); !!}"></script>
+    <script src="{!! URL::asset('//cdn.ckeditor.com/4.5.10/standard/ckeditor.js'); !!}"></script>
 
-        <script src="{!! URL::asset('/js/datepicker/js/bootstrap-datepicker.js'); !!}"></script>
-        <script src="{!! URL::asset('/js/datepicker/locales/bootstrap-datepicker.es.min.js'); !!}"></script>
-        <link href="{{ asset('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css') }}" rel="stylesheet">
-
-        <script src="{!! URL::asset('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'); !!}"></script>
-        <script>
-            $(document).ready(function() {
-              $(".select2").select2();
-          });
-        </script>
-        <script>
-            $(document).ready(function() {
-                $('#dataTables-example').DataTable({
-                    responsive: true
-                });
-            });
-        </script>
     </head>
 
     <body>
@@ -196,6 +175,25 @@ $menu = Menu::getMenuByPerfil(User::getInstance()->getPerfilId());
               <!-- /#page-wrapper -->
         </div>
 
+
+   
+    <!--script src="{!! URL::asset('//code.jquery.com/ui/1.11.4/jquery-ui.js'); !!}"></script-->
+    
+
+    <script src="{!! URL::asset('/js/datepicker/js/bootstrap-datepicker.js'); !!}"></script>
+    <script src="{!! URL::asset('/js/datepicker/locales/bootstrap-datepicker.es.min.js'); !!}"></script>
+    <!-- Este uso hasta ahora -->
+    <!--link href="{{ asset('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css') }}" rel="stylesheet"-->
+    
+    <!--script src="{!! URL::asset('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'); !!}"></script-->
+    <script src="{!! URL::asset('/js/select2/dist/js/select2.min.js'); !!}"></script>
+    <!--script>
+            $(document).ready(function() {
+              
+          });
+    </script-->
+     
+
     <script src="{!! URL::asset('/bower_components/metisMenu/dist/metisMenu.min.js'); !!}"></script>
 
     <!-- Custom Theme JavaScript -->
@@ -203,7 +201,7 @@ $menu = Menu::getMenuByPerfil(User::getInstance()->getPerfilId());
 
     <script src="{!! URL::asset('/bower_components/datatables/media/js/jquery.dataTables.min.js'); !!}"></script>
     <script src="{!! URL::asset('/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js'); !!}"></script>
-
+</body>
     <script>
     $('.ajaxCall').click(function(e){
         e.preventDefault();
@@ -211,7 +209,14 @@ $menu = Menu::getMenuByPerfil(User::getInstance()->getPerfilId());
         $('#page-wrapper').load('./');
     });
     </script>
+     <script>
+        $(document).ready(function() {
+            $(".select2").select2();
 
-</body>
+            $('#dataTables-example').DataTable({
+                responsive: true
+            });
 
+        });
+    </script> 
 </html>

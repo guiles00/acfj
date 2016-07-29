@@ -61,7 +61,7 @@
 					</div>
 					<div class="form-group">
 					      <label class="control-label col-sm-2">Texto</label>
-					      <div class="col-sm-8">          
+					      <div class="col-sm-10">          
 					        <textarea type="text" rows="10" class="form-control"  name="paso_texto_email" value='' id='b_paso_texto_email' ></textarea>
 					      </div>
 					</div>
