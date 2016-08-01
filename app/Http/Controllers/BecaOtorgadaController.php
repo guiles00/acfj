@@ -765,6 +765,8 @@ public function imprimirSolicitud($id){
 			   'X-Mailer: PHP/' . phpversion();
 
 		$res = mail($to, $subject, $message, $headers);
+		//echo $to;
+		//	print_r($message);
 
 		//ver error 
 
@@ -775,7 +777,13 @@ public function imprimirSolicitud($id){
 	public function enviarEmailIntimacion(){
 
 		$input = Request::all();
-		$data = DB::table('paso_beca')->where('paso_beca_id',$input['paso_beca_id'])->first();
+		$data = PasoBeca::find($input['paso_beca_id']);
+
+		//$data = DB::table('paso_beca')->where('paso_beca_id',$input['paso_beca_id'])->first();
+		$data->notificado = 1;
+		$data->save();
+		//print_r($data);
+
 		$data_beca = DB::table('beca')->where('beca_id',$data->beca_id)->first();
 
 	//	print_r($data_beca->alumno_id);
@@ -788,6 +796,7 @@ public function imprimirSolicitud($id){
 	
 		$datos_destinatario = $data_destinatario->usi_email;
 		
+
 		if(empty($datos_destinatario)) return 'false';
 		
 		$html = $data->texto_email;

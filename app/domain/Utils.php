@@ -33,5 +33,9 @@ class Utils {
 		return  date_format($date,"d/m/Y");;
 	}
 
+	public static function siNo($boolean){
+		return ($boolean == 0)? 'NO':'SI';
+
+	}
 }
 ?>
