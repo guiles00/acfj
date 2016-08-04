@@ -1,5 +1,19 @@
 Sistema Gestión Centro de Formación Judicial
 
+################### Versión [1.0.08] 29 - Julio - 2016 ####################################################
+	
+SIS.07.01	Agregar compresion en HTTP y cache
+BEC.07.09	Enviar email por intimacion
+
+	modified:   app/Http/Controllers/BecaController.php
+	modified:   app/Http/Controllers/BecaOtorgadaController.php
+	modified:   app/Http/routes.php
+	modified:   resources/views/app.blade.php
+	modified:   resources/views/otorgada/addPasoVencimientoBeca.blade.php
+	modified:   resources/views/otorgada/editPasoBecaVencimiento.blade.php
+
+################### FIN Versión [1.0.08] 29 - Julio - 2016 ####################################################
+
 ################### Versión [1.0.07] 26 - Julio - 2016 ####################################################
 
 CUR.07.14	Deshabilitar boton de submit cuando se carga el pago

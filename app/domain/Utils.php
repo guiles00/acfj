@@ -7,6 +7,8 @@ class Utils {
 
 	public static function formatDate($datetime){
 		
+		
+		if( $datetime == 0 ) return '';
 		if(empty($datetime)) return false;
 		
 		$date =  date_create($datetime);
@@ -16,9 +18,10 @@ class Utils {
 
 	public static function now(){
 
-		$date =  date_create($datetime);
+		//$date =  date_create($datetime);
 		
-		return  date_format($date,"Y-m-dd/m/Y");;
+		//return  date_format($date,"Y-m-dd/m/Y");
+		return date("Y-m-d H:i:s");
 	}
 
 

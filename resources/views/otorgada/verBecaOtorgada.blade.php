@@ -568,8 +568,9 @@ use App\domain\PagoCheque;
 	            <th>Asunto</th>
 	            <th>Observaciones</th>
 	            <th>Fecha Ingreso</th>
-	            <th>Fecha Vencimiento</th>
 	            <th>Notificado</th>
+	            <th>Fecha Env&iacute;o</th>
+	            <th>Fecha Vencimiento</th>
                 <th width="10%"></th>
                 <th width="10%"></th>
 	          </tr>
@@ -583,8 +584,9 @@ use App\domain\PagoCheque;
                 <td> {{ PasoBeca::getTipoPasoById($paso_beca->tipo_paso_beca_id) }} </td>                
                 <td> {{ $paso_beca->observaciones }} </td>
                 <td> {{ Utils::formatDate($paso_beca->fecha) }}</td>
-                <td> {{ Utils::formatDate($paso_beca->fecha_vencimiento) }}</td>
                 <td> {{ Utils::siNo($paso_beca->notificado) }} </td>
+                <td> {{ (empty($paso_beca->fecha_envio))?'N/D':Utils::formatDate($paso_beca->fecha_envio) }}</td>
+                <td> {{ Utils::formatDate($paso_beca->fecha_vencimiento) }}</td>
                 <td> <a href="{!! URL::action('BecaOtorgadaController@editPasoBecaVencimiento',$paso_beca->paso_beca_id); !!}">Ver</a></td>
                 <td> <a href="{!! URL::action('BecaOtorgadaController@deletePasoBeca',$paso_beca->paso_beca_id); !!}" onClick="return confirm('desea eliminar?')" >Eliminar</a></td>
 

@@ -15,7 +15,9 @@ use App\domain\Helper;
 use App\domain\Documentacion;
 use Redirect;
 use App\domain\User;
+use App\domain\Utils;
 use App\PasoBeca;
+
 
 class BecaOtorgadaController extends Controller {
 
@@ -621,7 +623,6 @@ public function imprimirSolicitud($id){
 	public function updatePasoBecaVencimiento(){
 		
 		$input = Request::all();
-
 		
 		$paso_beca = PasoBeca::find($input['paso_beca_id']);
 		
@@ -781,6 +782,10 @@ public function imprimirSolicitud($id){
 
 		//$data = DB::table('paso_beca')->where('paso_beca_id',$input['paso_beca_id'])->first();
 		$data->notificado = 1;
+
+		if( $data->fecha_envio == 0)
+		$data->fecha_envio = Utils::now();
+		
 		$data->save();
 		//print_r($data);
 

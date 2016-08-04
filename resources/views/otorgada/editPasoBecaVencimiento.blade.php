@@ -57,9 +57,16 @@
 					<div class="form-group">
 				      <label class="control-label col-sm-2">Fecha Vencimiento</label>
 				      <div class="col-sm-4">          
-				        <input type="text" class="form-control datepicker"  name="paso_beca_fecha_vencimiento" id="b_paso_beca_fecha_vencimiento" value="{{ date('Y-m-d') }}" >
+				        <input type="text" class="form-control datepicker"  name="paso_beca_fecha_vencimiento" id="b_paso_beca_fecha_vencimiento" value="{{ $paso_beca->fecha_vencimiento }}" >
 				      </div>
 				    </div>
+
+				    <div class="form-group">
+				      <label class="control-label col-sm-2">Fecha Envio</label>
+				      <div class="col-sm-4">          
+				        <input type="text" class="form-control datepicker"  name="paso_beca_fecha_envio" id="b_paso_beca_fecha_envio" value="{{ $paso_beca->fecha_envio }}" disabled>
+				      </div>
+				    </div>	
 
 					<div class="form-group">
 					     <label class="control-label col-sm-2">Observaciones</label>
@@ -104,6 +111,7 @@ $('#pv_submit').click(function(){
 var data = $('#ps_form_edit').serializeArray();
 //Traigo la data del editor y reemplazo el contenido para que este el actual
 var editorData = CKEDITOR.instances.b_paso_texto_email.getData();
+console.debug(data);
 data[7].value = editorData;
 
 	$.ajax({
