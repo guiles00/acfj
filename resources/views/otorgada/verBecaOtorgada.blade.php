@@ -466,7 +466,7 @@ use App\domain\PagoCheque;
 <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#menu2">Actuaciones</a></li>
    <li><a data-toggle="tab" href="#b_paso_beca">Acciones</a></li>
-   <li><a data-toggle="tab" href="#b_paso_vencimiento">Pr&oacute;rroga/Intimaciones</a></li>
+   <li><a data-toggle="tab" href="#b_paso_vencimiento">Notificaciones</a></li>
    <li><a data-toggle="tab" href="#b_pago_cheque">Pagos</a></li>
 </ul>
 
