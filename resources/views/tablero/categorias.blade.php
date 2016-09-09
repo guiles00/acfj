@@ -20,8 +20,8 @@
 
   <input type="button" id="botoneta1" class="btn btn-default botoneta" value="2014"></input>
   <input type="button" id="botoneta2" class="btn btn-default botoneta" value="2015"></input>
-  <!--input type="button" id="botoneta2" class="btn btn-default botoneta" value="2016"></input>
-  <input type="button" id="botoneta2" class="btn btn-default botoneta" value="2017"></input-->
+  <input type="button" id="botoneta2" class="btn btn-default botoneta" value="2016"></input>
+  <!--input type="button" id="botoneta2" class="btn btn-default botoneta" value="2017"></input-->
 
   <div id="res-grupo">
 

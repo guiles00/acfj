@@ -35,6 +35,7 @@
        <label>Seleccione A&nacute;o</label>
         <select name="curso" class="form-control select2 select-cat" id="a-anio">
             <!--option value="0" selected="true"> - </option-->
+            <option value="2015">2016</option>
             <option value="2015">2015</option>
             <option value="2014">2014</option>
         </select>

@@ -31,6 +31,7 @@
   <label>Seleccione A&ntilde;o</label>
   <select name="anio" class="form-control">
       <option value="0" selected="true"> - </option>
+      <option value="2016"> 2016 </option>
       <option value="2015"> 2015 </option>
       <option value="2014"> 2014 </option>
       <option value="2013"> 2013 </option>
