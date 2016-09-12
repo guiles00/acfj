@@ -50,7 +50,7 @@
               <tr href="{!! URL::action('TableroController@listadoGrupoDosCursos', array('gcu_id'=>$dat->gcu_id,'anio'=>$data['anio'])); !!}" style="cursor: pointer;" data-toggle="tooltip" title="Hooray!">
               <input type="hidden" value="{{ $dat->gcu_id}}"></input>
               <input type="hidden" value="{{ $data['anio'] }}"></input>
-              <td>{{$dat->gcu_nombre}}</td>
+              <td>{{$dat->grupo}}</td>
               <td>{{$dat->cantidad}}</td>
               </tr>
             @endforeach

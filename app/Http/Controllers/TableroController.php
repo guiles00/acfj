@@ -241,22 +241,32 @@ AND cus.cus_validado =  'Si'
 			where YEAR(curso.cur_fechaInicio) = '2014' 
 			group by gcu_nombre
 			ORDER BY cant
+
+			select gcu_nombre as grupo, gcu2_nombre as subgrupo, gcu3_titulo as tipo_actividad
+		from curso 
+	 inner join grupo_curso3_grupo_curso2 on (gcu32_id = cur_gcu32_id)
+	 inner join grupo_curso3 on (gcu3_id = gc32_gcu3_id)
+	 inner join grupo_curso2 on (gcu2_id = gc32_gcu2_id)
+	 inner join grupo_curso on (gcu_id = gcu2_gcu_id)
+
+where YEAR(curso.cur_fechaInicio) = '2016'
 		*/
 		$input = Request::all();
 		//print_r($input);
 		$data = [];
 
 			$res = DB::table('curso')
+            ->join('grupo_curso3_grupo_curso2', 'grupo_curso3_grupo_curso2.gcu32_id', '=', 'curso.cur_gcu32_id')
             ->join('grupo_curso3', 'curso.cur_gcu3_id', '=', 'grupo_curso3.gcu3_id')
             ->join('grupo_curso2', 'grupo_curso3.gcu3_gcu2_id', '=', 'grupo_curso2.gcu2_id')
             ->join('grupo_curso', 'grupo_curso2.gcu2_gcu_id', '=', 'grupo_curso.gcu_id')
-            ->select('gcu_id','gcu_nombre',DB::raw('count(*) as cantidad') )
+            ->select('gcu_id','gcu_nombre as grupo','gcu2_nombre as subgrupo','gcu3_titulo as tipo_actividad',DB::raw('count(*) as cantidad') )
             ->where(DB::raw('YEAR(curso.cur_fechaInicio)'), '=', $input['data'])
             ->groupBy('gcu_nombre')
             ->orderBy('cantidad','DESC')
             //->toSql();
             ->get();	
-
+//print_r($res);
             $data['res'] = $res;
             $data['anio'] = $input['data'];
 
@@ -266,7 +276,7 @@ AND cus.cus_validado =  'Si'
 		
 				$programa['color'] = "#2484c1";
 				$programa['value'] = (integer)$value->cantidad;
-				$programa['label'] = $value->gcu_nombre;
+				$programa['label'] = $value->grupo;
 				$arr_data[]=(object)$programa;
 			}	
 
