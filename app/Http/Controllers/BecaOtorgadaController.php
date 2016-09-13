@@ -166,7 +166,7 @@ class BecaOtorgadaController extends Controller {
 
 		$solicitud_beca = DB::table('beca')
             ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
-            ->select('*')
+            ->select('*',DB::raw('YEAR(beca.timestamp) as anio'))
             ->where('beca.beca_id', '=', $id)
             ->get(); 
             
@@ -822,15 +822,7 @@ public function imprimirSolicitud($id){
 		$input = Request::all();
 		
 		$str = (isset($input['str_beca']))?$input['str_beca']:'';
-		//print_r($input);
-		$helper = new Helper();
-		/*$becas = Beca::where('usi_nombre', 'LIKE', "%$str%")
-		->orWhere('usi_dni', 'LIKE', "%$str%")
-		->orWhere('usi_nombre', 'LIKE', "%$str%")
-		->orWhere('usi_legajo', 'LIKE', "%$str%")
-		->paginate(30);
-		*/
-		//$alumnos->setPath('alumnos');
+		
 		$input['estado_id'] = (isset($input['estado_id']))?$input['estado_id']:'-1';
 		if($input['estado_id'] == -1){
 			$data = DB::table('beca')
@@ -840,7 +832,7 @@ public function imprimirSolicitud($id){
 	            ->select('*')
 	            ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
                 ->where('beca.otorgada','=',1 )
-
+				//->where(DB::raw('YEAR(beca.timestamp)'), '=',DB::raw('YEAR(now())') )
 	           // ->groupBy('cargo.car_nombre')
 	            ->orderBy('beca.beca_id','DESC')
 	            //->toSql();
@@ -857,6 +849,7 @@ public function imprimirSolicitud($id){
             ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
             ->where('beca.estado_id', '=', $input['estado_id'])
 			->where('beca.otorgada','=',1 )
+			//->where(DB::raw('YEAR(beca.timestamp)'), '=',DB::raw('YEAR(now())') )
 			// ->groupBy('cargo.car_nombre')
             ->orderBy('beca.beca_id','DESC')
            // ->toSql();
@@ -869,8 +862,60 @@ public function imprimirSolicitud($id){
             $becas->setPath('listadoBecas');
             $becas->appends(array('estado_id' => $input['estado_id'],'str_beca' => $str));
             
-		return view('otorgada.listadoBecas')->with('becas',$becas);
 
+         $helpers = self::traeHelpers();    
+
+		return view('otorgada.listadoBecas')
+		->with('becas',$becas)
+		->with('helpers',$helpers);
+
+	}
+
+		private static function traeHelpers(){
+
+
+			$helper = new Helper();
+			$tipo_beca = $helper->getHelperByDominio('tipo_beca');
+			$renovacion = $helper->getHelperByDominio('renovacion');
+		    $estado_beca = $helper->getHelperByDominio('estado_beca');
+
+		    $helpers = array();
+			$helpers['renovacion'] = $renovacion;
+			$helpers['estado_beca'] = $estado_beca;
+			$helpers['tipo_beca'] = $tipo_beca;
+
+		return $helpers;
+	}
+
+	public function busquedaAvanzada()
+	{
+		$input = Request::all();
+		
+		$helpers = self::traeHelpers();
+		
+		
+		$query = DB::table('beca')
+            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
+            ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id')
+            ->where('otorgada','=','1');
+
+        $query->select('*');
+       
+        if(!empty($input['renovacion_id'])) $query->where('beca.renovacion_id', '=', $input['renovacion_id']);	
+        if(!empty($input['estado_id'])) $query->where('beca.estado_id', '=', $input['estado_id']);	
+        if(!empty($input['tipo_beca_id'])) $query->where('beca.tipo_beca_id', '=', $input['tipo_beca_id']);	
+		if(!empty($input['anio'])) $query->where(DB::raw('YEAR(beca.timestamp)'), '=', $input['anio']);	
+		            
+
+        
+        $data = $query->orderBy('beca.beca_id','DESC')->paginate(500);
+           
+        $becas = $data;
+
+        // $becas->setPath('listSolicitudesBecas');
+        // $becas->appends(array('estado_id' => $input['estado_id'],'str_beca' => $str));
+            
+		return view('otorgada.listadoBecas')->with('becas',$becas)->with('helpers',$helpers);
 	}
 
 	public function eliminarVinculoActuacion($id)

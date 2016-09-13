@@ -268,7 +268,7 @@ use App\domain\PagoCheque;
 				<div class="row">
 					<div class="form-group">
 						<label class="control-label col-md-2">A&ntilde;o</label>
-						<div class="col-md-4"><input class="form-control input-sm" name="apynom" value='2016'></div>
+						<div class="col-md-4"><input class="form-control input-sm" name="anio" value='{{$beca->anio}}'></div>
 					</div>
 				</div>
 

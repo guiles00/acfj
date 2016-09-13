@@ -128,6 +128,7 @@ Route::group(['middleware' => 'session_expired'], function () {
 	Route::get('addActuacionOtorgada/{id}', 'BecaOtorgadaController@addActuacion');
 	Route::post('saveActuacionOtorgada', 'BecaOtorgadaController@saveActuacion');
 	Route::get('addPasoBecaOtorgada/{id}', 'BecaOtorgadaController@addPasoBeca');
+	Route::get('busquedaAvanzada', 'BecaOtorgadaController@busquedaAvanzada');
 	
 	Route::post('savePasoBecaOtorgada', 'BecaOtorgadaController@savePasoBeca');
 	Route::get('editPasoBecaOtorgada/{id}', 'BecaOtorgadaController@editPasoBeca');
