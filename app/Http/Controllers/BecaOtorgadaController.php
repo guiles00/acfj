@@ -817,46 +817,63 @@ public function imprimirSolicitud($id){
 
 
 
-	public function listadoBecas(){
+	public function listadoBecas(){ //HORRIBLE
 
 		$input = Request::all();
 		
 		$str = (isset($input['str_beca']))?$input['str_beca']:'';
 		
 		$input['estado_id'] = (isset($input['estado_id']))?$input['estado_id']:'-1';
-		if($input['estado_id'] == -1){
+
+		if(!isset($input['buscar'])){
+		
 			$data = DB::table('beca')
 	            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
 	            ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id')
-	           // ->join('cargo','usuario_sitio.usi_car_id','=','cargo.car_id')
 	            ->select('*')
 	            ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
                 ->where('beca.otorgada','=',1 )
-				//->where(DB::raw('YEAR(beca.timestamp)'), '=',DB::raw('YEAR(now())') )
-	           // ->groupBy('cargo.car_nombre')
+				->where(DB::raw('YEAR(beca.timestamp)'), '=',DB::raw('YEAR(now())') )
 	            ->orderBy('beca.beca_id','DESC')
 	            //->toSql();
-	            //print_r($data);
-	            ->paginate(20); // El paginate funciona como get()
-	            //->get(); 
-        	
+	            ->paginate(20);
+	            
+		
 		}else{
-		$data = DB::table('beca')
-            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
-            ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id')
-           // ->join('cargo','usuario_sitio.usi_car_id','=','cargo.car_id')
-            ->select('*')
-            ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
-            ->where('beca.estado_id', '=', $input['estado_id'])
-			->where('beca.otorgada','=',1 )
-			//->where(DB::raw('YEAR(beca.timestamp)'), '=',DB::raw('YEAR(now())') )
-			// ->groupBy('cargo.car_nombre')
-            ->orderBy('beca.beca_id','DESC')
-           // ->toSql();
-            ->paginate(20); // El paginate funciona como get()
-            //->get(); 
 
-        }
+				if($input['estado_id'] == -1){
+					$data = DB::table('beca')
+			            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
+			            ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id')
+			           // ->join('cargo','usuario_sitio.usi_car_id','=','cargo.car_id')
+			            ->select('*')
+			            ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
+		                ->where('beca.otorgada','=',1 )
+						//->where(DB::raw('YEAR(beca.timestamp)'), '=',DB::raw('YEAR(now())') )
+			           // ->groupBy('cargo.car_nombre')
+			            ->orderBy('beca.beca_id','DESC')
+			            //->toSql();
+			            //print_r($data);
+			            ->paginate(20); // El paginate funciona como get()
+			            //->get(); 
+		        	
+				}else{
+				$data = DB::table('beca')
+		            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
+		            ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id')
+		            ->select('*')
+		            ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
+		            ->where('beca.estado_id', '=', $input['estado_id'])
+					->where('beca.otorgada','=',1 )
+					//->where(DB::raw('YEAR(beca.timestamp)'), '=',DB::raw('YEAR(now())') )
+		            ->orderBy('beca.beca_id','DESC')
+		           // ->toSql();
+		            ->paginate(20); // El paginate funciona como get()
+
+		        }
+		}
+
+		
             $becas = $data;
 
             $becas->setPath('listadoBecas');

@@ -25,16 +25,17 @@ $helper = new App\Domain\Helper();
                     <div class="col-md-4">
                           <select class="form-control" name="estado_id" id="estado_id">
                                 <option value="-1">-</option>
-                                <!--option value="0">CONFIRMAR EMAIL</option-->
-                                <option value="1">PENDIENTE</option>
-                                <option value="2">INCOMPLETO</option>
-                                <option value="3">COMPLETO</option>
+                                <option value="7">EN TRAMITE</option>
+                                <option value="8">DESISTIDA</option>
+                                <option value="9">CADUCADA</option>
+                                <option value="10">RENUNCIADA</option>
                           </select> 
                     </div>        
                   </div> 
                   <div class="form-group">
                     <input type="text" class="form-control" name="str_beca" placeholder="" id="search_beca">
                     <button type="submit" class="btn btn-default" id="buscar_solicitud_beca">Buscar</button>
+                    <input type="hidden" class="form-control" name="buscar" placeholder="">
                   </div>   
          </div>
         </form>
