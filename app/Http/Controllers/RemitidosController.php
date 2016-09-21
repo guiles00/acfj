@@ -213,11 +213,11 @@ class RemitidosController extends Controller {
 		//CAST(field_name as SIGNED INTEGER) ->orderBy('actuacion_fecha', 'desc')
 		//$actuaciones = Actuacion::all();
 		if( empty($input) ){
-			$remitidos = Remitidos::orderBy( 'remitidos_id' ,'desc')->get();	
+			$remitidos = Remitidos::orderBy( 'numero_memo' ,'desc')->get();	
 		}else{
 			$remitidos = Remitidos::where('numero_memo', 'LIKE', '%'.$input['str_remitido'].'%')
 			->orWhere('dirigido', 'LIKE', '%'.$input['str_remitido'].'%')
-			->orderBy( 'remitidos_id' ,'desc')->get();			
+			->orderBy( 'numero_memo' ,'desc')->get();			
 		}
 		
 		
