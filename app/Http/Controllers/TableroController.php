@@ -268,7 +268,7 @@ group by gcu_nombre
             //->toSql();
             ->get();
 
-//print_r($res);
+			//print_r($res);
             $data['res'] = $res;
             $data['anio'] = $input['data'];
 

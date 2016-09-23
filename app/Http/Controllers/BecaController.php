@@ -849,6 +849,8 @@ public function exportar(){
 		->paginate(30);
 		*/
 		//$alumnos->setPath('alumnos');
+
+
 		$input['estado_id'] = (isset($input['estado_id']))?$input['estado_id']:'-1';
 		if($input['estado_id'] == -1){
 			$data = DB::table('beca')

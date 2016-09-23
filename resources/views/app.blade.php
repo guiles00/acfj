@@ -19,6 +19,43 @@ $menu = Menu::getMenuByPerfil(User::getInstance()->getPerfilId());
 
     <title>CFJ - Administraci&oacute;n</title>
 
+    <!-- Agrego el estilo para el indicador que esta cargando ajax -->
+    <style> 
+            /* Start by setting display:none to make this hidden.
+           Then we position it in relation to the viewport window
+           with position:fixed. Width, height, top and left speak
+           for themselves. Background we set to 80% white with
+           our animation centered, and no-repeating */
+        .loader {
+            display:    none;
+            position:   fixed;
+            z-index:    1000;
+            top:        0;
+            left:       0;
+            height:     100%;
+            width:      100%;
+            background: 
+                        url('http://localhost/content/cfj-cfj/admin_cfj/public/img/ajax-loader-big.gif') 
+                        50% 50% 
+                        no-repeat;
+
+                        /*rgba( 255, 255, 255, .8 ) */
+        }
+
+        /* When the body has the loading class, we turn
+           the scrollbar off with overflow:hidden */
+        /*.notloading {
+            overflow: hidden; 
+        }*/
+
+        /* Anytime the body has the loading class, our
+           modal element will be visible */
+        .loading {
+            display: block;
+        }
+
+    </style>
+    
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('/bower_components/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet">
     <!--link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"-->
@@ -57,6 +94,16 @@ $menu = Menu::getMenuByPerfil(User::getInstance()->getPerfilId());
     <script src="{!! URL::asset('/bower_components/bootstrap/dist/js/bootstrap.min.js'); !!}"></script>
     <script src="{!! URL::asset('//cdn.ckeditor.com/4.5.10/standard/ckeditor.js'); !!}"></script>
 
+     <script>
+        $(document).ready(function() {
+            $(".select2").select2();
+
+            $('#dataTables-example').DataTable({
+                responsive: true
+            });
+
+        });
+    </script> 
     </head>
 
     <body>
@@ -174,7 +221,7 @@ $menu = Menu::getMenuByPerfil(User::getInstance()->getPerfilId());
             
               <!-- /#page-wrapper -->
         </div>
-
+           
 
    
     <!--script src="{!! URL::asset('//code.jquery.com/ui/1.11.4/jquery-ui.js'); !!}"></script-->
@@ -202,21 +249,29 @@ $menu = Menu::getMenuByPerfil(User::getInstance()->getPerfilId());
     <script src="{!! URL::asset('/bower_components/datatables/media/js/jquery.dataTables.min.js'); !!}"></script>
     <script src="{!! URL::asset('/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js'); !!}"></script>
 </body>
+ <div id="load" class="loader"><!-- Ajax waiting Loader --></div>  
     <script>
     $('.ajaxCall').click(function(e){
         e.preventDefault();
         console.debug('click');
         $('#page-wrapper').load('./');
     });
+
+
+    var body = $("body");
+    var loader = $('#load');
+    
+    //loader.hide();
+
+    $(document).on({
+        
+        ajaxStart: function() { 
+            loader.addClass("loading");    
+        },
+        ajaxStop: function() { 
+            loader.removeClass("loading");
+        }    
+    });
     </script>
-     <script>
-        $(document).ready(function() {
-            $(".select2").select2();
 
-            $('#dataTables-example').DataTable({
-                responsive: true
-            });
-
-        });
-    </script> 
 </html>

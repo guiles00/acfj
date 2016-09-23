@@ -252,6 +252,21 @@ Route::group(['middleware' => ['session_expired']], function () {
 	Route::get('imprimirComprobanteCurso/{id}','ChequesController@imprimirComprobanteCurso');    
     
 });
+
+
+
+Route::group(['middleware' => 'session_expired'], function () {
+
+	Route::get('listarCursos', 'CursosController@listarCursos');
+	Route::get('verInscriptosCurso/{id}', 'CursosController@verInscriptosCurso');
+	Route::get('listarUsuariosCurso/{id}', 'CursosController@listarUsuariosCurso');
+	Route::post('validarUsuarioCurso', 'CursosController@validarUsuarioCurso');
+	Route::post('rechazarUsuarioCurso', 'CursosController@rechazarUsuarioCurso');
+	Route::post('validarTodosCurso', 'CursosController@validarTodosCurso');
+
+});
+
+
 	
 /* ABM Docentes */
 Route::group(['middleware' => ['session_expired']], function () {

@@ -86,9 +86,11 @@ class ChequesController extends Controller {
         $cheques->setPath('listPagoCheques');
 		
         $nro_recibo = $this->traeUltimoNroRecibo();
+        $pago_cheque = new DPagoCheque();
 
 		return view('cheques.listPagoCheques')->with('cheques',$cheques)
-		->with('nro_recibo',$nro_recibo);
+		->with('nro_recibo',$nro_recibo)
+		->with('pago_cheque',$pago_cheque);
 		
 	}
 
@@ -141,7 +143,7 @@ class ChequesController extends Controller {
 							//->toSql();
             				->get();
         
-//		print_r($cursos);
+		//print_r($cursos);
 		
 		foreach ($cursos as $key => $value) {
 					//$res['items'][] = array("id"=>$value->cur_id, "name"=>$value->gcu3_titulo,"full_name"=>$value->gcu3_titulo.'- Fecha Inicio: '.$value->cur_fechaInicio.' Fecha Fin: '.$value->cur_fechaFin);
