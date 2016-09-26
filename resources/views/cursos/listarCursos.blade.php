@@ -16,10 +16,20 @@
       </div>
      <div class="row">      
         <form method="GET" action="{{action('CursosController@listarCursos')}}" class="navbar-form navbar-left pull-right" role="search">
+            <input type="hidden" name="_search" value="true" />
             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
             <div class="row">
               <div class="form-group">
                     <input type="text" class="form-control " name="str_curso" placeholder="" id="search_curso">
+                        <div class="form-group">      
+                          <div class="col-md-4">
+                                <select class="form-control search_beca" name="estado_id" id="estado_id">
+                                      <option value="-1">-</option>
+                                      <option value="0">ACTIVO</option>
+                                      <option value="1">CERRADO</option>
+                                </select> 
+                          </div>        
+                        </div> 
                     <button type="submit" class="btn btn-default" id="buscar_curso">Buscar</button>
               </div>   
          </div>
@@ -71,4 +81,14 @@
   
 
 </div>
+<script>
+$(document).ready(function() {
+   $('#search_curso').on('change', function(d) {
+                
+                $('#buscar_curso').click();
+
+                });
+
+ });
+</script>
 @stop

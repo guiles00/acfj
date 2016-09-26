@@ -10,11 +10,12 @@
     <!--div class="form-group pull-left">
                 
       </div-->
-  <input type="button" class="btn btn-default" name="validar_todos" id="b_validar_todos" value="Validar Todos" />
+  <input type="button" class="btn btn-default" name="validar_todos" id="c_validar_todos" value="Validar Todos" />
+  <input type="button" class="btn btn-default" name="alta_alumno" id="c_alta_alumno" value="Alta Alumno" />
   <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
   <input type="hidden" name="" id="b_cur_id" value="{{$cur_id}}" ></input>
   <span id="loading"></span>
-  </div>
+  <!--/div-->
       <!--div class="panel-body"-->
         <div class="table-responsive">
               <table class="table table-responsive table-striped table-bordered table-hover" id="curso">
@@ -95,13 +96,13 @@ $('document').ready(function(){
                     ,success : function(result) {
                     
                     load_inscriptos(cur_id);
-
+                    trae_data_curso(cur_id);
                     }
                   });  
                
     });
 
-    $('#b_validar_todos').click(function(){
+    $('#c_validar_todos').click(function(){
       if( ! confirm('Estas segurdo que desea Validar todos') ) return false;
       var cur_id = $('#b_cur_id').val();
       var _token = $('#csrf-token').val();
@@ -114,7 +115,7 @@ $('document').ready(function(){
                     ,success : function(result) {
                     
                     load_inscriptos(cur_id);
-
+                    trae_data_curso(cur_id);
                     }
                   });  
             });

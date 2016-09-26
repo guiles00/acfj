@@ -264,6 +264,8 @@ Route::group(['middleware' => 'session_expired'], function () {
 	Route::post('rechazarUsuarioCurso', 'CursosController@rechazarUsuarioCurso');
 	Route::post('validarTodosCurso', 'CursosController@validarTodosCurso');
 
+	Route::get('traeDataCurso/{id}', 'CursosController@traeDataCurso');
+
 });
 
 
