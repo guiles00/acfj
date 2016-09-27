@@ -564,16 +564,30 @@ class ChequesController extends Controller {
 	
 		$docente = DPagoCheque::getDatosDocenteById($cheque->docente_id);
 		$curso = DPagoCheque::getDatosCursoById($cheque->curso_id);
+		//echo "<pre>";
+		//print_r($cheque);
+		//exit;
+		//$entregado_por = Agente::find($cheque->entregado_por_id);
+	
+		$entregado_por =  '';
+		if(! $cheque->entregado_por_id == 0){
+			$agente = Agente::find($cheque->entregado_por_id);
+			$entregado_por = $agente->agente_nombre;	
+		} 		
 
-		$entregado_por = Agente::find($cheque->entregado_por_id);
-		
-		$nro_memo = Remitidos::where('remitidos_id','=',$cheque->nro_memo_id)->first();
-		
+		$nro_memo = '';
+		if(! $cheque->nro_memo_id == 0){
+			$remitido = Remitidos::where('remitidos_id','=',$cheque->nro_memo_id)->first();
+			//print_r($cheque->nro_memo_id);
+			//exit;
+			$nro_memo = $remitido->numero_memo;	
+		}
+
 	return view('cheques.comprobanteCurso')->with('cheque',$cheque)
-		->with('nro_memo',$nro_memo->numero_memo)
+		->with('nro_memo',$nro_memo)
 		->with('docente',$docente->doc_apellido.', '.$docente->doc_nombre)
 		->with('curso',$curso->gcu3_titulo)
-		->with('entregado_por',$entregado_por->agente_nombre)
+		->with('entregado_por',$entregado_por)
 		;
 
 	}

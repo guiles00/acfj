@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-
+@inject('pago_cheque','App\domain\PagoCheque')
 <? 
 //use App\domain\Utils;
 //use App\domain\Actuacion;
