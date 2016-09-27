@@ -3,9 +3,9 @@
 @section('content')
 
 <? 
-use App\domain\Utils;
-use App\domain\Actuacion;
-use App\domain\PagoCheque;
+//use App\domain\Utils;
+//use App\domain\Actuacion;
+//use App\domain\PagoCheque;
 ?>
 
   <!--div class="row">
@@ -143,14 +143,14 @@ use App\domain\PagoCheque;
                 <td> {{ $cheque->nro_recibo }} </td>
                 <td> {{ $cheque->nro_disp_otorga }} </td>
                 <td> {{ $cheque->nro_disp_aprueba }} </td>
-                <td> {{ PagoCheque::getNroMemoById($cheque->nro_memo_id) }} </td>
+                <td> {{  $pago_cheque::getNroMemoById($cheque->nro_memo_id) }} </td>
                 <td> $ {{ $cheque->importe}} </td>
-                <td> {{ PagoCheque::getNombreCursoById($cheque->curso_id)}}</td>
-                <td> {{ PagoCheque::getNombreSubgrupoById($cheque->curso_id)}}</td>
-                <td> {{ PagoCheque::getNombreDocenteById($cheque->docente_id)}}</td>
-                <td> {{ PagoCheque::getDisponibleChequeById($cheque->disponible_id) }}</td>
+                <td> {{  $pago_cheque::getNombreCursoById($cheque->curso_id)}}</td>
+                <td> {{  $pago_cheque::getNombreSubgrupoById($cheque->curso_id)}}</td>
+                <td> {{  $pago_cheque::getNombreDocenteById($cheque->docente_id)}}</td>
+                <td> {{  $pago_cheque::getDisponibleChequeById($cheque->disponible_id) }}</td>
                 <td> $  {{ $cheque->importe_cheque}} </td>
-                <td> {{ PagoCheque::getEntregadoChequeById($cheque->entregado_por_id) }}</td>
+                <td> {{  $pago_cheque::getEntregadoChequeById($cheque->entregado_por_id) }}</td>
                 <td> <a href="{!! URL::action('ChequesController@editCursoPagoCheque',$cheque->pago_cheque_id); !!}">Ver</a></td>
             </tr>
             @endforeach    

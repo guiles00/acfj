@@ -189,7 +189,7 @@ use App\domain\PagoCheque;
 						<div class="col-md-12 col-md-offset-2">
 							<button type="submit" class="btn btn-default" id="c_alta_pago_cheque">Guardar</button>
 							<a href="{{action('ChequesController@listPagoBecaCheques')}}" class="btn btn-default">Cancelar</a>
-              <a target="_target" href="#" class="btn btn-default">Imprimir Comprobante</a>
+              <a target="_target" href="{{action('ChequesController@imprimirComprobanteBeca',$pago_cheque->pago_cheque_id)}}" class="btn btn-default">Imprimir Comprobante</a>
 						</div>
 		</div>
 	</div>

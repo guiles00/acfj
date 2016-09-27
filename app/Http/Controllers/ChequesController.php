@@ -579,6 +579,35 @@ class ChequesController extends Controller {
 	}
 
 
+	public function imprimirComprobanteBeca($id){
+		
+		$cheque = PagoCheque::find($id);
+		/*echo "<pre>";
+		print_r($cheque);
+		exit;
+		*/
+		$becario = DPagoCheque::getDatosBecario($cheque->beca_id);
+		
+		$entregado_por =  '';
+		if(! $cheque->entregado_por_id == 0){
+			$agente = Agente::find($cheque->entregado_por_id);
+			$entregado_por = $agente->agente_nombre;	
+		} 
+		//echo $entregado_por;
+		//print_r($cheque->nro_memo_id);
+		//exit;	
+		$nro_memo = '';
+		if(! $cheque->nro_memo_id == 0){
+			$remitido = Remitidos::where('remitidos_id','=',$cheque->nro_memo_id)->first();
+			$nro_memo = $remitido->numero_memo;	
+		}
+		
+		
+	return view('cheques.comprobanteBeca')->with('cheque',$cheque)
+		->with('nro_memo',$nro_memo)
+		->with('beneficiario',$becario->usi_nombre)
+		->with('entregado_por',$entregado_por);	
+	}
 
 
 

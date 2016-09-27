@@ -1,17 +1,60 @@
 @inject('icurso','App\domain\Curso')
- <!--ul class="breadcrumb">
-    <li>Cursos - Listado Cursos</li>
-    <li class="active">Listado de Inscriptos</li>
-</ul-->
 
-<!--div class="panel panel-default">
- 
-  <div class="panel-heading">
-    <!--div class="form-group pull-left">
-                
-      </div-->
+
+<!-- Modal Busqueda Avanzada-->
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title" id="myModalLabel">B&uacute;squeda de Actuaciones</h4>
+            </div>
+            <form method="POST" action="#">
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12 col-md-12">
+            
+            <div class="row"> 
+              <div class="form-group">
+                <label class="control-label col-md-2">Alumno</label>
+
+                <div class="col-md-8">
+                    <select class="form-control" name="anio">
+                      
+                    </select>
+                </div>
+              </div>
+            </div>  
+            <br>
+            
+        </div>
+      </div>
+
+                </div>
+                <div class="modal-footer">
+             
+                <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary" >Aceptar</button>
+             
+            </div>
+         </form>
+    </div>
+  </div>
+</div>
+
+<!-- -->
+
+
+
+
+
+
   <input type="button" class="btn btn-default" name="validar_todos" id="c_validar_todos" value="Validar Todos" />
-  <input type="button" class="btn btn-default" name="alta_alumno" id="c_alta_alumno" value="Alta Alumno" />
+  <!--input type="button" class="btn btn-default" name="alta_alumno" id="c_alta_alumno" value="Alta Alumno" /-->
+  <a href="#" class="btn glyphicon btn-default" data-toggle="modal" data-target="#basicModal">Alta Alumno</a>
   <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
   <input type="hidden" name="" id="b_cur_id" value="{{$cur_id}}" ></input>
   <span id="loading"></span>
@@ -60,10 +103,6 @@
 
                  </tbody>
           </table>
-        <!--/div-->
-
-      <!--/div>  
-</div-->
 
 <script>
 
@@ -119,6 +158,16 @@ $('document').ready(function(){
                     }
                   });  
             });
+
+
+    $('#c_alta_alumno').click(function(){
+
+        //alert('alta y luego recarga');
+        //window.location.replace('../verInscriptosCurso/378');
+
+        load_inscriptos(378);
+        trae_data_curso(378);
+    });
 
 });
 </script>

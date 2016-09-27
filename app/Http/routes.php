@@ -249,7 +249,9 @@ Route::group(['middleware' => ['session_expired']], function () {
 
     Route::get('traeDataMemo','ChequesController@traeDataMemo');
 
-	Route::get('imprimirComprobanteCurso/{id}','ChequesController@imprimirComprobanteCurso');    
+	Route::get('imprimirComprobanteCurso/{id}','ChequesController@imprimirComprobanteCurso');
+	Route::get('imprimirComprobanteBeca/{id}','ChequesController@imprimirComprobanteBeca');
+	    
     
 });
 
