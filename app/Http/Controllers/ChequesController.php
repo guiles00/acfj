@@ -490,11 +490,12 @@ class ChequesController extends Controller {
 		}
 		
 		
-		$cheques = PagoCheque::where('tipo_pago_cheque_id','=',2)->orderBy('pago_cheque_id','DESC')->paginate(20);// ->get();	
+		//$cheques = PagoCheque::where('tipo_pago_cheque_id','=',2)->orderBy('pago_cheque_id','DESC')->paginate(20);// ->get();	
 		
-		$cheques->setPath('listPagoBecaCheques');
+		//$cheques->setPath('listPagoBecaCheques');
 
-		return view('cheques.listPagoBecaCheques')->with('cheques',$cheques);
+		//return view('cheques.listPagoBecaCheques')->with('cheques',$cheques);
+		return redirect()->back()->with('edited',true);
 	}
 
 
@@ -769,13 +770,15 @@ class ChequesController extends Controller {
 			exit;
 		}
 		
-		$cheques = PagoCheque::where('tipo_pago_cheque_id','=',1)->orderBy('pago_cheque_id','DESC')->paginate(20);// ->get();	
+		//$cheques = PagoCheque::where('tipo_pago_cheque_id','=',1)->orderBy('pago_cheque_id','DESC')->paginate(20);// ->get();	
 
-		$nro_recibo = $this->traeUltimoNroRecibo();
+		//$nro_recibo = $this->traeUltimoNroRecibo();
 
-		return view('cheques.listPagoCheques')
-		->with('cheques',$cheques)
-		->with('nro_recibo',$nro_recibo);
+		//return view('cheques.listPagoCheques')
+		//->with('cheques',$cheques)
+		//->with('nro_recibo',$nro_recibo);
+
+		return redirect()->back()->with('edited',true);
 	}
 
 

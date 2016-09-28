@@ -48,8 +48,10 @@ class CursosController extends Controller {
             //->toSql();
             $cursos = $query->get();
 
+          $cant = sizeof($cursos);  
        	return view('cursos.listarCursos')
-			->with('cursos',$cursos);
+			->with('cursos',$cursos)
+			->with('cant',$cant);
 	}
 
 
@@ -84,7 +86,7 @@ class CursosController extends Controller {
             ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'curso_usuario_sitio.cus_usi_id')
             ->select('*')
             ->where('curso.cur_id', '=', $cur_id)
-            ->orderBy('cus_validado','DESC')
+            ->orderBy('cus_validado','ASC')
             //->where('curso_usuario_sitio.cus_habilitado', '=', 1)
             //->toSql();
             ->get();

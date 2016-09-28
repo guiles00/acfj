@@ -4,7 +4,7 @@
 @inject('utils', 'App\domain\Utils')
 @inject('icurso', 'App\domain\Curso')
  <ul class="breadcrumb">
-    <li>Cursos - Cursos</li>
+    <li>Cursos</li>
     <li class="active">Listado de Cursos</li>
 </ul>
 
@@ -18,7 +18,9 @@
         <form method="GET" action="{{action('CursosController@listarCursos')}}" class="navbar-form navbar-left pull-right" role="search">
             <input type="hidden" name="_search" value="true" />
             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+
             <div class="row">
+
               <div class="form-group">
                     <input type="text" class="form-control " name="str_curso" placeholder="" id="search_curso">
                         <div class="form-group">      
@@ -37,6 +39,7 @@
     </div>
   </div>
       <div class="panel-body">
+        <span align="float:left" align="left"><b>Cantidad de cursos: {{$cant}}</b><span>
         <div class="table-responsive">
               <table class="table table-responsive table-striped table-bordered table-hover" id="curso">
                   <thead>
