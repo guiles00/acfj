@@ -1,56 +1,39 @@
 @inject('icurso','App\domain\Curso')
-
-
 <!-- Modal Busqueda Avanzada-->
-<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+<div class="modal fade" id="basicModal" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-            <h4 class="modal-title" id="myModalLabel">B&uacute;squeda de Actuaciones</h4>
+            <button type="button" class="close"  aria-hidden="true"></button>
+            <h4 class="modal-title" id="myModalLabel">B&uacute;squeda</h4>
             </div>
-            <form method="POST" action="#">
+           
 
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-lg-12 col-md-12">
-            
-            <div class="row"> 
-              <div class="form-group">
-                <label class="control-label col-md-2">Alumno</label>
+                <div class="modal-body">
+                       <div class="form-group">
+                      <label class="control-label  col-sm-2" >Alumno</label>    
+                      <div class="col-sm-6" >
+                         <select class="form-control" name="docente_id" id="b_usuario_sitio_id" style="width: 100%;" required>
+                             <option value="" selected></option>
+                         </select>
+                      </div>
+                    </div>    
 
-                <div class="col-md-8">
-                    <select class="form-control" name="anio">
-                      
-                    </select>
-                </div>
-              </div>
-            </div>  
-            <br>
-            
-        </div>
-      </div>
 
                 </div>
                 <div class="modal-footer">
              
-                <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
-
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary" >Aceptar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="b_cerrar_alumno">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="b_agrear_alumno">Aceptar</button>
              
             </div>
-         </form>
+
     </div>
   </div>
 </div>
 
-<!-- -->
 
-
-
-
-
+<!-- remote_select2 js-data-example-ajax -->
 
   <input type="button" class="btn btn-default" name="validar_todos" id="c_validar_todos" value="Validar Todos" />
   <!--input type="button" class="btn btn-default" name="alta_alumno" id="c_alta_alumno" value="Alta Alumno" /-->
@@ -160,13 +143,111 @@ $('document').ready(function(){
             });
 
 
-    $('#c_alta_alumno').click(function(){
+    /*$('#c_alta_alumno').click(function(){
 
         //alert('alta y luego recarga');
         //window.location.replace('../verInscriptosCurso/378');
 
         load_inscriptos(378);
         trae_data_curso(378);
+    });*/
+
+
+
+
+
+ function formatRepoAlumno (repo) {
+      
+      if (repo.loading) return repo.text;
+
+      var markup = "<div class='select2-result-repository clearfix'>" +
+        "<div class='select2-result-repository__meta'>" +
+          "<div class='select2-result-repository__title'>" +repo.name + "</div>";
+          
+      /*if (repo.description) {
+        markup += "<div class='select2-result-repository__description'>" + repo.description + "</div>";
+      }*/
+
+      markup += "<div class='select2-result-repository__statistics'>" +
+       "<div class='select2-result-repository__forks'><b>DNI:</b> " + repo.dni + "</div>" +
+      "<div class='select2-result-repository__forks'><b>EMAIL:</b> " + repo.email + "</div>" +
+      "</div>" +
+      "</div></div>";
+      
+
+      return markup;
+    }
+
+
+    function formatRepoSelection (repo) {
+
+      return repo.name || repo.text;
+    }
+
+
+
+
+//Autocomplete
+//$("#b_alumno_id").select2();
+
+$("#b_usuario_sitio_id").select2({
+                                      ajax: {
+                                        //url: "./traeDataAlumno",
+                                        url: "../traeDataAltaAlumno",
+                                        dataType: 'json',
+                                        delay: 250,
+                                        //dropdownAutoWidth: 'true',
+                                        data: function (params) {
+                                          return {
+                                            q: params.term, // search term
+                                            page: params.page,
+                                            cur_id:cur_id
+                                          };
+                                        },
+                                        processResults: function (data, params) {
+                                          
+                                        
+                                          // parse the results into the format expected by Select2
+                                          // since we are using custom formatting functions we do not need to
+                                          // alter the remote JSON data, except to indicate that infinite
+                                          // scrolling can be used
+                                          params.page = params.page || 1;
+
+                                          return {
+                                            results: data.items,
+                                            pagination: {
+                                              more: (params.page * 30) < data.total_count
+                                            }
+                                          };
+                                        },
+                                        cache: true
+                                      },
+                                      escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                                      minimumInputLength: 3,
+                                      templateResult: formatRepoAlumno, 
+                                      templateSelection: formatRepoSelection
+                });
+
+
+    $('#b_agrear_alumno').click(function(){
+        var usi_id = $('#b_usuario_sitio_id').val();
+        var cur_id = $('#b_cur_id').val();
+        var _token = $('#csrf-token').val();
+        
+        //alert('agrega este alumno'+usi_id);
+       
+         $.ajax({
+                    //url : href
+                    url:'../addAlumnoCurso'
+                    ,type:'POST'
+                    ,data: {'usi_id':usi_id,'cur_id':cur_id,'_token':_token}
+                    ,success : function(result) {
+                    
+                    window.location.reload(false); 
+                    
+                    }
+                  });        
+       
     });
 
 });

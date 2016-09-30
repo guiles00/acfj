@@ -174,7 +174,7 @@ where curso.cur_id = 378*/
 		$cus_cur_id = $input['cus_cur_id'];
 		
 		
-		$curso_usuario = CursoUsuarioSitio::where('cus_cur_id',$cus_cur_id);//->get();
+		$curso_usuario = CursoUsuarioSitio::where('cus_cur_id',$cus_cur_id)->where("cus_validado","=","-");//->get();
 		
 		$curso_usuario->update(array("cus_validado"=>"Si"));
 		
@@ -182,6 +182,60 @@ where curso.cur_id = 378*/
 		
 	}
 	
+
+	public function traeDataAltaAlumno(){
+
+		
+
+		$input = Request::all();
+		$cur_id = $input['cur_id'];
+		$q = $input['q'];
+		$res['items'] = '';
+
+        /*select * from usuario_sitio where usuario_sitio.usi_id not in (SELECT cus_usi_id FROM curso_usuario_sitio where cus_cur_id=378)*/
+
+        				$cursos = $data = DB::table('usuario_sitio')
+							->where('usi_nombre','like','%'.$q.'%')
+							->orWhere('usi_dni','like','%'.$q.'%')
+							->orWhere('usi_email','like','%'.$q.'%')
+							->whereNotIn('usuario_sitio.usi_id',function($query) use($cur_id){
+
+							    $query->select('cus_usi_id')
+							    ->from('curso_usuario_sitio')
+							    ->where('cus_cur_id', $cur_id);
+
+							})
+							->orderBy('usuario_sitio.usi_nombre','DESC')
+							//->toSql();
+            				->get();
+        
+		//print_r($cursos);
+		
+		foreach ($cursos as $key => $value) {
+					
+			$res['items'][] = array("id"=>$value->usi_id, "name"=>$value->usi_nombre,"dni"=>$value->usi_dni,"email"=>$value->usi_email);
+		}
 	
+		$res['total_counts'] = sizeof($res['items']);
+		
+	
+		echo json_encode($res);
+
+	}
+	
+	public function addAlumnoCurso(){
+
+		$input = Request::all();
+		//Agrego los id en la tabla curso_usuario_sitio
+
+		$curso_usuario_sitio = new CursoUsuarioSitio();
+		$curso_usuario_sitio->cus_usi_id = $input['usi_id'];
+		$curso_usuario_sitio->cus_cur_id = $input['cur_id'];
+		$curso_usuario_sitio->save();
+
+
+		return 'true';
+	}
+
 
 }

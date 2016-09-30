@@ -267,6 +267,8 @@ Route::group(['middleware' => 'session_expired'], function () {
 	Route::post('validarTodosCurso', 'CursosController@validarTodosCurso');
 
 	Route::get('traeDataCurso/{id}', 'CursosController@traeDataCurso');
+	Route::get('traeDataAltaAlumno', 'CursosController@traeDataAltaAlumno');
+	Route::post('addAlumnoCurso', 'CursosController@addAlumnoCurso');
 
 });
 

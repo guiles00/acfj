@@ -33,7 +33,7 @@
 
   <div class="form-group">
       <label class=" col-sm-12"></label>
-      </div>
+  </div>
   <hr>
     <div class="form-group">
       <label class="control-label  col-sm-2" >Capacitador</label>    
