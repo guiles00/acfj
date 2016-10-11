@@ -620,6 +620,7 @@ use App\domain\PagoCheque;
 	            <th>Monto</th>
 	            <th>Disponible</th>
 	            <th>Entregado</th>
+	            <th>Fecha</th>
                 <!--th width="10%"></th-->
 	          </tr>
 	        </thead>
@@ -634,6 +635,7 @@ use App\domain\PagoCheque;
                 <td> {{ $cheque->importe}} </td>
                 <td> {{ PagoCheque::getDisponibleChequeById($cheque->disponible_id) }}</td>
                 <td> {{ PagoCheque::getEntregadoChequeById($cheque->entregado_por_id) }}</td>
+                <td> {{ $cheque->fecha_retiro}} </td>
                 <!--td> <a href="{!! URL::action('ChequesController@editPagoBecaCheque',$cheque->pago_cheque_id); !!}">Ver</a></td-->
 
             </tr>
