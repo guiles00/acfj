@@ -64,7 +64,7 @@ class Curso {
             ->where('fuero_id', '=', $usi_fuero_id)
             //->toSql();
             ->first();
-
+        if(empty($area)) return '';
 		return $area->fuero_nombre;
 	}
 
