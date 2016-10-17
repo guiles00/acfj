@@ -17,6 +17,7 @@ class UsuarioSitio {
             ->first();
 
         if(empty($area)) return '';    
+        
 		return $area->fuero_nombre;
 	}
 

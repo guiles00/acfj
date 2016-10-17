@@ -1,11 +1,3 @@
-<? 
-use App\domain\User;
-use App\domain\Menu;
-?>
-
-<?
-$menu = Menu::getMenuByPerfil(User::getInstance()->getPerfilId());
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -128,7 +120,6 @@ $menu = Menu::getMenuByPerfil(User::getInstance()->getPerfilId());
                 <ul class="nav navbar-top-links navbar-right">
                
                     <li>
-                      <span style="color:white">  {{ User::getInstance()->getUsername() }} <span>
                     </li>
                     <li class="dropdown">
 
@@ -156,28 +147,10 @@ $menu = Menu::getMenuByPerfil(User::getInstance()->getPerfilId());
                     
                             <!-- Menu Dinamico-->
                             
-                            @foreach($menu as $key=>$items)
-                            <li> <!-- fa fa-dashboard fa-fw-->
-                            <a href="#"><i class=""></i>{{$key}}<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                @foreach($items as $key=>$item)
-                                    <li>
-                                        <a href="{!! URL::asset($item->url) !!}">{{$item->menu}}</a>
-                                    </li>
-                                    @endforeach
-                                </ul>
-                            </li>
-                            @endforeach
-
 
                             <!-- Menu Dinamico-->
 
                             <!-- Aca empieza el menu -->
-                            <? $user = User::getInstance(); ?>
-
-                            <? if( $user->hassAcess(1) ){ ?>
-                            <!--li>
-                            <a href="#"><i class=""></i>Control de Gesti&oacute;n<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                     <li>
                                         <a href="{!! URL::asset('/categorias') !!}">Cursos x Programas</a>

@@ -75,7 +75,7 @@ class Curso {
             ->where('dep_id', '=', $usi_dep_id)
             //->toSql();
             ->first();
-
+		if(empty($dep)) return '';
 		return $dep->dep_nombre;
 	}
 
@@ -87,6 +87,7 @@ class Curso {
             //->toSql();
             ->first();
 
+		if(empty($cargo)) return '';
 		return $cargo->car_nombre;
 	}
 }

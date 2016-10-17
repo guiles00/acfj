@@ -74,7 +74,7 @@
                       <?if($usuario_sitio->usi_validado == '-'):?>
                       <td><a href="#" class="btn btn-default  uajaxCall" onClick="return false" >OK</a></td>
                       <?else:?> <!-- {!! URL::action('UsuarioSitioController@validarUsuarioSitio') !!}-->
-                      <td></td>
+                      <td><a href="{!! URL::action('UsuarioSitioController@resetPasswordUsuarioSitio',$usuario_sitio->usi_id) !!}" class="btn btn-default gajaxCall" onClick="return false" >RESET</a></td>
                       <?endif;?>
                   </tr>
                   @endforeach     
@@ -111,8 +111,8 @@ $(document).ready(function() {
     console.debug(usi_id);
 
         $.ajax({
-                    //url : href
-                    url:'./validarUsuarioSitio'
+                    url : href
+                    //url:'./validarUsuarioSitio'
                     ,type:'POST'
                     ,data: {'cus_id':usi_id,'_token':_token}
                     ,success : function(result) {
@@ -122,6 +122,27 @@ $(document).ready(function() {
          
     });
 
+   $('.gajaxCall').click(function(e){
+    //e.preventDefault();
+    console.debug(e.target)
+    var href = e.target.href;
+    var usi_id = e.target.parentNode.parentNode.id;
+    var _token = $('#csrf-token').val();
+    console.debug(href);
+    console.debug(usi_id);
+    if(!confirm('Desea Blanquear la Contraseña?')) return false;
+        $.ajax({
+                    url : href
+                    //url:'./validarUsuarioSitio'
+                    ,type:'GET'
+                    //,data: {'cus_id':usi_id,'_token':_token}
+                    ,success : function(result) {
+                    //window.location.reload(false); 
+                    //alert('Contraseña Reseteada');
+                    }
+                  });  
+         
+    });
 
 
 

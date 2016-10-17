@@ -1,9 +1,9 @@
-<? 
+<?php 
 use App\domain\User;
 use App\domain\Menu;
 ?>
 
-<?
+<?php
 $menu = Menu::getMenuByPerfil(User::getInstance()->getPerfilId());
 ?>
 <!DOCTYPE html>

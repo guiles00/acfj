@@ -90,8 +90,8 @@ class UsuarioSitioController extends Controller {
 	public function update(){
 		
 		$input = Request::all();
-		echo "<pre>";
-		print_r($input);
+		//echo "<pre>";
+		//print_r($input);
 
 		$usuario_sitio = UsuarioSitio::find($input['_id']);
 
@@ -111,5 +111,15 @@ class UsuarioSitioController extends Controller {
 	    $usuario_sitio->save();
 
 	    return redirect()->back();
+	}
+
+
+	public function resetPasswordUsuarioSitio($id){
+
+		$usuario_sitio = UsuarioSitio::find($id);
+		$usuario_sitio->usi_clave = $usuario_sitio->usi_dni;
+		$usuario_sitio->save();
+
+		return 'true';
 	}
 }

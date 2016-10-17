@@ -38,7 +38,7 @@ class CursosController extends Controller {
             ->join('grupo_curso2', 'gc32_gcu2_id', '=', 'gcu2_id')
             ->join('grupo_curso', 'gcu2_gcu_id', '=', 'gcu_id')
             ->select('*' )
-            ->where('cur_ecu_id', '=', 1)
+            //->where('cur_ecu_id', '=', 1)
             ->orderBy('cur_fechaInicio','ASC');
         
             //Si uso el filtro
