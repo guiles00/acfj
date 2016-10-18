@@ -38,11 +38,21 @@ class CursosController extends Controller {
             ->join('grupo_curso2', 'gc32_gcu2_id', '=', 'gcu2_id')
             ->join('grupo_curso', 'gcu2_gcu_id', '=', 'gcu_id')
             ->select('*' )
-            //->where('cur_ecu_id', '=', 1)
+            
             ->orderBy('cur_fechaInicio','ASC');
         
+
+        	if(!isset($input['_search'])){
+        		$query->where(DB::raw('YEAR(cur_fechaInicio)'), '=', DB::raw('YEAR(now())')) //SIEMPRE TRAE LAS DEL CORRIENTE AÑO
+        		->where('cur_ecu_id', '=', 1);
+        	} 
+            
             //Si uso el filtro
-            if(isset($input['_search'])) $query->where('grupo_curso3.gcu3_titulo','like',"%$input[str_curso]%");
+            if(isset($input['_search'])){
+            	$query->where('grupo_curso3.gcu3_titulo','like',"%$input[str_curso]%");
+            	
+            	if($input['anio'] > 0) $query->where(DB::raw('YEAR(cur_fechaInicio)'), '=', $input['anio']);
+            } 
 
             //->groupBy('gcu_nombre')
             //->toSql();

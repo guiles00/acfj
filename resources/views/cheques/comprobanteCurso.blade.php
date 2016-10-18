@@ -34,7 +34,7 @@ div.page
 </p>
 <span style="font-size:12px;"><b>PARA CFJ</b></span>
 <span style="font-size:12px;margin-right:50px; float:right "><b>N°: {{$cheque->nro_recibo}}</b></span><br>
-<span style="font-size:12px; float:right"><b>FECHA:</b>{{$utils::formatDate(date("Y-m-d H:i:s"))}}</span>
+<span style="font-size:12px; float:right"><b>FECHA:</b>{{$utils::formatDate($cheque->fecha_retiro)}}</span>
 <p align="center" style="margin-bottom: 0in; line-height: 100%">RECIBO</p>
 <p align="center" style="margin-bottom: 0in; line-height: 100%">DEPARTAMENTO
 DE FORMACI&Oacute;N JUDICIAL Y ADMINISTRATIVO</p>

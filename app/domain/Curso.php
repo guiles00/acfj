@@ -90,5 +90,29 @@ class Curso {
 		if(empty($cargo)) return '';
 		return $cargo->car_nombre;
 	}
+
+	public static function traeEstadoCursoById($cur_ecu_id){
+		
+		//No hay tabla con el estado de los cursos (No se si crearla, asi que  hardcodeo)
+		switch ($cur_ecu_id) {
+					case 1:
+						return 'ACTIVO';
+						break;
+					case 2:
+						return 'CERRADO';
+						break;	
+					case 3:
+						return 'NO MOSTRAR WEB';
+						break;
+					case 4:
+						return 'FINALIZADO';
+						break;
+							
+					default:
+						return '';
+						break;
+		}		
+		
+	}
 }
 ?>

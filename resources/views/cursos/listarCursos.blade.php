@@ -32,6 +32,17 @@
                                 </select> 
                           </div>        
                         </div> 
+                        <div class="form-group">      
+                          <div class="col-md-4">
+                                <select class="form-control search_beca" name="anio" id="c_anio">
+                                      <option value="-1">-</option>
+                                      <option value="2016">2016</option>
+                                      <option value="2015">2015</option>
+                                      <option value="2014">2014</option>
+                                      <option value="2013">2013</option>
+                                </select> 
+                          </div>        
+                        </div> 
                     <button type="submit" class="btn btn-default" id="buscar_curso">Buscar</button>
               </div>   
          </div>
@@ -68,7 +79,7 @@
                       <td>{{$utils::formatDateBis($curso->cur_fechaFin)}}</td>
                       <td>{{$curso->gcu2_nombre}}</td>
                       <td>{{$curso->gcu3_titulo}} </td>
-                      <td>activo</td>
+                      <td>{{$curso->cur_ecu_id}}</td>
                       <td>{{$icurso::cantidadValidados($curso->cur_id)}}</td>
                       <td>{{$icurso::cantidadInscriptos($curso->cur_id)}}</td>
                       <td> <a href="{!! URL::action('CursosController@verInscriptosCurso',$curso->cur_id) !!}">Ver</a></td>

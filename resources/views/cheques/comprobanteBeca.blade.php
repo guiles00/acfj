@@ -32,8 +32,8 @@ div.page
 <p align="center"><img src=" ../img/print-logo.jpg" align="bottom" width="180" height="60" border="0">
 </p>
 <span style="font-size:12px;"><b>PARA TSJ</b></span>
-<span style="font-size:12px;margin-left:30px; float:right"><b>N°</b></span>
-<span style="font-size:12px;margin-left:30px; float:right"><b>FECHA</b></span>
+<span style="font-size:12px;margin-right:50px; float:right "><b>N°:</b></span><br>
+<span style="font-size:12px; float:right"><b>FECHA:</b>{{$utils::formatDate($cheque->fecha_retiro)}}</span>
 <p align="center" style="font-size:14px;margin-bottom: 0in; line-height: 100%">REINTEGRO DE BECA</p>
 <p align="center" style="font-size:14px;margin-bottom: 0in; line-height: 100%">CONSTANCIA DE RECEPCI&Oacute;N</p>
 <table class="tg">
