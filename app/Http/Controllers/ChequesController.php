@@ -55,7 +55,11 @@ class ChequesController extends Controller {
 		$input = Request::all();
 		
 	
-		$cheques = PagoCheque::where('tipo_pago_cheque_id','=',1)->orderBy('pago_cheque_id','DESC')->paginate(20);// ->get();	
+		$cheques = PagoCheque::where('tipo_pago_cheque_id','=',1)
+		->where('pago_cheque.entregado_por_id','=',0)
+		->orderBy('pago_cheque.disponible_id','DESC')
+		->orderBy('pago_cheque.fecha_emision','ASC')
+		->paginate(20);// ->get();	
 		
 		//echo "<pre>";
 		//print_r($input);
@@ -77,7 +81,6 @@ class ChequesController extends Controller {
 	                              			//->orwhere('pago_cheque.nro_cheque','like','%'.$input['str_cheque'].'%');
 	                			})
 								->where('pago_cheque.tipo_pago_cheque_id','=',1)
-								->orderBy('pago_cheque.pago_cheque_id','DESC')
 					            //->toSql();
 	            				->paginate(20);
 	            					

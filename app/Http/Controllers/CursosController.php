@@ -6,6 +6,8 @@ use Request;
 use DB;
 use App\domain\Utils;
 use App\CursoUsuarioSitio;
+use App\UsuarioSitio;
+use App\Curso;
 
 class CursosController extends Controller {
 
@@ -159,12 +161,63 @@ where curso.cur_id = 378*/
 		
 		$cus_id = $input['cus_id'];
 		$curso_usuario = CursoUsuarioSitio::find($cus_id);
-		$curso_usuario->cus_validado = 'Si';
-		$curso_usuario->save();
+		$curso_usuario->cus_validado = 'Si'; //Lo comente para probar
+		
+		try {
+   		$res =	$curso_usuario->save();
+		} catch (Exception $e) {
+   			echo "Exception";
+		}
+		
+		//print_r($curso_usuario);
+		if($res)
+		//Si sale todo OK comunico
+	    $this->comunicarUsuario($curso_usuario->cus_cur_id,$curso_usuario->cus_usi_id);
 		
 		return 'true'; //Debería devolver estado si hay error o exito
 	}
 
+	private function comunicarUsuario($cur_id,$usi_id){
+
+		//echo "MANDO EMAIL".$usi_id;
+		//Traigo datos curso, tengo que hacer una consulta con muchos joins
+		//$curso = Curso::find($cur_id);
+
+			$curso = DB::table('curso')
+            ->join('grupo_curso3_grupo_curso2', 'grupo_curso3_grupo_curso2.gcu32_id', '=', 'curso.cur_gcu32_id')
+            ->join('grupo_curso3', 'gcu3_id', '=', 'gc32_gcu3_id')
+            ->select('*')
+            ->where('curso.cur_id', '=', $cur_id)
+            ->get();
+		//Traigo datos usuario
+		$usuario = UsuarioSitio::find($usi_id);
+		echo $usuario->usi_email;
+		echo $usuario->usi_nombre;
+		echo $curso[0]->gcu3_titulo;
+		
+		//$this->enviaEmail(null,null);
+	}
+
+
+	private function enviaEmail($datos_destinatario,$html){
+
+		//$to      = $datos_destinatario[0]->usi_email;
+		$to = $datos_destinatario; //ESTO NO SE COMO LO VOY A IMPLEMENTAR
+		$subject = 'NOTIFICACION BECA 2016';
+		$message = $html;
+		$headers = 'From: cursos@jusbaires.gov.ar' . "\r\n" .
+   			   'Reply-To: cursos@jusbaires.gov.ar' . "\r\n" .
+			   'Bcc: gcaserotto@jusbaires.gov.ar' . "\r\n" .
+			   'Return-Path: return@jusbaires.gov.ar' . "\r\n" .
+			   'MIME-Version: 1.0' . "\r\n" .
+			   'Content-Type: text/html; charset=ISO-8859-1' . "\r\n" .
+			   'X-Mailer: PHP/' . phpversion();
+
+		$res = mail($to, $subject, $message, $headers);
+		
+		
+		return $res;
+	}
 	public function rechazarUsuarioCurso(){
 		
 		$input = Request::all();

@@ -2,6 +2,7 @@
 
 @section('content')
 @inject('pago_cheque','App\domain\PagoCheque')
+@inject('utils','App\domain\Utils')
 <? 
 //use App\domain\Utils;
 //use App\domain\Actuacion;
@@ -123,7 +124,9 @@
         <table class="table table-responsive table-striped table-bordered table-hover" id="cheque">
             <thead>
                 <tr>
-                   <th>Nro Recibo</th>                   
+                   <th>Nro Recibo</th>
+                   <th>Fecha Emisi&oacute;n Cheque</th>
+                   <th>D&iacute;as</th>
                    <th>Nro Disposici&oacute;n Fija Fecha</th>                   
                    <th>Nro Disposici&oacute;n Pago</th>
                    <th>Nro. Memo</th>
@@ -139,8 +142,14 @@
            </thead>
            <tbody>
             @foreach ($cheques as $cheque)
+            <?php if( ($cheque->fecha_emision <> 0 )&& ($utils::compareDate($utils::now(),$cheque->fecha_emision) > 20) ):?>
+            <tr style="background-color:#ff4c4c">
+            <?php else: ?>
             <tr>
+            <?php endif; ?>
                 <td> {{ $cheque->nro_recibo }} </td>
+                <td> {{ $utils::formatDate($cheque->fecha_emision)}} </td>
+                <td> {{ $utils::compareDate($utils::now(),$cheque->fecha_emision) }} </td>
                 <td> {{ $cheque->nro_disp_otorga }} </td>
                 <td> {{ $cheque->nro_disp_aprueba }} </td>
                 <td> {{  $pago_cheque::getNroMemoById($cheque->nro_memo_id) }} </td>

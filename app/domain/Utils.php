@@ -40,5 +40,13 @@ class Utils {
 		return ($boolean == 0)? 'NO':'SI';
 
 	}
+
+	public static function compareDate($one,$two){
+
+		$datetime1 = date_create($one); 
+		$datetime2 = date_create($two); 
+		$interval = date_diff($datetime1, $datetime2); 
+		return $interval->days;
+	}
 }
 ?>

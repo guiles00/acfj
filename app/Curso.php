@@ -6,5 +6,6 @@ class Curso extends Model {
 
 	//
 		protected $table = 'curso';
+		protected $primaryKey = 'cur_id';
 
 }
