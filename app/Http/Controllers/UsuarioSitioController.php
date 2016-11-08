@@ -61,10 +61,58 @@ class UsuarioSitioController extends Controller {
 	}
 
 
-	public function validarUsuarioSitio(){
+	public function validarUsuarioSitio($id){ //AJAX
 
-		return 'holis';
+		$usuario = UsuarioSitio::find($id);
+		$usuario->usi_validado = 'Si';
+		$usuario->save();
+
+
+		$this->comunicarUsuario($usuario->usi_id);
+
+		return 'true';
 	}
+
+
+	private function comunicarUsuario($usi_id){
+
+		$usuario = UsuarioSitio::find($usi_id);
+		$html = "Estimado $usuario->usi_nombre , le informamos que ya ha sido habilitado como alumno en nuestro sitio web. Le recordamos sus datos de acceso:
+		<br>
+		USUARIO: $usuario->usi_nombre;
+		<br>
+		CONTRASE&Ntilde;A: $usuario->usi_clave;
+		<br>
+		Ante cualquier duda, por favor, pongase en contacto.";
+
+		$this->enviaEmail($usuario->usi_email,$html,'Bienvenido a CFJ');
+
+		return 'true';
+	}
+
+		private function enviaEmail($datos_destinatario,$html,$asunto){
+		
+		//print_r($html);
+		
+		//$to      = $datos_destinatario[0]->usi_email;
+		$to = $datos_destinatario; //ESTO NO SE COMO LO VOY A IMPLEMENTAR
+		$subject = $asunto;
+		$message = $html;
+		$headers = 'From: cursos@jusbaires.gov.ar' . "\r\n" .
+   			   'Reply-To: cursos@jusbaires.gov.ar' . "\r\n" .
+			   'Bcc: gcaserotto@jusbaires.gov.ar' . "\r\n" .
+			   'Return-Path: return@jusbaires.gov.ar' . "\r\n" .
+			   'MIME-Version: 1.0' . "\r\n" .
+			   'Content-Type: text/html; charset=ISO-8859-1' . "\r\n" .
+			   'X-Mailer: PHP/' . phpversion();
+
+		$res = mail($to, $subject, $message, $headers);
+		
+		
+		return $res;
+		//return $html;
+	}
+
 
 	public function verUsuarioSitio($id){
 		

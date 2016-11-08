@@ -142,7 +142,7 @@
            </thead>
            <tbody>
             @foreach ($cheques as $cheque)
-            <?php if( ($cheque->fecha_emision <> 0 )&& ($utils::compareDate($utils::now(),$cheque->fecha_emision) > 20) ):?>
+            <?php if( ($cheque->entregado_por_id == 0 ) && ($cheque->fecha_emision <> 0 )&& ($utils::compareDate($utils::now(),$cheque->fecha_emision) > 20) ):?>
             <tr style="background-color:#ff4c4c">
             <?php else: ?>
             <tr>

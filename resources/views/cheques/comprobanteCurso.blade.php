@@ -76,10 +76,15 @@ DE FORMACI&Oacute;N JUDICIAL Y ADMINISTRATIVO</p>
     <td class="tg-yw4l">{{$cheque->orden_pago}}</td>
   </tr>
   <tr>
+    <td class="tg-yw4l">NRO CHEQUE:</td>
+    <td class="tg-yw4l">{{$cheque->nro_cheque}}</td>
     <td class="tg-yw4l">FECHA DE EMISI&Oacute;N:</td>
     <td class="tg-yw4l">{{$utils::formatDateBis($cheque->fecha_emision)}}</td>
+  </tr>
+  <tr>
     <td class="tg-yw4l">IMPORTE:</td>
-    <td class="tg-yw4l">${{$cheque->importe}}</td>
+    <td class="tg-yw4l" colspan="2">${{$cheque->importe}}</td>
+    <td class="tg-yw4l"></td>
   </tr>
   <tr>
     <td class="tg-yw4l"><b>BENEFICIARIO:</b><br><span class="tg-y5sk">(APELLIDO Y NOMBRE)</span></td>
@@ -104,7 +109,7 @@ DE FORMACI&Oacute;N JUDICIAL Y ADMINISTRATIVO</p>
 </p>
 <span style="font-size:12px;"><b>PARA TSJ</b></span>
 <span style="font-size:12px;margin-right:50px; float:right "><b>N°: {{$cheque->nro_recibo}}</b></span><br>
-<span style="font-size:12px; float:right"><b>FECHA:</b>{{$utils::formatDate(date("Y-m-d H:i:s"))}}</span>
+<span style="font-size:12px; float:right"><b>FECHA:</b>{{$utils::formatDate($cheque->fecha_retiro)}}</span>
 <p align="center" style="margin-bottom: 0in; line-height: 100%">RECIBO</p>
 <p align="center" style="margin-bottom: 0in; line-height: 100%">DEPARTAMENTO
 DE FORMACI&Oacute;N JUDICIAL Y ADMINISTRATIVO</p>
@@ -146,10 +151,15 @@ DE FORMACI&Oacute;N JUDICIAL Y ADMINISTRATIVO</p>
     <td class="tg-yw4l">{{$cheque->orden_pago}}</td>
   </tr>
   <tr>
+    <td class="tg-yw4l">NRO CHEQUE:</td>
+    <td class="tg-yw4l">{{$cheque->nro_cheque}}</td>
     <td class="tg-yw4l">FECHA DE EMISI&Oacute;N:</td>
     <td class="tg-yw4l">{{$utils::formatDateBis($cheque->fecha_emision)}}</td>
+  </tr>
+  <tr>
     <td class="tg-yw4l">IMPORTE:</td>
-    <td class="tg-yw4l">${{$cheque->importe}}</td>
+    <td class="tg-yw4l" colspan="2">${{$cheque->importe}}</td>
+    <td class="tg-yw4l"></td>
   </tr>
   <tr>
     <td class="tg-yw4l"><b>BENEFICIARIO:</b><br><span class="tg-y5sk">(APELLIDO Y NOMBRE)</span></td>

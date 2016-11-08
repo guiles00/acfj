@@ -191,19 +191,48 @@ where curso.cur_id = 378*/
             ->get();
 		//Traigo datos usuario
 		$usuario = UsuarioSitio::find($usi_id);
-		echo $usuario->usi_email;
-		echo $usuario->usi_nombre;
-		echo $curso[0]->gcu3_titulo;
+		//echo $usuario->usi_email;
+		//echo $usuario->usi_nombre;
+		//echo $curso[0]->gcu3_titulo;
+		$actividad = $curso[0]->gcu3_titulo;
 		
-		//$this->enviaEmail(null,null);
+		$html = "RESPUESTA AUTOMATICA / NO Responda este email <br>
+
+Estimado/a <span>$usuario->usi_nombre </span> , le informamos que de acuerdo a su solicitud se le ha asignado la vacante a la actividad <span> $actividad </span>
+<br>
+Se recuerda que cada actividad posee vacantes limitadas, y a los efectos de maximizar la asistencia, luego de cubierto el cupo, se abre una lista de inscripci&oacute;n condicional. <br>
+
+A fin de habilitar a quienes est&eacute;n inscriptos en dicha lista, la renuncia a la vacante asignada deber&aacute; hacerse desde la p&aacute;gina web ingresando a MIS CURSOS, con al menos un d&iacute;a de anticipaci&oacute;n, de lo contrario, esta conducta ser&aacute; tenida en cuenta como antecedente desfavorable para futuras asignaciones.<br>
+
+El Centro de Formaci&oacute;n Judicial desea que los participantes con discapacidad se sientan a gusto en sus actividades. P&oacute;ngase en contacto a tiempo para informar sus necesidades de accesibilidad u otras necesidades de apoyo. <br>
+
+Podr&aacute; descargar los tutoriales de ayuda desde la p&aacute;gina web o haciendo click en el siguiente link: <a href='http://www.cfj.gov.ar/vermas-noticias.php?n=172'>Clic Aqu&iacute;</a>
+<br>
+
+Cordialmente
+Centro de Formaci&oacute;n Judicial
+Tribunal Superior de Justicia de la Ciudad Aut&oacute;noma de Buenos Aires
+<br>
+Bol&iacute;var 177, 3 piso 
+<br>
+Email: cursos@jusbaires.gov.ar
+<br>
+ENCONTRANOS EN: www.cfj.gov.ar <br>
+F: http://www.facebook.com/cfjcaba <br>
+T: https://twitter.com/CFJ_CABA <br>";
+
+
+		$this->enviaEmail($usuario->usi_email,$html);
 	}
 
 
 	private function enviaEmail($datos_destinatario,$html){
-
+		
+		//print_r($html);
+		
 		//$to      = $datos_destinatario[0]->usi_email;
 		$to = $datos_destinatario; //ESTO NO SE COMO LO VOY A IMPLEMENTAR
-		$subject = 'NOTIFICACION BECA 2016';
+		$subject = ' Inscripción a curso';
 		$message = $html;
 		$headers = 'From: cursos@jusbaires.gov.ar' . "\r\n" .
    			   'Reply-To: cursos@jusbaires.gov.ar' . "\r\n" .
@@ -217,6 +246,7 @@ where curso.cur_id = 378*/
 		
 		
 		return $res;
+		//return $html;
 	}
 	public function rechazarUsuarioCurso(){
 		
@@ -236,11 +266,25 @@ where curso.cur_id = 378*/
 		
 		$cus_cur_id = $input['cus_cur_id'];
 		
+		//echo "<pre>";
+		$curso_usuarios = CursoUsuarioSitio::where('cus_cur_id',$cus_cur_id)->where("cus_validado","=","-")->get();
 		
-		$curso_usuario = CursoUsuarioSitio::where('cus_cur_id',$cus_cur_id)->where("cus_validado","=","-");//->get();
+		foreach ($curso_usuarios as $curso_usuario) {
+				
+				$usuario = UsuarioSitio::find($curso_usuario->cus_usi_id);
+				
+				$curso_usuario->cus_validado = "Si";
+				$curso_usuario->save();
+
+				//echo "actualizo";
+				$this->comunicarUsuario($curso_usuario->cus_cur_id,$curso_usuario->cus_usi_id);
+		}
 		
-		$curso_usuario->update(array("cus_validado"=>"Si"));
+
+		//$curso_usuario = CursoUsuarioSitio::where('cus_cur_id',$cus_cur_id)->where("cus_validado","=","-");//->get();
 		
+		//$curso_usuario->update(array("cus_validado"=>"Si"));
+				
 		return 'true';
 		
 	}

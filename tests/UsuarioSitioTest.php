@@ -43,9 +43,19 @@ class UsuarioSitioTest extends TestCase {
 	    $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testValidarUsuario(){
+    public function testValidarUsuarioSito(){
 
-    	$this->assertTrue(true);	
+        //$response = $this->call('GET','/validarUsuarioSitio',['id'=>8613]); //8613
+
+        $usuario = UsuarioSitio::find(8613);
+        $usuario->usi_validado = '-';
+        $usuario->save();
+        $response = $this->call('GET','/validarUsuarioSitio/8613'); //8613
+        $usuario = UsuarioSitio::find(8613);
+
+        $this->assertEquals($usuario->usi_validado, 'Si');   
+    	
+        //$this->assertTrue(true);	
     }
 
     public function testVerUsuarioSitio(){

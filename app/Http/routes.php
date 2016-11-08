@@ -277,7 +277,7 @@ Route::group(['middleware' => 'session_expired'], function () {
 
 	Route::get('listarUsuarioSitio', 'UsuarioSitioController@listarUsuarioSitio');
 	Route::get('verUsuarioSitio/{id}', 'UsuarioSitioController@verUsuarioSitio');
-	Route::post('validarUsuarioSitio', 'UsuarioSitioController@validarUsuarioSitio'); 
+	Route::get('validarUsuarioSitio/{id}', 'UsuarioSitioController@validarUsuarioSitio'); 
 	Route::post('updateUsuarioSitio', 'UsuarioSitioController@update'); 
 
 	Route::get('resetPasswordUsuarioSitio/{id}', 'UsuarioSitioController@resetPasswordUsuarioSitio');

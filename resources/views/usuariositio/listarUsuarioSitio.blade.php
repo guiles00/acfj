@@ -72,7 +72,7 @@
                       <td>{{$usuario_sitio->usi_activado}}</td>
                       <td> <a href="{!! URL::action('UsuarioSitioController@verUsuarioSitio',$usuario_sitio->usi_id) !!}">Ver</a></td>
                       <?if($usuario_sitio->usi_validado == '-'):?>
-                      <td><a href="#" class="btn btn-default  uajaxCall" onClick="return false" >OK</a></td>
+                      <td><a href="{!! URL::action('UsuarioSitioController@validarUsuarioSitio',$usuario_sitio->usi_id) !!}" class="btn btn-default  uajaxCall" onClick="return false" >OK</a></td>
                       <?else:?> <!-- {!! URL::action('UsuarioSitioController@validarUsuarioSitio') !!}-->
                       <td><a href="{!! URL::action('UsuarioSitioController@resetPasswordUsuarioSitio',$usuario_sitio->usi_id) !!}" class="btn btn-default gajaxCall" onClick="return false" >RESET</a></td>
                       <?endif;?>
@@ -113,8 +113,8 @@ $(document).ready(function() {
         $.ajax({
                     url : href
                     //url:'./validarUsuarioSitio'
-                    ,type:'POST'
-                    ,data: {'cus_id':usi_id,'_token':_token}
+                    ,type:'GET'
+                    //,data: {'cus_id':usi_id,'_token':_token}
                     ,success : function(result) {
                     window.location.reload(false); 
                     }

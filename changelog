@@ -1,5 +1,33 @@
 Sistema Gestión Centro de Formación Judicial
 
+################### Versión [1.0.09] 08 - Noviembre - 2016 ####################################################
+	
+USU.10.01	Validar Usuario
+USU.10.02	Ajax en validar usuario
+CUR.10.03	email validacion
+PAGO.11.02	Agregar en comprobante numero de cheque
+USU.11.01	Notificar validacion Usuairo
+
+	modified:   app/Http/Controllers/CursosController.php
+	modified:   app/Http/Controllers/UsuarioSitioController.php
+	modified:   app/Http/routes.php
+	modified:   changelog
+	modified:   resources/views/app.blade.php
+	deleted:    resources/views/app.blade.php.09_30_2016
+	deleted:    resources/views/app.blade.php.10_03_2016
+	deleted:    resources/views/app.blade.php.10_04_2016
+	deleted:    resources/views/app.blade.php.10_05_2016
+	deleted:    resources/views/app.blade.php.10_06_2016
+	deleted:    resources/views/app.blade.php.10_17_2016
+	modified:   resources/views/cheques/comprobanteCurso.blade.php
+	modified:   resources/views/cheques/listPagoCheques.blade.php
+	modified:   resources/views/usuariositio/listarUsuarioSitio.blade.php
+	modified:   tests/UsuarioSitioTest.php
+
+
+################### FIN Versión [1.0.08] 29 - Julio - 2016 ####################################################
+
+
 ################### Versión [1.0.08] 29 - Julio - 2016 ####################################################
 	
 SIS.07.01	Agregar compresion en HTTP y cache
