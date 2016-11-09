@@ -79,7 +79,7 @@ class UsuarioSitioController extends Controller {
 		$usuario = UsuarioSitio::find($usi_id);
 		$html = "Estimado $usuario->usi_nombre , le informamos que ya ha sido habilitado como alumno en nuestro sitio web. Le recordamos sus datos de acceso:
 		<br>
-		USUARIO: $usuario->usi_nombre;
+		USUARIO: $usuario->usi_email;
 		<br>
 		CONTRASE&Ntilde;A: $usuario->usi_clave;
 		<br>

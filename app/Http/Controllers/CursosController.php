@@ -227,8 +227,8 @@ T: https://twitter.com/CFJ_CABA <br>";
 
 
 	private function enviaEmail($datos_destinatario,$html){
-		
-		//print_r($html);
+		echo $datos_destinatario; echo "<br>";
+		print_r($html);
 		
 		//$to      = $datos_destinatario[0]->usi_email;
 		$to = $datos_destinatario; //ESTO NO SE COMO LO VOY A IMPLEMENTAR
