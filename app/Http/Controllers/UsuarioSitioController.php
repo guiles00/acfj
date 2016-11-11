@@ -100,7 +100,7 @@ class UsuarioSitioController extends Controller {
 		$message = $html;
 		$headers = 'From: cursos@jusbaires.gov.ar' . "\r\n" .
    			   'Reply-To: cursos@jusbaires.gov.ar' . "\r\n" .
-			   'Bcc: gcaserotto@jusbaires.gov.ar' . "\r\n" .
+			 //  'Bcc: gcaserotto@jusbaires.gov.ar' . "\r\n" .
 			   'Return-Path: return@jusbaires.gov.ar' . "\r\n" .
 			   'MIME-Version: 1.0' . "\r\n" .
 			   'Content-Type: text/html; charset=ISO-8859-1' . "\r\n" .

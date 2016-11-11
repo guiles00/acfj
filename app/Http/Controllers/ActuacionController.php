@@ -250,7 +250,7 @@ class ActuacionController extends Controller {
 		$message = $html;
 		$headers = 'From: no-reply@jusbaires.gov.ar' . "\r\n" .
    			   'Reply-To: no-reply@jusbaires.gov.ar' . "\r\n" .
-			   'Bcc: gcaserotto@jusbaires.gov.ar' . "\r\n" .
+			  // 'Bcc: gcaserotto@jusbaires.gov.ar' . "\r\n" .
 			   'Return-Path: return@jusbaires.gov.ar' . "\r\n" .
 			   'MIME-Version: 1.0' . "\r\n" .
 			   'Content-Type: text/html; charset=UTF-8' . "\r\n" .
