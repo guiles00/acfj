@@ -1,6 +1,6 @@
 <div class="row">
                 <div class="col-lg-12">
-                    <h2 class="page-header">{{$data['res'][0]->gcu_nombre}}</h2>
+                    <h2 class="page-header">{{$data['res'][0]->subgrupo}}</h2>
                 </div>
                 
 </div>
@@ -23,7 +23,7 @@
             <tbody>
             @foreach($data['res'] as $dat)
               <tr href="{!! URL::action('TableroController@listadoCursos', array('gcu2_id'=>$dat->gcu2_id,'anio'=>$data['anio'])); !!}" style="cursor: pointer;">
-              <td> {{ $dat->gcu2_nombre }}</td>
+              <td> {{ $dat->subgrupo }}</td>
               <td> {{ $dat->cantidad }} </td>
               </tr>
             @endforeach

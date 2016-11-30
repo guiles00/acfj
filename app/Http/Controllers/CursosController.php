@@ -222,21 +222,21 @@ F: http://www.facebook.com/cfjcaba <br>
 T: https://twitter.com/CFJ_CABA <br>";
 
 
-		$this->enviaEmail($usuario->usi_email,$html);
+		$this->enviaEmail($usuario->usi_email,$html,'Inscripción a curso');
 	}
 
 
-	private function enviaEmail($datos_destinatario,$html){
+	private function enviaEmail($datos_destinatario,$html,$asunto){
 		echo $datos_destinatario; echo "<br>";
 		print_r($html);
 		
 		//$to      = $datos_destinatario[0]->usi_email;
 		$to = $datos_destinatario; //ESTO NO SE COMO LO VOY A IMPLEMENTAR
-		$subject = ' Inscripción a curso';
+		$subject = $asunto ; //' Inscripción a curso';
 		$message = $html;
 		$headers = 'From: cursos@jusbaires.gov.ar' . "\r\n" .
    			   'Reply-To: cursos@jusbaires.gov.ar' . "\r\n" .
-			   'Bcc: gcaserotto@jusbaires.gov.ar' . "\r\n" .
+			  // 'Bcc: gcaserotto@jusbaires.gov.ar' . "\r\n" .
 			   'Return-Path: return@jusbaires.gov.ar' . "\r\n" .
 			   'MIME-Version: 1.0' . "\r\n" .
 			   'Content-Type: text/html; charset=ISO-8859-1' . "\r\n" .

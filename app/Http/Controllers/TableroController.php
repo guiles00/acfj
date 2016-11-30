@@ -332,11 +332,12 @@ group by gcu_nombre
 			GROUP BY gcu2_id
 		*/
 
+
 		$input = Request::all();
 		
 
 		$data = [];
-
+/*
 			$res = DB::table('curso')
             ->join('grupo_curso3', 'curso.cur_gcu3_id', '=', 'grupo_curso3.gcu3_id')
             ->join('grupo_curso2', 'grupo_curso3.gcu3_gcu2_id', '=', 'grupo_curso2.gcu2_id')
@@ -349,6 +350,27 @@ group by gcu_nombre
             //->toSql();
             ->get();	
 
+*/
+
+ $res = DB::table('curso')
+            ->join('grupo_curso3_grupo_curso2', 'grupo_curso3_grupo_curso2.gcu32_id', '=', 'curso.cur_gcu32_id')
+            ->join('grupo_curso3', 'gcu3_id', '=', 'gc32_gcu3_id')
+            ->join('grupo_curso2', 'gc32_gcu2_id', '=', 'gcu2_id')
+            ->join('grupo_curso', 'gcu2_gcu_id', '=', 'gcu_id')
+            ->select('gcu2_id','gcu_nombre as grupo','gcu2_nombre as subgrupo','gcu3_titulo as tipo_actividad',DB::raw('count(*) as cantidad') )
+            ->where(DB::raw('YEAR(curso.cur_fechaInicio)'), '=',  $input['anio'])
+            ->where('gcu_id', '=', $input['gcu_id'])
+            ->groupBy('gcu2_id')
+            ->orderBy('cantidad','DESC')
+            //->toSql();
+            ->get();
+
+
+
+
+
+
+
             $data['res'] = $res;
             $data['anio'] = $input['anio'];
 
@@ -359,7 +381,7 @@ group by gcu_nombre
 		
 				$grupo['color'] = "#2484c1";
 				$grupo['value'] = (integer)$value->cantidad;
-				$grupo['label'] = $value->gcu2_nombre;
+				$grupo['label'] = $value->subgrupo;
 				$arr_data[]=(object)$grupo;
 			}
 
@@ -382,7 +404,7 @@ group by gcu_nombre
 		$input = Request::all();
 		//print_r($input);
 		$data = [];
-
+/*	
 			$res = DB::table('curso')
             ->join('grupo_curso3', 'curso.cur_gcu3_id', '=', 'grupo_curso3.gcu3_id')
             ->join('grupo_curso2', 'grupo_curso3.gcu3_gcu2_id', '=', 'grupo_curso2.gcu2_id')
@@ -394,6 +416,24 @@ group by gcu_nombre
             ->orderBy('cantidad','DESC')
             //->toSql();
             ->get();	
+
+*/
+
+
+            $res = DB::table('curso')
+            ->join('grupo_curso3_grupo_curso2', 'grupo_curso3_grupo_curso2.gcu32_id', '=', 'curso.cur_gcu32_id')
+            ->join('grupo_curso3', 'gcu3_id', '=', 'gc32_gcu3_id')
+            ->join('grupo_curso2', 'gc32_gcu2_id', '=', 'gcu2_id')
+            ->join('grupo_curso', 'gcu2_gcu_id', '=', 'gcu_id')
+             ->select('*',DB::raw('count(*) as cantidad'))
+            ->where(DB::raw('YEAR(curso.cur_fechaInicio)'), '=',  $input['anio'])
+            ->where('gcu2_id', '=', $input['gcu2_id'])
+            ->groupBy('gcu3_id')
+            ->orderBy('cantidad','DESC')
+            //->toSql();
+            ->get();
+
+
 
             $data['res'] = $res;
             $data['anio'] = $input['anio'];
@@ -415,7 +455,7 @@ group by gcu_nombre
 		$input = Request::all();
 		//print_r($input);
 		$data = [];
-
+/*
 			$res = DB::table('curso')
             ->join('grupo_curso3', 'curso.cur_gcu3_id', '=', 'grupo_curso3.gcu3_id')
             ->join('grupo_curso2', 'grupo_curso3.gcu3_gcu2_id', '=', 'grupo_curso2.gcu2_id')
@@ -425,6 +465,19 @@ group by gcu_nombre
             ->where('cur_gcu3_id', '=', $input['cur_gcu3_id'])
   //          ->toSql();
             ->get();	
+*/
+           $res = DB::table('curso')
+            ->join('grupo_curso3_grupo_curso2', 'grupo_curso3_grupo_curso2.gcu32_id', '=', 'curso.cur_gcu32_id')
+            ->join('grupo_curso3', 'gcu3_id', '=', 'gc32_gcu3_id')
+            ->join('grupo_curso2', 'gc32_gcu2_id', '=', 'gcu2_id')
+            ->join('grupo_curso', 'gcu2_gcu_id', '=', 'gcu_id')
+            ->select('*')
+            ->where(DB::raw('YEAR(curso.cur_fechaInicio)'), '=',  $input['anio'])
+            ->where('cur_gcu3_id', '=', $input['cur_gcu3_id'])
+            //->toSql();
+            ->get();
+
+
 
             $data['res'] = $res;
 
