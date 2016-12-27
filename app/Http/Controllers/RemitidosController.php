@@ -217,6 +217,7 @@ class RemitidosController extends Controller {
 		}else{
 			$remitidos = Remitidos::where('numero_memo', 'LIKE', '%'.$input['str_remitido'].'%')
 			->orWhere('dirigido', 'LIKE', '%'.$input['str_remitido'].'%')
+			->orWhere('asunto', 'LIKE', '%'.$input['str_remitido'].'%')
 			->orderBy( 'numero_memo' ,'desc')->get();			
 		}
 		

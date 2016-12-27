@@ -82,9 +82,10 @@ DE FORMACI&Oacute;N JUDICIAL Y ADMINISTRATIVO</p>
     <td class="tg-yw4l">{{$utils::formatDateBis($cheque->fecha_emision)}}</td>
   </tr>
   <tr>
+    <td class="tg-yw4l">MONTO SOLICITADO:</td>
+    <td class="tg-yw4l">${{$cheque->importe}}</td>
     <td class="tg-yw4l">IMPORTE:</td>
-    <td class="tg-yw4l" colspan="2">${{$cheque->importe}}</td>
-    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l">${{$cheque->importe_cheque}}</td>
   </tr>
   <tr>
     <td class="tg-yw4l"><b>BENEFICIARIO:</b><br><span class="tg-y5sk">(APELLIDO Y NOMBRE)</span></td>
@@ -157,9 +158,10 @@ DE FORMACI&Oacute;N JUDICIAL Y ADMINISTRATIVO</p>
     <td class="tg-yw4l">{{$utils::formatDateBis($cheque->fecha_emision)}}</td>
   </tr>
   <tr>
+    <td class="tg-yw4l">MONTO SOLICITADO:</td>
+    <td class="tg-yw4l">${{$cheque->importe}}</td>
     <td class="tg-yw4l">IMPORTE:</td>
-    <td class="tg-yw4l" colspan="2">${{$cheque->importe}}</td>
-    <td class="tg-yw4l"></td>
+    <td class="tg-yw4l">${{$cheque->importe_cheque}}</td>
   </tr>
   <tr>
     <td class="tg-yw4l"><b>BENEFICIARIO:</b><br><span class="tg-y5sk">(APELLIDO Y NOMBRE)</span></td>
