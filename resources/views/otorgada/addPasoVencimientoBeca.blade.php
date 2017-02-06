@@ -42,7 +42,7 @@
 					</div>
 					
 				 	<div class="form-group">
-				      <label class="control-label col-sm-2">Fecha Ingreso</label>
+				      <label class="control-label col-sm-2">Fecha Auto</label>
 				      <div class="col-sm-4">          
 				        <input type="text" class="form-control datepicker"  name="paso_beca_fecha" id="b_paso_beca_fecha" value="{{ date('Y-m-d') }}" >
 				      </div>
