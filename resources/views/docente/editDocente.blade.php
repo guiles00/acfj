@@ -45,7 +45,7 @@
     <div class="form-group">
       <label class="control-label  col-sm-2">NOMBRE</label>
       <div class="col-sm-2">          
-        <input type="text" class="form-control" id="" name="docente_nombre" value="{{ strtoupper($docente->doc_nombre)}}">
+        <input type="text" class="form-control" id="" name="docente_nombre" value="{{ $docente->doc_nombre }}">
       </div>
     </div>
 
