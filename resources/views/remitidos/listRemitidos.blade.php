@@ -25,19 +25,87 @@ $helper = new Helper();
                 <a class="btn btn-default pull-left" href="{!! URL::action('RemitidosController@altaRemitidos'); !!}" aria-label="Left Align">Agregar Remitidos</a><!--/button-->
       </div>
      <div class="row">      
+  
+
+        <a href="#" class="btn glyphicon glyphicon-search" data-toggle="modal" data-target="#basicModal"></a> 
+
         <form method="GET" action="{{action('RemitidosController@listRemitidos')}}" class="navbar-form navbar-left pull-right" role="search">
             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
             <input type="hidden" name="busqueda"/>
-            <div class="row">
+             <div class="row">
+  
+
+
               <div class="form-group">
                     <input type="text" class="form-control " name="str_remitido" placeholder="" id="search_remitido">
                     <button type="submit" class="btn btn-default" id="buscar_remitido">Buscar</button>
               </div>   
+
          </div>
         </form>
     </div>
   </div>
     
+
+
+<!-- Modal Busqueda -->
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title" id="myModalLabel">B&uacute;squeda de Remitidos</h4>
+            </div>
+            <form method="GET" action="{{action('RemitidosController@busquedaAvanzada')}}" role="search">
+                <div class="modal-body">
+        
+
+        <div class="row">
+          <div class="col-lg-12 col-md-12">
+            
+            <div class="row"> 
+              <div class="form-group">
+                <label class="control-label col-md-2">A&ntilde;o</label>
+                <div class="col-md-8">
+                   <select class="form-control" name="anio">
+                      <option value="">-</option>
+                      <option value="2016">2016</option>
+                      <option value="2017">2017</option>
+                      <option value="2018">2018</option>
+                      <option value="2019">2019</option>
+                      <option value="2020">2020</option>
+                    </select>
+                </div>
+              </div>
+            </div>  
+            <br>
+            <div class="row"> 
+              <div class="form-group">
+                <label class="control-label col-md-2">N&uacute;mero</label>
+                <div class="col-md-8"><input class="form-control input-sm" name="str_numero" value=''></div>
+              </div>
+            </div> 
+        </div>
+      </div>
+
+                </div>
+                <div class="modal-footer">
+             
+                <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary" >Buscar</button>
+             
+            </div>
+         </form>
+    </div>
+  </div>
+</div>
+
+<!-- -->
+
+
+
       <div class="panel-body">
         <div class="table-responsive">
               <table class="table table-responsive table-striped table-bordered table-hover" id="remitido">

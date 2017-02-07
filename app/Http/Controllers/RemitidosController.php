@@ -239,6 +239,36 @@ class RemitidosController extends Controller {
 		
 	}
 
+
+		public function busquedaAvanzada()
+	{
+		$input = Request::all();
+		
+		
+		//$helpers = self::traeHelpers();
+		
+		
+		$query = DB::table('remitidos');
+            //->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
+            //->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id');
+
+        $query->select('*');
+       
+       	if(!empty($input['str_numero'])) $query->where(DB::raw('remitidos.numero_memo'), '=', $input['str_numero']);	
+        if(!empty($input['anio'])) $query->where(DB::raw('YEAR(remitidos.fecha_remitidos)'), '=', $input['anio']);	
+		            
+
+        
+        $data = 
+
+           
+        $remitidos = $query->orderBy( 'numero_memo' ,'desc')->get();			
+
+            
+		return view('remitidos.listRemitidos')->with('remitidos',$remitidos);
+	}
+
+
 	public function getDatosActuacion(){
 
 		$input = Request::all();

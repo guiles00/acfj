@@ -178,6 +178,7 @@ Route::get('altaRemitidos','RemitidosController@altaRemitidos');
 Route::post('storeRemitidos', 'RemitidosController@store');
 Route::get('editRemitidos/{id}','RemitidosController@edit');
 Route::post('updateRemitidos','RemitidosController@update');
+Route::get('busquedaAvanzada','RemitidosController@busquedaAvanzada');
 
 });
 
