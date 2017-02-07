@@ -185,9 +185,14 @@ class RemitidosController extends Controller {
 		//print_r($input);
 
 		//return view('actuacion.store')->with('actuacion',$actuacion);
-		$remitidos = Remitidos::orderBy( 'remitidos_id' ,'desc')->get();	
+		//$remitidos = Remitidos::orderBy( 'remitidos_id' ,'desc')->get();	
 
-		return view('remitidos.listRemitidos')->with('remitidos',$remitidos);
+		//return view('remitidos.listRemitidos')->with('remitidos',$remitidos);
+		//return redirect()->back()->with('remitidos',$remitidos);
+
+		//$url = 'verSolicitud/'.$input['beca_id'];
+		return Redirect::to('./listRemitidos');
+
 	}
 
 	/**
@@ -208,12 +213,17 @@ class RemitidosController extends Controller {
 		}
 	*/
 		$input = Request::all();
-		//print_r($input);
 
+		$str = (isset($input['str_remitido']))?$input['str_remitido']:'';
+
+		//print_r($input);
 		//CAST(field_name as SIGNED INTEGER) ->orderBy('actuacion_fecha', 'desc')
 		//$actuaciones = Actuacion::all();
-		if( empty($input) ){
-			$remitidos = Remitidos::orderBy( 'numero_memo' ,'desc')->get();	
+		if(!isset($input['busqueda'])){
+			$remitidos = Remitidos::orderBy( 'numero_memo' ,'desc')
+						->where(DB::raw('YEAR(remitidos.timestamp)'), '=', DB::raw('YEAR(now())')) //SIEMPRE TRAE LAS DEL CORRIENTE AÑO
+
+			->get();	
 		}else{
 			$remitidos = Remitidos::where('numero_memo', 'LIKE', '%'.$input['str_remitido'].'%')
 			->orWhere('dirigido', 'LIKE', '%'.$input['str_remitido'].'%')

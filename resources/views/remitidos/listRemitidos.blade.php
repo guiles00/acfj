@@ -27,6 +27,7 @@ $helper = new Helper();
      <div class="row">      
         <form method="GET" action="{{action('RemitidosController@listRemitidos')}}" class="navbar-form navbar-left pull-right" role="search">
             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+            <input type="hidden" name="busqueda"/>
             <div class="row">
               <div class="form-group">
                     <input type="text" class="form-control " name="str_remitido" placeholder="" id="search_remitido">
