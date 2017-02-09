@@ -84,7 +84,7 @@ use App\domain\PagoCheque;
       <label class="control-label col-md-2">Nro. Memo</label>
         <div class="col-md-6">
           <? if(!empty($pago_cheque->nro_memo_id))
-          $nro_memo = PagoCheque::getMemoById($pago_cheque->nro_memo_id) 
+          $nro_memo = PagoCheque::getMemoById($pago_cheque->nro_memo_id);
           ?>
           <select class="form-control " name="nro_memo_id" id="b_nro_memo_id">
             <option value="{{$pago_cheque->nro_memo_id}}" selected>{{ $nro_memo }}</option>

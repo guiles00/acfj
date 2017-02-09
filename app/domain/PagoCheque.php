@@ -184,9 +184,10 @@ class PagoCheque {
 
 		if(empty($res)) return '';							
 
-		return  $res[0]->nombre.' '.$res[0]->numero_memo;
+		return  $res[0]->nombre.' '.$res[0]->numero_memo.'/'.$res[0]->anio;
 	}
 
+	
 
 }
 ?>

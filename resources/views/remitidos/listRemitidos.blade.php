@@ -132,7 +132,7 @@ $helper = new Helper();
                       
                       <td> {{ Utils::formatDate($remitido->fecha_remitidos) }} </td>
                       <td> {{ $helper->getHelperByDominioAndId('tipo_memo',$remitido->tipo_remitido_id) }} </td>
-                      <td> {{ $remitido->numero_memo }} </td>
+                      <td> {{ $remitido->numero_memo }}/{{ $remitido->anio }} </td>
                       <td> {{ $remitido->asunto }} </td>
                       <td> {{ Agente::getResponsableByAreaId($remitido->firmado_id) }} </td>
                       <td> {{ $remitido->dirigido }} </td>

@@ -100,6 +100,7 @@ class RemitidosController extends Controller {
 		$remitidos->fecha_remitidos =	$input['remitidos_fecha'];
 		$remitidos->tipo_remitido_id = $input['tipo_remitido_id']; 
 		$remitidos->numero_memo = $input['numero_memo']; 
+		$remitidos->anio = $input['anio']; 
 	    $remitidos->asunto = $input['remitidos_asunto']; 
     	$remitidos->dirigido = $input['remitidos_dirigido'];
     	$remitidos->firmado_id = $input['area_destino_id'];
@@ -163,6 +164,7 @@ class RemitidosController extends Controller {
 		$remitidos->fecha_remitidos =	$input['remitidos_fecha'];
 		$remitidos->tipo_remitido_id = $input['tipo_remitido_id']; 
 		$remitidos->numero_memo = $input['numero_memo']; 
+		$remitidos->anio = date("y");
 	    $remitidos->asunto = $input['remitidos_asunto']; 
     	$remitidos->dirigido = $input['remitidos_dirigido'];
     	$remitidos->firmado_id = $input['area_destino_id'];

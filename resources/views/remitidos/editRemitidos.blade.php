@@ -19,10 +19,11 @@
 </ul>
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<button type="button" class="btn btn-default" aria-label="Left Align">
+		<!--button type="button" class="btn btn-default" aria-label="Left Align">
 			<a href="{{action('RemitidosController@listRemitidos')}}" class="glyphicon glyphicon-arrow-left"></a>
-		</button>
-		
+		</button-->
+     <a class="btn btn-default glyphicon glyphicon-arrow-left" href="{{action('RemitidosController@listRemitidos')}}" ></a>
+
 	</div>
 
     <div class="alert alert-success alert-dismissable" style="display:none" id="r_alert_esta">
@@ -72,8 +73,12 @@
     
     <div class="form-group">
       <label class="control-label  col-sm-2">N&uacute;mero</label>
-      <div class="col-sm-4">          
+      <div class="col-sm-2">          
         <input type="text" class="form-control" id="" name="numero_memo" value="{{$remitido->numero_memo}}"></input>
+      </div>
+      <label class="control-label  col-sm-2">Sufijo</label>
+      <div class="col-sm-2">          
+        <input type="text" class="form-control" id="" name="anio" value="{{$remitido->anio}}"></input>
       </div>
     </div>
 
