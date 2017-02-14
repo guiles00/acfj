@@ -50,7 +50,7 @@ $helper = new App\Domain\Helper();
         <div class="modal-content">
             <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-            <h4 class="modal-title" id="myModalLabel">B&uacute;squeda de Actuaciones</h4>
+            <h4 class="modal-title" id="myModalLabel">B&uacute;squeda Avanzada</h4>
             </div>
             <form method="GET" action="{!! URL::action('BecaController@busquedaAvanzada'); !!}" role="search">
 

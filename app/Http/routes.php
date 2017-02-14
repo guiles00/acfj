@@ -95,7 +95,7 @@ Route::group(['middleware' => 'session_expired'], function () {
 Route::group(['middleware' => 'session_expired'], function () {
 
 	Route::resource('listSolicitudesBecas', 'BecaController@index');
-	Route::get('busquedaAvanzada', 'BecaController@busquedaAvanzada');
+	Route::get('bbusquedaAvanzada', 'BecaController@busquedaAvanzada');
 
 
 	Route::get('verSolicitud/{id}', 'BecaController@verSolicitud');
@@ -128,7 +128,7 @@ Route::group(['middleware' => 'session_expired'], function () {
 	Route::get('addActuacionOtorgada/{id}', 'BecaOtorgadaController@addActuacion');
 	Route::post('saveActuacionOtorgada', 'BecaOtorgadaController@saveActuacion');
 	Route::get('addPasoBecaOtorgada/{id}', 'BecaOtorgadaController@addPasoBeca');
-	Route::get('busquedaAvanzada', 'BecaOtorgadaController@busquedaAvanzada');
+	Route::get('obusquedaAvanzada', 'BecaOtorgadaController@busquedaAvanzada');
 	
 	Route::post('savePasoBecaOtorgada', 'BecaOtorgadaController@savePasoBeca');
 	Route::get('editPasoBecaOtorgada/{id}', 'BecaOtorgadaController@editPasoBeca');
@@ -178,7 +178,7 @@ Route::get('altaRemitidos','RemitidosController@altaRemitidos');
 Route::post('storeRemitidos', 'RemitidosController@store');
 Route::get('editRemitidos/{id}','RemitidosController@edit');
 Route::post('updateRemitidos','RemitidosController@update');
-Route::get('busquedaAvanzada','RemitidosController@busquedaAvanzada');
+Route::get('rbusquedaAvanzada','RemitidosController@busquedaAvanzada');
 
 });
 
