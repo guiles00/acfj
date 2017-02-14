@@ -223,7 +223,7 @@ class RemitidosController extends Controller {
 		//$actuaciones = Actuacion::all();
 		if(!isset($input['busqueda'])){
 			$remitidos = Remitidos::orderBy( 'numero_memo' ,'desc')
-						->where(DB::raw('YEAR(remitidos.timestamp)'), '=', DB::raw('YEAR(now())')) //SIEMPRE TRAE LAS DEL CORRIENTE AÑO
+						->where(DB::raw('YEAR(remitidos.fecha_remitidos)'), '=', DB::raw('YEAR(now())')) //SIEMPRE TRAE LAS DEL CORRIENTE AÑO
 
 			->get();	
 		}else{
