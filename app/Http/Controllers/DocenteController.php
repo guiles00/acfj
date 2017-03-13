@@ -149,11 +149,18 @@ class DocenteController extends Controller {
         $docente->doc_celular = $input['docente_celular'];
         $docente->doc_email = $input['docente_email'];
         $docente->doc_domicilio = $input['docente_domicilio'];
-        $docente->doc_cp = $input['docente_cp'];
+        $docente->localidad_id = $input['localidad_id'];
+        //$docente->doc_cp = $input['docente_cp'];
         $docente->doc_dni = $input['docente_dni'];
         $docente->doc_cuit = $input['docente_cuit'];
 
-		
+        $docente->tipo_factura_id = $input['tipo_factura_id'];
+		$docente->nombre_banco = $input['nombre_banco'];
+		$docente->tipo_cuenta = $input['tipo_cuenta'];
+		$docente->nro_cuenta = $input['nro_cuenta'];
+		$docente->cbu = $input['cbu'];
+		$docente->alias	= $input['alias'];
+
 		$docente->save();
 		
 		

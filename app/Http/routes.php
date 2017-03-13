@@ -142,6 +142,7 @@ Route::group(['middleware' => 'session_expired'], function () {
 	Route::post('updatePasoBecaVencimiento', 'BecaOtorgadaController@updatePasoBecaVencimiento');
 
 	Route::get('traeTextoPaso', 'BecaOtorgadaController@traeTextoPaso');
+	Route::get('traeFirmaTexto', 'BecaOtorgadaController@traeFirmaTexto');
 
 	Route::get('enviarEmailIntimacion', 'BecaOtorgadaController@enviarEmailIntimacion');
 

@@ -92,7 +92,8 @@ $menu = Menu::getMenuByPerfil(User::getInstance()->getPerfilId());
     
     <script src="{!! URL::asset('/bower_components/jquery/dist/jquery.min.js'); !!}"></script>
     <script src="{!! URL::asset('/bower_components/bootstrap/dist/js/bootstrap.min.js'); !!}"></script>
-    <script src="{!! URL::asset('//cdn.ckeditor.com/4.5.10/standard/ckeditor.js'); !!}"></script> <!--  Donde uso el CKEditor??? En add paso vencimientos-->
+    <!--script src="{!! URL::asset('//cdn.ckeditor.com/4.5.10/standard/ckeditor.js'); !!}"></script> <!--  Donde uso el CKEditor??? En add paso vencimientos-->
+    <script src="{!! URL::asset('/js/ckedit/ckeditor.js'); !!}"></script> <!-- EN DESARROLLO USO CKEDITOR LOCAL-->
 
      <script>
         $(document).ready(function() {
