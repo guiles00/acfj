@@ -68,6 +68,22 @@
 				      </div>
 				    </div>	
 
+
+				    <div class="form-group">
+						<label class="control-label col-md-2">Firmante</label>
+						<div class="col-md-8">
+									<select id="b_firmante_id" class="form-control" name="firmante_id">
+									@foreach($firmantes as $key=>$agente)
+									<?php if( $paso_beca->firmante_id == $agente->agente_id ){?>
+									<option value="{{$agente->agente_id}}" selected>{{$agente->agente_nombre}}</option>
+	 								<?php }else{?>
+	 								<option value="{{$agente->agente_id}}">{{$agente->agente_nombre}}</option>
+	 								<?php }?>
+									@endforeach
+									</select>
+						</div>
+					</div>
+
 					<div class="form-group">
 					     <label class="control-label col-sm-2">Observaciones</label>
 					     <div class="col-sm-8">          
@@ -112,7 +128,7 @@ var data = $('#ps_form_edit').serializeArray();
 //Traigo la data del editor y reemplazo el contenido para que este el actual
 var editorData = CKEDITOR.instances.b_paso_texto_email.getData();
 console.debug(data);
-data[7].value = editorData;
+data[8].value = editorData; //OJO QIE CADA VEZ QUE AGREGO UN CAMPO TENGO QUE MODIFICAR LA UBICACION DEL ARRAY
 
 	$.ajax({
 		                url : "../updatePasoBecaVencimiento"

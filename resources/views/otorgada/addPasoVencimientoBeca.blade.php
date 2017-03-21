@@ -53,6 +53,19 @@
 				        <input type="text" class="form-control datepicker"  name="paso_beca_fecha_vencimiento" id="b_paso_beca_fecha_vencimiento" value="{{ date('Y-m-d') }}" >
 				      </div>
 				    </div>	
+
+					<div class="form-group">
+						<label class="control-label col-md-2">Firmante</label>
+						<div class="col-md-8">
+									<select id="b_firmante_id" class="form-control" name="firmante_id">
+									<option value="-1">-</option>	
+									@foreach($firmantes as $key=>$agente)
+									<option value="{{$agente->agente_id}}">{{$agente->agente_nombre}}</option>
+									@endforeach
+									</select>
+						</div>
+					</div>
+
 					<div class="form-group">
 					      <label class="control-label col-sm-2">Observaciones</label>
 					      <div class="col-sm-8">          
@@ -83,6 +96,7 @@
 </div>
 <script>
 $(document).ready(function() {
+CKEDITOR.config.allowedContent = true;
 
 var t_paso_id = $('#b_tipo_paso_beca_id').val();
 
@@ -107,6 +121,40 @@ $('#b_tipo_paso_beca_id').change(function(data){
 		                	//$('#b_paso_texto_email').html(result);
 		                	//console.debug(result);
 		                	CKEDITOR.instances.b_paso_texto_email.setData(result);
+
+		                }
+     			});   
+
+});
+
+
+
+$('#b_firmante_id').change(function(data){
+
+	var firmante_id = data.target.value;
+//alert(firmante_id);
+				$.ajax({
+		                url : "../traeFirmaTexto"
+		                ,data: {'id':firmante_id}
+		                ,success : function(result) {
+		                	//$('#b_paso_texto_email').html(result);
+		                	console.debug(result);
+		                	
+
+		                	var texto = CKEDITOR.instances.b_paso_texto_email.getData();
+		                	
+		                	var parser = new DOMParser()
+  							var doc = parser.parseFromString(texto, "text/html");
+  							console.debug(doc);
+
+
+  			
+							var a = doc.getElementById('pb_firma');
+			
+							a.innerHTML = result;
+  			
+			
+							CKEDITOR.instances.b_paso_texto_email.setData(doc.body.innerHTML);
 
 		                }
      			});   

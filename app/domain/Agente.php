@@ -30,5 +30,17 @@ class Agente {
 		return  $res[0]->area_responsable ;
 	}
 
+	public static function getFirmantes(){
+
+    
+      $res = DB::table('agente')
+            ->select('*')
+            ->where('firmante','=',1)
+            ->get();
+		
+		if(empty($res)) return '';
+		
+		return  $res;
+	}
 }
 ?>

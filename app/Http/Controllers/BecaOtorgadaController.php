@@ -17,6 +17,9 @@ use Redirect;
 use App\domain\User;
 use App\domain\Utils;
 use App\PasoBeca;
+use App\domain\Agente;
+
+
 
 
 class BecaOtorgadaController extends Controller {
@@ -546,7 +549,12 @@ public function imprimirSolicitud($id){
 		//$input = Request::all();
 		$t_pasos = DB::table('t_paso_beca')->where('t_accion_id','=',2)->OrderBy('orden')->get();
 
-		return view('otorgada.addPasoVencimientoBeca')->with('t_pasos',$t_pasos)->with('beca_id',$id);
+		$firmantes = Agente::getFirmantes();
+
+		return view('otorgada.addPasoVencimientoBeca')
+		->with('t_pasos',$t_pasos)
+		->with('beca_id',$id)
+		->with('firmantes',$firmantes);
 
 	}
 
@@ -568,6 +576,9 @@ public function imprimirSolicitud($id){
 		$paso_beca->fecha = $input['paso_beca_fecha'];
 		$paso_beca->observaciones = $input['paso_beca_observaciones'];
 		$paso_beca->fecha_vencimiento = (isset($input['paso_beca_fecha_vencimiento']))?$input['paso_beca_fecha_vencimiento']:'';
+
+		$paso_beca->firmante_id = (isset($input['firmante_id']))?$input['firmante_id']:0;
+
 		$paso_beca->texto_email = $input['paso_texto_email'];
 		$paso_beca->save();
 
@@ -590,7 +601,10 @@ public function imprimirSolicitud($id){
 		
 		$t_pasos = DB::table('t_paso_beca')->where('t_accion_id','=',1)->OrderBy('orden')->get();
 
-		return view('otorgada.editPasoBeca')->with('t_pasos',$t_pasos)->with('paso_beca',$paso_beca);
+
+		return view('otorgada.editPasoBeca')
+		->with('t_pasos',$t_pasos)
+		->with('paso_beca',$paso_beca);
 	}	
 
 	public function updatePasoBeca(){
@@ -617,7 +631,13 @@ public function imprimirSolicitud($id){
 		
 		$t_pasos = DB::table('t_paso_beca')->where('t_accion_id','=',2)->OrderBy('orden')->get();
 
-		return view('otorgada.editPasoBecaVencimiento')->with('t_pasos',$t_pasos)->with('paso_beca',$paso_beca);
+		$firmantes = Agente::getFirmantes();
+
+		return view('otorgada.editPasoBecaVencimiento')
+		->with('t_pasos',$t_pasos)
+		->with('paso_beca',$paso_beca)
+		->with('firmantes',$firmantes);
+
 	}	
 
 	public function updatePasoBecaVencimiento(){
@@ -632,6 +652,8 @@ public function imprimirSolicitud($id){
 		$paso_beca->fecha = $input['paso_beca_fecha'];
 		$paso_beca->fecha_vencimiento = (isset($input['paso_beca_fecha_vencimiento']))?$input['paso_beca_fecha_vencimiento']:'';
 		$paso_beca->texto_email = $input['paso_texto_email'];
+
+		$paso_beca->firmante_id = (isset($input['firmante_id']))?$input['firmante_id']:0;
 
 		$paso_beca->save();
 
@@ -957,6 +979,15 @@ public function imprimirSolicitud($id){
 		echo $pasos_beca->email_texto;
 	}
 
+	public function traeFirmaTexto(){
+		$input = Request::all();
+
+		$firma_texto = DB::table('agente')->where('agente_id','=',$input['id'])->first();
+		//print_r($input);
+		//Trae el texto
+
+		echo $firma_texto->firma_texto;
+	}
 	/**
 	 * Show the form for creating a new resource.
 	 *
