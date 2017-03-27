@@ -118,6 +118,7 @@
 
 <script>
 $(document).ready(function() {
+CKEDITOR.config.allowedContent = true;
 
 
 $('#pv_submit').click(function(){
@@ -163,6 +164,39 @@ $('#b_tipo_paso_beca_id').change(function(data){
 
 
 });
+
+$('#b_firmante_id').change(function(data){
+
+	var firmante_id = data.target.value;
+
+				$.ajax({
+		                url : "../traeFirmaTexto"
+		                ,data: {'id':firmante_id}
+		                ,success : function(result) {
+		                	//$('#b_paso_texto_email').html(result);
+		                	console.debug(result);
+		                	
+
+		                	var texto = CKEDITOR.instances.b_paso_texto_email.getData();
+		                	
+		                	var parser = new DOMParser()
+  							var doc = parser.parseFromString(texto, "text/html");
+  							console.debug(doc);
+
+
+  			
+							var a = doc.getElementById('pb_firma');
+			
+							a.innerHTML = result;
+  			
+			
+							CKEDITOR.instances.b_paso_texto_email.setData(doc.body.innerHTML);
+
+		                }
+     			});   
+
+});
+
 
 $('.datepicker').datepicker({
                     format: 'yyyy-mm-dd'
