@@ -8,7 +8,8 @@
 </ul>
 <div class="panel panel-default">
  <div class="panel-heading">
-       <a <a class="btn btn-default glyphicon glyphicon-arrow-left" href="{{action('CursosController@listarCursos')}}" ></a>
+       <!--a class="btn btn-default glyphicon glyphicon-arrow-left" href="{{action('CursosController@listarCursos')}}" ></a-->
+       <a class="btn btn-default glyphicon glyphicon-arrow-left" href="{!! URL::previous(); !!}" ></a>
 
 </div>
 

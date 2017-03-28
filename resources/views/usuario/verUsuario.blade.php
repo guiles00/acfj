@@ -10,7 +10,7 @@ use App\domain\Perfil;
 </ul>
 <div class="panel panel-default">
  <div class="panel-heading">
-       <a <a class="btn btn-default glyphicon glyphicon-arrow-left" href="{{action('UsuarioController@listUsuarios')}}" ></a>
+       <a class="btn btn-default glyphicon glyphicon-arrow-left" href="{{action('UsuarioController@listUsuarios')}}" ></a>
 </div>
 
 <div class="panel-body">

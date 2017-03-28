@@ -9,7 +9,10 @@
 </ul>
 <div class="panel panel-default">
 	<div class="panel-heading">
-			<a href="{{action('UsuarioSitioController@listarUsuarioSitio')}}" class="btn btn-default glyphicon glyphicon-arrow-left"></a>
+      <a href="{!! URL::previous(); !!}" class="btn btn-default glyphicon glyphicon-arrow-left"></a>
+			<!--a href="{{action('UsuarioSitioController@listarUsuarioSitio')}}" class="btn btn-default glyphicon glyphicon-arrow-left"></a-->
+      <!--a href="{!! URL::previous(); !!}" class="glyphicon glyphicon-arrow-left"></a-->
+
 	</div>
 
 

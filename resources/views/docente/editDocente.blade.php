@@ -16,7 +16,8 @@
 </ul>
 <div class="panel panel-default">
 	<div class="panel-heading">
-			<a href="{{action('DocenteController@listDocentes')}}" class="btn btn-default glyphicon glyphicon-arrow-left"></a>
+			<!--a href="{{action('DocenteController@listDocentes')}}" class="btn btn-default glyphicon glyphicon-arrow-left"></a-->
+      <a href="{!! URL::previous(); !!}" class="btn btn-default glyphicon glyphicon-arrow-left"></a>
 	</div>
 
 

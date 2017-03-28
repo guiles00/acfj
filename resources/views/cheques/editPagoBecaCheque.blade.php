@@ -18,7 +18,9 @@ use App\domain\PagoCheque;
 </ul>
 <div class="panel panel-default">
 	<div class="panel-heading">
-			<a class="btn btn-default glyphicon glyphicon-arrow-left" href="{{action('ChequesController@listPagoBecaCheques')}}"></a>
+			<!--a class="btn btn-default glyphicon glyphicon-arrow-left" href="{{action('ChequesController@listPagoBecaCheques')}}"></a-->
+      <a class="btn btn-default glyphicon glyphicon-arrow-left" href="{!! URL::previous(); !!}"></a>
+
 		</div>
 
     <div class="alert alert-success alert-dismissable" style="display:none" id="a_alert_esta">

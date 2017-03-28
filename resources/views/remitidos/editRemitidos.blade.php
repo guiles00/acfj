@@ -22,7 +22,8 @@
 		<!--button type="button" class="btn btn-default" aria-label="Left Align">
 			<a href="{{action('RemitidosController@listRemitidos')}}" class="glyphicon glyphicon-arrow-left"></a>
 		</button-->
-     <a class="btn btn-default glyphicon glyphicon-arrow-left" href="{{action('RemitidosController@listRemitidos')}}" ></a>
+     <!--a class="btn btn-default glyphicon glyphicon-arrow-left" href="{{action('RemitidosController@listRemitidos')}}" ></a-->
+     <a class="btn btn-default glyphicon glyphicon-arrow-left" href="{!! URL::previous(); !!}" ></a>
 
 	</div>
 

@@ -18,7 +18,8 @@ use App\domain\PagoCheque;
 </ul>
 <div class="panel panel-default">
 	<div class="panel-heading">
-			<a class="btn btn-default glyphicon glyphicon-arrow-left" href="{{action('ChequesController@listPagoCheques')}}"></a>
+			<!--a class="btn btn-default glyphicon glyphicon-arrow-left" href="{{action('ChequesController@listPagoCheques')}}"></a-->
+      <a class="btn btn-default glyphicon glyphicon-arrow-left" href="{!! URL::previous(); !!}"></a>
       <span style="color:red">Atenci&oacute;n, el &uacute;timo n&uacute;mero de recibo registrado en el sistema es: {{$nro_recibo}}</span>
 	</div>
 

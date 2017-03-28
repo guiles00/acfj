@@ -7,6 +7,7 @@
 	<div class="panel-heading">
 		<button type="button" class="btn btn-default" aria-label="Left Align">
 			<a href="{!! URL::action('AlumnosController@index'); !!}" class="glyphicon glyphicon-arrow-left"></a>
+			<!--a href="{!! URL::previous(); !!}" class="glyphicon glyphicon-arrow-left"></a-->
 
 			<!--a href="{{action('AlumnosController@create')}}" class="glyphicon glyphicon-plus" align="right"></a-->
 
