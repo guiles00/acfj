@@ -181,12 +181,12 @@ $('#b_firmante_id').change(function(data){
 		                	
 		                	var parser = new DOMParser()
   							var doc = parser.parseFromString(texto, "text/html");
-  							console.debug(doc);
-
-
   			
 							var a = doc.getElementById('pb_firma');
-			
+							
+							//Si no lo encuentra, no haces nada
+							if (a == null) return false;
+
 							a.innerHTML = result;
   			
 			
