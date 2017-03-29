@@ -108,6 +108,8 @@ var t_paso_id = $('#b_tipo_paso_beca_id').val();
 		                ,data: {'id':t_paso_id}
 		                ,success : function(result) {
 		                	
+		                	CKEDITOR.instances.b_paso_texto_email.setData(result);
+		                	/*AL FINAL ESTO NO SE USA
 		                	var parser = new DOMParser()
   							var doc = parser.parseFromString(result, "text/html");
   							
@@ -124,11 +126,45 @@ var t_paso_id = $('#b_tipo_paso_beca_id').val();
 
 							fecha.innerHTML = "Buenos Aires "+day+" de "+meses[month]+" de "+year;
 
-
+							
 		                	CKEDITOR.instances.b_paso_texto_email.setData(doc.body.innerHTML);
+		                	*/
 
 		                }
      				});   
+
+
+
+$('#b_paso_beca_fecha').change(function(data){
+
+
+var date = $("#b_paso_beca_fecha").datepicker( 'getDate' );
+
+var         day  = date.getDate(),  
+            month = date.getMonth() + 1,              
+            year =  date.getFullYear();
+
+
+            			if(jQuery.isEmptyObject(CKEDITOR.instances)) return false;
+						
+
+							var texto = CKEDITOR.instances.b_paso_texto_email.getData();
+						
+		                
+		                	var parser = new DOMParser()
+  							var doc = parser.parseFromString(texto, "text/html");
+  			
+							var fecha = doc.getElementById('pb_fecha');
+			
+							//Si no lo encuentra, no haces nada
+							if (fecha == null) return false;
+
+
+							fecha.innerHTML = "Buenos Aires "+day+" de "+meses[month]+" de "+year;
+  						
+							CKEDITOR.instances.b_paso_texto_email.setData(doc.body.innerHTML);
+
+});
 
 $('#b_tipo_paso_beca_id').change(function(data){
 
@@ -143,7 +179,7 @@ $('#b_tipo_paso_beca_id').change(function(data){
   							var doc = parser.parseFromString(result, "text/html");
   							
 							var fecha = doc.getElementById('pb_fecha');
-							alert(fecha);
+							//alert(fecha);
 							//Si no lo encuentra, no haces nada
 							if (fecha == null) return false;
 
