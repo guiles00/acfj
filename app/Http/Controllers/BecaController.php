@@ -106,7 +106,10 @@ class BecaController extends Controller {
        //// echo "<pre>";
       //  print_r($helper);
        // exit;
-		return view('beca.index')->with('becas',$becas)->with('helpers',$helpers);
+		return view('beca.index')
+		->with('becas',$becas)
+		->with('helpers',$helpers)
+		->with('search',$input);
 	}
 
 		public function listBecas(){
@@ -476,14 +479,65 @@ public function saveActuacion(){
 
 }
 public function exportar(){
-	/*$datos = array(
-		array("First Name" => "Nitya", "Last Name" => "Maity", "Email" => "nityamaity87@gmail.com", "Message" => "Test message by Nitya"),
-		array("First Name" => "Codex", "Last Name" => "World", "Email" => "info@codexworld.com", "Message" => "Test message by CodexWorld"),
-		array("First Name" => "John", "Last Name" => "Thomas", "Email" => "john@gmail.com", "Message" => "Test message by John"),
-		array("First Name" => "Michael", "Last Name" => "Vicktor", "Email" => "michael@gmail.com", "Message" => "Test message by Michael"),
-		array("First Name" => "Sarah", "Last Name" => "David", "Email" => "sarah@gmail.com", "Message" => "Test message by Sarah")
-	);*/
+	$input = Request::all();
 
+	//Bastante desprolijo
+
+	$str = (isset($input['str_beca']))?$input['str_beca']:'';
+		//print_r($input);
+		$helper = new Helper();
+		/*$becas = Beca::where('usi_nombre', 'LIKE', "%$str%")
+		->orWhere('usi_dni', 'LIKE', "%$str%")
+		->orWhere('usi_nombre', 'LIKE', "%$str%")
+		->orWhere('usi_legajo', 'LIKE', "%$str%")
+		->paginate(30);
+		*/
+		//$alumnos->setPath('alumnos');
+		
+		//Primer busqueda, uso parametro de busqueda
+		$input['estado_id'] = (isset($input['estado_id']))?$input['estado_id']:'-1';
+		
+		//if($input['estado_id'] == -1 && empty($str)){
+		if(!isset($input['busqueda'])){
+			$data = DB::table('beca')
+	            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
+	            ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id')
+	            ->leftJoin('dependencia','beca.dependencia_id','=','dependencia.dep_id')
+	            ->leftJoin('titulo','beca.titulo_id','=','titulo.titulo_id')
+    	        ->leftJoin('universidad_sigla','beca.universidad_id','=','universidad_sigla.universidad_id')
+        	    ->leftJoin('cargo','usuario_sitio.usi_car_id','=','cargo.car_id')
+	            ->select('*')
+	            ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
+                ->where('beca.estado_id', '<>', 0)
+                ->where('beca.otorgada', '=', 0)
+				->where(DB::raw('YEAR(beca.timestamp)'), '=', DB::raw('YEAR(now())')) //SIEMPRE TRAE LAS DEL CORRIENTE AÑO
+	            ->orderBy('beca.beca_id','DESC')
+	            ->get(); 
+        	
+		}else{
+		//Busqueda por dos parametros	
+		$query = DB::table('beca')
+            ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
+            ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id')
+            ->leftJoin('dependencia','beca.dependencia_id','=','dependencia.dep_id')
+            ->leftJoin('titulo','beca.titulo_id','=','titulo.titulo_id')
+            ->leftJoin('universidad_sigla','beca.universidad_id','=','universidad_sigla.universidad_id')
+            ->leftJoin('cargo','usuario_sitio.usi_car_id','=','cargo.car_id')
+            ->select('*')
+            ->where('usuario_sitio.usi_nombre', 'LIKE', "%$str%")
+            
+            ->where('beca.estado_id', '<>', 0);
+
+           if($input['estado_id'] > 0 ) $query->where('beca.estado_id', '=', $input['estado_id']);	
+        
+            $query->orderBy('beca.beca_id','DESC');
+        
+            $data = $query->get();
+        
+        }
+           
+        
+	/*
 		$data = DB::table('beca')
             ->join('usuario_sitio', 'usuario_sitio.usi_id', '=', 'beca.alumno_id')
             ->join('estado_beca', 'beca.estado_id', '=', 'estado_beca.estado_beca_id')
@@ -499,6 +553,10 @@ public function exportar(){
             ->orderBy('beca.beca_id','DESC')
             ->get();
      
+    */
+
+
+
      $excel = array();
      $row = array();
 	 //echo "<pre>";

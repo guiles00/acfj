@@ -181,7 +181,8 @@ $helper = new App\Domain\Helper();
     </table>
   </div>
 <div>
- <a href="{{action('BecaController@exportar')}}">Exportar a Excel</a>
+
+ <a href="{{action('BecaController@exportar',$search)}}">Exportar a Excel</a>
 </div>
 
 <?php echo $becas->render(); ?>
