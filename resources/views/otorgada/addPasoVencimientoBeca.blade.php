@@ -23,7 +23,8 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="form-group">
-								<h3 >Agregar Acci&oacute;n</h3> 
+								<h3>&nbsp;Agregar Acci&oacute;n</h3> 	
+								<h4>&nbsp; Becario: &nbsp; {{$nombre}}</h4>
 							</div>
 						</div>
 					</div>

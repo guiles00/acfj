@@ -46,5 +46,16 @@ class UsuarioSitio {
 
 		return $cargo->car_nombre;
 	}
+	public static function traeNombreById($usi_id){
+
+		$nombre = DB::table('usuario_sitio')
+            ->where('usi_id', '=', $usi_id)
+            //->toSql();
+            ->first();
+
+        if(empty($nombre)) return '';
+
+		return $nombre->usi_nombre;
+	}
 }
 ?>

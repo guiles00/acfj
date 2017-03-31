@@ -18,6 +18,7 @@ use App\domain\User;
 use App\domain\Utils;
 use App\PasoBeca;
 use App\domain\Agente;
+use App\domain\UsuarioSitio;
 
 
 
@@ -550,10 +551,15 @@ public function imprimirSolicitud($id){
 		$t_pasos = DB::table('t_paso_beca')->where('t_accion_id','=',2)->OrderBy('orden')->get();
 
 		$firmantes = Agente::getFirmantes();
+		$beca = Beca::find($id);
+		/*echo "<pre>";
+		print_r($beca->alumno_id);*/
+		$nombre = UsuarioSitio::traeNombreById($beca->alumno_id);
 
 		return view('otorgada.addPasoVencimientoBeca')
 		->with('t_pasos',$t_pasos)
 		->with('beca_id',$id)
+		->with('nombre',$nombre)
 		->with('firmantes',$firmantes);
 
 	}
