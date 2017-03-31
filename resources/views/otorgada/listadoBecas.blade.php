@@ -20,6 +20,8 @@ $helper = new App\Domain\Helper();
          <a href="#" class="btn glyphicon glyphicon-search pull-right" data-toggle="modal" data-target="#basicModal"></a>
          <form method="GET" action="{{action('BecaOtorgadaController@listadoBecas')}}" class="navbar-form navbar-left pull-right" role="search">
             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+            <input type="hidden" name="busqueda"/>
+
             <div class="row">
                   <div class="form-group">      
                     <div class="col-md-4">
@@ -175,9 +177,9 @@ $helper = new App\Domain\Helper();
         </tbody>
     </table>
   </div>
-<!--div>
- <a href="{{action('BecaController@exportar')}}">Exportar a Excel</a>
-</div-->
+<div>
+  <a href="{{action('BecaOtorgadaController@exportar',$search)}}">Exportar a Excel</a>
+</div>
 
 <?php echo $becas->render(); ?>
 
