@@ -40,7 +40,21 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{	
-		return view('login');
+		//Si esta recordarme loguearse
+		$datos_usuario = null;
+		$recordarme = 0;
+		$user_data = null;
+		//Si estan las cookies de recordar de usuario, mandarle los datos
+		if (isset($_COOKIE["id_usuario_dw"]) && isset($_COOKIE["marca_aleatoria_usuario_dw"])){
+			$user_data = MyAuth::getUserDataById($_COOKIE["id_usuario_dw"]);//,$_COOKIE["marca_aleatoria_usuario_dw"]);
+			$recordarme = 1;
+
+			return Redirect::to('bienvenido');
+		}
+
+		return view('login')
+		->with('recordarme',$recordarme)
+		->with('user_data',$user_data);
 	}
 
 	public function doLogin()
@@ -48,9 +62,6 @@ class WelcomeController extends Controller {
 		
 		$input = Request::all();
 		
-		
-
-
 		/*$credenciales = DB::table('users')
 	            ->select('*')
 	            ->where('email', '=', $input['email'])
@@ -69,6 +80,21 @@ class WelcomeController extends Controller {
 
 		 // attempt to do the login
 	     if ( MyAuth::attempt($userdata) ) {
+
+
+					     	if (isset($input["recordar_usuario"])){
+					     	  
+						      mt_srand (time());
+						      $numero_aleatorio = mt_rand(1000000,999999999);
+						      $user_data = MyAuth::getUserData($userdata);
+		
+								//para mayor seguridad tengo que guardar un numero aleatorio en la tabla del usuario				     
+						     // $ssql = "update usuario set cookie='$numero_aleatorio' where id_usuario=" . $usuario_encontrado->id_usuario;
+						    
+						      setcookie("id_usuario_dw", $user_data->user_id , time()+(60*60*24*365));
+						      setcookie("marca_aleatoria_usuario_dw", $numero_aleatorio, time()+(60*60*24*365));
+
+						   }
 	       
 	        return Redirect::to('bienvenido');
 
@@ -84,6 +110,7 @@ class WelcomeController extends Controller {
 		
 			session_start();
 			session_destroy();
+			if(isset($_COOKIE['id_usuario_dw'])) setcookie('id_usuario_dw');
 
 		 return Redirect::to('/');
 	}

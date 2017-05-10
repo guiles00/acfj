@@ -1,0 +1,58 @@
+<html>
+<script src="./jquery/jquery.min.js"></script>
+<script src="./lib/ckeditor.js"></script>
+
+<label>Firma</label>
+<input type="text" value="testeando"></input>
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+FIRMANTE:<select id="id_select">
+<option value=1>AAAAAAAAA</option>
+<option value=2>BBBBBBBB</option>
+<option value=3>CCCCCCCC</option>
+<option value=4>DDDDDDDDDDD</option>
+</select>
+<textarea id="editor1" name="editor1">
+	&lt;p&gt;Initial value.&lt;/p&gt;
+	&lt;p id='id_p' &gt;Initial value.&lt;/p&gt;
+
+</textarea>
+</html>
+
+
+
+
+<script>
+
+ $(document).ready(function() {
+			CKEDITOR.config.allowedContent = true;
+
+ 			CKEDITOR.replace( 'editor1' );
+
+
+
+
+		$('#id_select').change(function(){
+			console.debug($('#id_select').val());
+			var sel = $('#id_select').val();
+			var parser = new DOMParser()
+
+			var editor_data = CKEDITOR.instances.editor1.getData();
+			
+			var doc = parser.parseFromString(editor_data, "text/html");
+  			
+			var a = doc.getElementById('id_p');
+			console.debug(a);
+			a.innerHTML = 'averrrrr este es el numero'+sel;
+  			
+			//console.debug(doc.getElementsbyTagName('body'));
+			console.debug(doc.body.innerHTML);
+
+			CKEDITOR.instances.editor1.setData(doc.body.innerHTML);
+
+		});
+
+
+
+	});
+</script>

@@ -20,7 +20,11 @@
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Recordarme
+                                        <?if($recordarme):?>
+                                        <input name="recordar_usuario" type="checkbox" value="recordar" checked>Recordarme
+                                        <?else:?>
+                                        <input name="recordar_usuario" type="checkbox" value="recordar">Recordarme
+                                        <?endif;?>
                                     </label>
                                 </div>
                                 

@@ -82,4 +82,32 @@ if( empty($res[0]) ) return 'S/D';
             
             return $res[0]->nombre;
   }
+
+
+
+ static public function getUserData($userdata){
+    
+  $user_data = DB::table('users')
+              ->select('*')
+              ->where('email', '=', $userdata['email'])
+              ->OrWhere('username', '=', $userdata['email'])
+              ->get();
+              
+    if(empty($user_data)) return false;
+
+    return $user_data[0];  
+  }
+
+  static public function getUserDataById($user_id){
+    
+  $user_data = DB::table('users')
+              ->select('*')
+              ->where('user_id', '=', $user_id)
+              ->get();
+              
+    if(empty($user_data)) return false;
+
+    return $user_data[0];  
+  }
+
 }

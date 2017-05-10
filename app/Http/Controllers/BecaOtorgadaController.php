@@ -693,7 +693,7 @@ public function imprimirSolicitud($id){
 
 		//$to      = $datos_destinatario[0]->usi_email;
 		$to = $datos_destinatario; //ESTO NO SE COMO LO VOY A IMPLEMENTAR
-		$subject = 'NOTIFICACION BECA 2016';
+		$subject = 'NOTIFICACION BECA 2017';
 		$message = $html;
 		$headers = 'From: becas@jusbaires.gov.ar' . "\r\n" .
    			   'Reply-To: becas@jusbaires.gov.ar' . "\r\n" .

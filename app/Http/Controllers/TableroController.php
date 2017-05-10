@@ -367,7 +367,7 @@ group by gcu_nombre
 
 
 
-
+            //print_r($res);
 
 
 
