@@ -135,7 +135,7 @@ var t_paso_id = $('#b_tipo_paso_beca_id').val();
      				});   
 
 
-
+/*
 $('#b_paso_beca_fecha').change(function(data){
 
 
@@ -166,7 +166,7 @@ var         day  = date.getDate(),
 							CKEDITOR.instances.b_paso_texto_email.setData(doc.body.innerHTML);
 
 });
-
+*/
 $('#b_tipo_paso_beca_id').change(function(data){
 
 	var t_paso_id = data.target.value;
@@ -201,7 +201,7 @@ $('#b_tipo_paso_beca_id').change(function(data){
 });
 
 
-
+/*
 $('#b_firmante_id').change(function(data){
 
 	var firmante_id = data.target.value;
@@ -233,7 +233,7 @@ $('#b_firmante_id').change(function(data){
      			});   
 
 });
-
+*/
 $('.datepicker').datepicker({
                     format: 'yyyy-mm-dd'
                     ,language:'es'

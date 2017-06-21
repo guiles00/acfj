@@ -164,7 +164,7 @@ $('#b_tipo_paso_beca_id').change(function(data){
 
 
 });
-
+/*
 $('#b_firmante_id').change(function(data){
 
 	var firmante_id = data.target.value;
@@ -196,7 +196,7 @@ $('#b_firmante_id').change(function(data){
      			});   
 
 });
-
+*/
 
 $('.datepicker').datepicker({
                     format: 'yyyy-mm-dd'
